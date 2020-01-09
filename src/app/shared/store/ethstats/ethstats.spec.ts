@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { reduceActions } from '../testing-utils'
 
+import { EthstatsNode } from './ethstats.state'
 import * as fromEthstats from './ethstats.reducers'
 import * as ethstatesActions from './ethstats.actions'
 
@@ -17,16 +18,16 @@ describe('Ethstats Store reducers', () => {
 
   it('should add nodes', () => {
     const finalState = reduceActions(reducer, [
-      ethstatesActions.addNodes({nodes: [{address: '0x0'}]}),
+      ethstatesActions.addNodes({nodes: [{id: '0x0'}] as EthstatsNode[]}),
     ]);
-    expect(fromEthstats.getNodes(finalState)).toEqual({'0x0': {address: '0x0'}});
+    expect(fromEthstats.getNodes(finalState)).toEqual({'0x0': {id: '0x0'} as EthstatsNode});
   });
 
   it('should add nodes multiples nodes and not repeat them', () => {
     const states = reduceActions(reducer, [
-      ethstatesActions.addNodes({nodes: [{address: '0x0'}]}),
-      ethstatesActions.addNodes({nodes: [{address: '0x0'}, {address: '0x1'}]}),
-      ethstatesActions.addNodes({nodes: [{address: '0x1'}, {address: '0x2'}]}),
+      ethstatesActions.addNodes({nodes: [{id: '0x0'}] as EthstatsNode[]}),
+      ethstatesActions.addNodes({nodes: [{id: '0x0'}, {id: '0x1'}] as EthstatsNode[]}),
+      ethstatesActions.addNodes({nodes: [{id: '0x1'}, {id: '0x2'}] as EthstatsNode[]}),
     ], true);
 
     const finalState = states[states.length - 1]
@@ -36,9 +37,9 @@ describe('Ethstats Store reducers', () => {
       .map(({length}) => length)
 
     expect(fromEthstats.getNodes(finalState)).toEqual({
-      '0x0': {address: '0x0'},
-      '0x1': {address: '0x1'},
-      '0x2': {address: '0x2'},
+      '0x0': {id: '0x0'} as EthstatsNode,
+      '0x1': {id: '0x1'} as EthstatsNode,
+      '0x2': {id: '0x2'} as EthstatsNode,
     });
 
     expect(nodesLength).toEqual([0, 1, 2, 3])

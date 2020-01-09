@@ -5,6 +5,7 @@ import * as ethstatsActions from './ethstats.actions'
 
 export const initialState: State = {
   nodes: {},
+  lastBlock: null
 };
 
 const ethstatsReducer = createReducer(
@@ -16,7 +17,7 @@ const ethstatsReducer = createReducer(
       ...nodes
         .reduce((acc, node) => ({
           ...acc,
-          [node.address]: node,
+          [node.id]: node,
         }), {})
     },
   })),
@@ -29,3 +30,4 @@ export function reducer(state: State | undefined, action: Action) {
 
 export const getNodes = (state: State) => state.nodes
 export const getNodesList = (state: State) => Object.values(state.nodes)
+export const getLastBlock = (state: State) => state.lastBlock
