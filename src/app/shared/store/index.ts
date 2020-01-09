@@ -6,17 +6,23 @@ import {
   MetaReducer
 } from '@ngrx/store';
 import { Effect } from '@ngrx/effects';
+
 import { environment } from '../../../environments/environment';
 
-export interface State {
+import * as Ethstats from './ethstats'
 
+
+export interface State {
+  ethstats: Ethstats.State,
 }
 
 export const reducers: ActionReducerMap<State> = {
-
+  ethstats: Ethstats.reducer,
 };
 
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
 
-export const effects: Effect[] = []
+export const effects: any[] = [
+  Ethstats.Effects,
+]
