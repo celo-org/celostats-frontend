@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { reduceActions } from '../testing-utils'
 
-import { EthstatsNode } from './ethstats.state'
+import { EthstatsNode, EthstatsBlock } from './ethstats.state'
 import * as fromEthstats from './ethstats.reducers'
 import * as ethstatesActions from './ethstats.actions'
 
@@ -18,16 +18,16 @@ describe('Ethstats Store reducers', () => {
 
   it('should add nodes', () => {
     const finalState = reduceActions(reducer, [
-      ethstatesActions.addNodes({nodes: [{id: '0x0'}] as EthstatsNode[]}),
+      ethstatesActions.updateNodes({nodes: [{id: '0x0'}] as EthstatsNode[]}),
     ]);
     expect(fromEthstats.getNodes(finalState)).toEqual({'0x0': {id: '0x0'} as EthstatsNode});
   });
 
-  it('should add nodes multiples nodes and not repeat them', () => {
+  it('should add multiples nodes and not repeat them', () => {
     const states = reduceActions(reducer, [
-      ethstatesActions.addNodes({nodes: [{id: '0x0'}] as EthstatsNode[]}),
-      ethstatesActions.addNodes({nodes: [{id: '0x0'}, {id: '0x1'}] as EthstatsNode[]}),
-      ethstatesActions.addNodes({nodes: [{id: '0x1'}, {id: '0x2'}] as EthstatsNode[]}),
+      ethstatesActions.updateNodes({nodes: [{id: '0x0'}] as EthstatsNode[]}),
+      ethstatesActions.updateNodes({nodes: [{id: '0x0'}, {id: '0x1'}] as EthstatsNode[]}),
+      ethstatesActions.updateNodes({nodes: [{id: '0x1'}, {id: '0x2'}] as EthstatsNode[]}),
     ], true);
 
     const finalState = states[states.length - 1]
@@ -43,5 +43,28 @@ describe('Ethstats Store reducers', () => {
     });
 
     expect(nodesLength).toEqual([0, 1, 2, 3])
+  });
+
+  it('should update a node', () => {
+    const states = reduceActions(reducer, [
+      ethstatesActions.updateNodes({nodes: [{id: '0x0', propagationAvg: 10}] as EthstatsNode[]}),
+      ethstatesActions.updateNodes({nodes: [{id: '0x0', propagationAvg: 20}] as EthstatsNode[]}),
+    ], true);
+
+    const nodePropagationAvg = states
+      .map(fromEthstats.getNodesList)
+      .map(nodes => nodes[0]?.propagationAvg)
+
+    expect(nodePropagationAvg).toEqual([undefined, 10, 20])
+  });
+
+  it('should set the last block', () => {
+    const finalState = reduceActions(reducer, [
+      ethstatesActions.setLastBlock({block: {number: 1} as EthstatsBlock}),
+      ethstatesActions.setLastBlock({block: {number: 2} as EthstatsBlock}),
+      ethstatesActions.setLastBlock({block: {number: 1} as EthstatsBlock}),
+    ]);
+
+    expect(fromEthstats.getLastBlock(finalState)).toEqual({number: 2} as EthstatsBlock)
   });
 });

@@ -10,18 +10,26 @@ export const initialState: State = {
 
 const ethstatsReducer = createReducer(
   initialState,
-  on(ethstatsActions.addNodes, (state, {nodes}) => ({
+  on(ethstatsActions.updateNodes, (state, {nodes}) => ({
     ...state,
     nodes: {
       ...state.nodes,
       ...nodes
         .reduce((acc, node) => ({
           ...acc,
-          [node.id]: node,
+          [node.id]: {
+            ...(state.nodes[node.id] || {}),
+            ...node,
+          },
         }), {})
     },
   })),
-  // on(ScoreboardPageActions.awayScore, state => ({ ...state, away: state.away + 1 })),
+  on(ethstatsActions.setLastBlock, (state, {block}) => ({
+    ...state,
+    lastBlock: state.lastBlock?.number > block.number
+      ? state.lastBlock
+      : block,
+  })),
 );
 
 export function reducer(state: State | undefined, action: Action) {
