@@ -1,15 +1,15 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { BrowserModule } from '@angular/platform-browser'
+import { NgModule } from '@angular/core'
+import { StoreModule } from '@ngrx/store'
+import { EffectsModule } from '@ngrx/effects'
+import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 
-import { AppComponent } from './app.component';
+import { AppComponent } from './app.component'
 
-import { PROVIDERS } from './shared';
-import { reducers, metaReducers, effects } from './shared/store';
+import { PROVIDERS } from './shared'
+import { reducers, metaReducers, effects } from './shared/store'
 
-import { environment } from '../environments/environment';
+import { environment } from '../environments/environment'
 
 @NgModule({
   declarations: [

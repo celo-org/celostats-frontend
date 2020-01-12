@@ -1,4 +1,4 @@
-import { Action, createReducer, on, createSelector, createFeatureSelector } from '@ngrx/store';
+import { Action, createReducer, on, createSelector, createFeatureSelector } from '@ngrx/store'
 
 import { State } from './ethstats.state'
 import * as ethstatsActions from './ethstats.actions'
@@ -6,7 +6,7 @@ import * as ethstatsActions from './ethstats.actions'
 export const initialState: State = {
   nodes: {},
   lastBlock: null
-};
+}
 
 const ethstatsReducer = createReducer(
   initialState,
@@ -30,10 +30,10 @@ const ethstatsReducer = createReducer(
       ? state.lastBlock
       : block,
   })),
-);
+)
 
 export function reducer(state: State | undefined, action: Action) {
-  return ethstatsReducer(state, action);
+  return ethstatsReducer(state, action)
 }
 
 export const getNodes = (state: State) => state.nodes
