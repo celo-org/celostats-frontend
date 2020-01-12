@@ -24,7 +24,7 @@ import { environment } from '../environments/environment';
         strictActionImmutability: true
       }
     }),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    StoreDevtoolsModule.instrument({ maxAge: 5, logOnly: environment.production }),
     EffectsModule.forRoot(effects)
   ],
   providers: [
