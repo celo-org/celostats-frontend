@@ -10,20 +10,20 @@ export const initialState: State = {
 
 const ethstatsReducer = createReducer(
   initialState,
-  on(ethstatsActions.updateNodes, (state, {nodes}) => ({
-    ...state,
-    nodes: {
-      ...state.nodes,
-      ...nodes
-        .reduce((acc, node) => ({
-          ...acc,
-          [node.id]: {
-            ...(state.nodes[node.id] || {}),
-            ...node,
-          },
-        }), {})
-    },
-  })),
+  on(ethstatsActions.updateNodes, (state, {nodes}) => {
+    const nodesState = {...state.nodes}
+    nodes
+      .forEach(node => {
+        nodesState[node.id] = {
+          ...nodesState[node.id],
+          ...node,
+        }
+      })
+    return {
+      ...state,
+      nodes: nodesState,
+    }
+  }),
   on(ethstatsActions.setLastBlock, (state, {block}) => ({
     ...state,
     lastBlock: state.lastBlock?.number > block.number
