@@ -10,7 +10,7 @@ import { EthstatsNode } from './store/ethstats'
   providedIn: 'root'
 })
 export class EthstatsService {
-  data$: Observable<{action: string, data: Partial<EthstatsNode>}>
+  private data$: Observable<{action: string, data: Partial<EthstatsNode>}>
   private webSocket: WebSocket
 
   constructor() {
@@ -24,5 +24,9 @@ export class EthstatsService {
       setTimeout(() => this.webSocket.close(), 6000)
     })
       .pipe(share())
+  }
+
+  data() {
+    return this.data$
   }
 }
