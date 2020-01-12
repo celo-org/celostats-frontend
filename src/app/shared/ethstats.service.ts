@@ -21,7 +21,7 @@ export class EthstatsService {
       this.webSocket.onerror = e => observer.error(e)
       // TODO: Implement reconnection
       this.webSocket.onclose = () => observer.complete()
-      setTimeout(() => this.webSocket.close(), 6000)
+      // setTimeout(() => this.webSocket.close(), 6000)
     })
       .pipe(share())
   }

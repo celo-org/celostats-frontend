@@ -33,14 +33,16 @@ describe('EthstatsEffects', () => {
     actions$ = of(rootEffectsInit())
 
     spyOn(ethstatsService, 'data').and.returnValue(
-      cold('-t-b-t-b', {
+      cold('-t-aat-b', {
         t: {action: 'test', data: {}},
-        b: {action: 'block', data: {block: {test: 'block'}}},
+        a: {action: 'block', data: {block: {number: 1, test: 'block'}}},
+        b: {action: 'block', data: {block: {number: 2, test: 'block'}}},
       }),
     );
 
-    const expected = hot('---a---a', {
-      a: ethstatesActions.setLastBlock({block: {test: 'block'} as any}),
+    const expected = hot('---a---b', {
+      a: ethstatesActions.setLastBlock({block: {number: 1, test: 'block'} as any}),
+      b: ethstatesActions.setLastBlock({block: {number: 2, test: 'block'} as any}),
     });
 
     expect(effects.listenNewBlocks$).toBeObservable(expected)
@@ -49,9 +51,9 @@ describe('EthstatsEffects', () => {
   it('should dispatch new nodes', () => {
     actions$ = of(rootEffectsInit())
 
-    const bufferTimeMarbles=    '------|'
-    const ethstatsDataMarbles = '--abac--x-x--dabcd------------|'
-    const expectedMarbles =     '------a-----e-----b-----------|'
+    const bufferTimeMarbles=    '------|'//--|-----|-----|-----|
+    const ethstatsDataMarbles = '--abac--x-x--dabcd--------------|'
+    const expectedMarbles =     '------a-----------b-------------|'
 
     spyOn(ethstatsService, 'data').and.returnValue(
       cold(ethstatsDataMarbles, {
@@ -70,7 +72,6 @@ describe('EthstatsEffects', () => {
       b: ethstatesActions.updateNodes({
         nodes: ['d', 'a', 'b','c','d'].map(_ => ({id: '0x' + _})) as any
       }),
-      e: ethstatesActions.updateNodes({nodes: []}),
     });
 
     expect(effects.listenNewNodes$({buffer: time(bufferTimeMarbles), scheduler: getTestScheduler()}))
