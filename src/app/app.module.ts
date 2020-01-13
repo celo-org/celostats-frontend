@@ -5,6 +5,9 @@ import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 import { AppComponent } from './app.component'
 
 import { PROVIDERS } from './shared'
@@ -27,9 +30,12 @@ import { DASHBOARD_COMPONENTS } from './+dashboard';
         strictActionImmutability: true
       }
     }),
-    StoreDevtoolsModule.instrument({ maxAge: 5, logOnly: environment.production }),
-    EffectsModule.forRoot(effects)
-    BrowserAnimationsModule
+    // StoreDevtoolsModule.instrument({ maxAge: 5, logOnly: environment.production }),
+    EffectsModule.forRoot(effects),
+    BrowserAnimationsModule,
+
+    MatIconModule,
+    MatTooltipModule,
   ],
   providers: [
     ...PROVIDERS,

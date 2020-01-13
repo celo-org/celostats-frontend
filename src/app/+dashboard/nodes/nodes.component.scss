@@ -1,0 +1,15 @@
+.table {
+  min-width: 100%;
+
+  &__cell {
+    white-space: nowrap;
+    padding: 2px 12px;
+    font-size: 12px;
+  }
+
+  &__head {
+    &-icon {
+      cursor: default;
+    }
+  }
+}

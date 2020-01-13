@@ -1,28 +1,15 @@
-<table>
+<table class="table" *ngIf="nodesList | async as nodes">
   <thead>
-    <tr>
-      <td>Name</td>
-      <td>ID</td>
-      <td>Latency</td>
-      <td>Peers</td>
-      <td>Pending</td>
-      <td>Block #</td>
-      <td>Transactions</td>
-      <td>Block Time</td>
-      <td>Propagation</td>
-    </tr>
+    <tr class="table__head">
+      <td class="table__cell" *ngFor="let column of columns; trackBy: trackColumn">
+        <mat-icon [matTooltip]="column.name" class="table__head-icon">{{column.icon}}</mat-icon>
+      </td>
   </thead>
   <tbody>
-    <tr *ngFor="let node of nodesList | async; trackBy: trackNodes">
-      <td>{{node.info?.name}}</td>
-      <td>{{node.id}}</td>
-      <td>{{node.stats?.latency}}</td>
-      <td>{{node.stats?.peers}}</td>
-      <td>{{node.pending}}</td>
-      <td>{{node.block?.number}}</td>
-      <td>{{node.block?.transactions.length}}</td>
-      <td>{{node.block?.received}}</td>
-      <td>{{node.block?.propagation}}</td>
+    <tr class="table__row" *ngFor="let node of nodes; trackBy: trackNodes">
+      <td class="table__cell" *ngFor="let column of columns; trackBy: trackColumn">
+        {{column.accessor(node)}}
+      </td>
     </tr>
   </tbody>
 </table>
