@@ -9,7 +9,10 @@
 
   &__head {
     &-icon {
-      cursor: default;
     }
+  }
+
+  &__head &__cell {
+    cursor: pointer;
   }
 }
