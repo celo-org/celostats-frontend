@@ -20,7 +20,7 @@ export class EthstatsEffects {
         filter(({length}) => !!length),
         map(buffer => ethstatsActions.updateNodes({
           nodes: buffer
-            .filter(({action, data}) => data && ['add', 'block', 'pending', 'stats'].includes(action))
+            .filter(({action, data}) => data && ['init', 'add', 'block', 'pending', 'stats'].includes(action))
             .map(({data}) => data)
         })),
         filter(({nodes: {length}}) => !!length),
