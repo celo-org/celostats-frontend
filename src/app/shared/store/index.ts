@@ -11,18 +11,24 @@ import { environment } from '../../../environments/environment'
 
 import * as Ethstats from './ethstats'
 
-
-export interface State {
-  ethstats: Ethstats.State
-}
-
-export const reducers: ActionReducerMap<State> = {
-  ethstats: Ethstats.reducer,
-}
-
-
-export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : []
-
 export const effects: any[] = [
   Ethstats.Effects,
 ]
+
+export interface AppState {
+  ethstats: Ethstats.State
+}
+
+export const metaReducers: MetaReducer<AppState>[] = !environment.production ? [] : []
+
+export const reducers: ActionReducerMap<AppState> = {
+  ethstats: Ethstats.reducer,
+}
+
+// Root selectors
+export const selectEthstats = (state: AppState) => state.ethstats
+
+// Ethstats Selectors
+export const getEthstatsNodes = createSelector(selectEthstats, Ethstats.getNodes)
+export const getEthstatsNodesList = createSelector(selectEthstats, Ethstats.getNodesList)
+export const getEthstatsLastBlock = createSelector(selectEthstats, Ethstats.getLastBlock)
