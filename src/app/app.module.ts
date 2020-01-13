@@ -9,11 +9,13 @@ import { AppComponent } from './app.component'
 import { PROVIDERS } from './shared'
 import { reducers, metaReducers, effects } from './shared/store'
 
-import { environment } from '../environments/environment'
+import { environment } from '../environments/environment';
+import { DASHBOARD_COMPONENTS } from './+dashboard';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ...DASHBOARD_COMPONENTS,
   ],
   imports: [
     BrowserModule,
@@ -24,8 +26,9 @@ import { environment } from '../environments/environment'
         strictActionImmutability: true
       }
     }),
-    StoreDevtoolsModule.instrument({ maxAge: 5, logOnly: environment.production }),
-    EffectsModule.forRoot(effects)
+    // StoreDevtoolsModule.instrument({ maxAge: 5, logOnly: environment.production }),
+    EffectsModule.forRoot(effects),
+    BrowserAnimationsModule
   ],
   providers: [
     ...PROVIDERS,
