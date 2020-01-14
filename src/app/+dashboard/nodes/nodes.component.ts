@@ -5,19 +5,7 @@ import { share, combineLatest, map, first, throttleTime, filter, distinctUntilCh
 
 import { AppState, getEthstatsNodesList, getEthstatsLastBlock } from 'src/app/shared/store'
 import { EthstatsNode } from 'src/app/shared/store/ethstats'
-
-function formatNumber(n: number, decimals: number = Infinity) {
-  return isNaN(+n) ? 'n/a' : (+n).toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-}
-
-function colorRange(value: number, ranges: (number | null)[] = []): color {
-  const colors = ['info', 'ok', 'warn1', 'warn2', 'warn3', 'warn4', 'no'] as any
-  const index = ranges
-    .findIndex(_ => (_ || _ === 0) && value <= _)
-  return colors[index !== -1 ? index : ranges.length]
-}
-
-type color = 'info' | 'ok' | 'warn1' | 'warn2' | 'warn3' | 'warn4' | 'no' | undefined
+import { color, colorRange, formatNumber } from 'src/app/shared'
 
 interface Context {
   block: number
