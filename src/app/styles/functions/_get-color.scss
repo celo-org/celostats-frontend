@@ -4,13 +4,13 @@
  * @param  {text} $color-name
  * @return {color}
  */
-@function get-color($name) {
+@function get-color($name, $opacity: 1) {
   @if not map-has-key($palette, $name) {
     @warn('[get-color] Color "' + $name + '" not found');
   }
-  @return map-get($palette, $name);
+  @return rgba(map-get($palette, $name), $opacity);
 }
 
-@function gc($name) {
-  @return get-color($name);
+@function gc($name, $opacity: 1) {
+  @return get-color($name, $opacity);
 }

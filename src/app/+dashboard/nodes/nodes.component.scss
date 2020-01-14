@@ -1,10 +1,26 @@
+@import '../../styles/index';
+
 .table {
+  @include get-font(text);
+
   min-width: 100%;
 
   &__cell {
     white-space: nowrap;
-    padding: 2px 12px;
+    padding: 4px 12px;
     font-size: 12px;
+    border-top: 1px solid gc(g9, 0.06);
+
+    &--info  { color: gc(s0); }
+    &--ok    { color: gc(s1); }
+    &--warn1 { color: gc(s2); }
+    &--warn2 { color: gc(s3); }
+    &--warn3 { color: gc(s4); }
+    &--warn4 { color: gc(s5); }
+    &--no    { color: gc(g7); }
+  }
+  &__row:nth-child(odd) &__cell {
+    background: gc(g0, 0.03);
   }
 
   &__head {
@@ -14,5 +30,8 @@
 
   &__head &__cell {
     cursor: pointer;
+    border: 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
   }
 }

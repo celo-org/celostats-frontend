@@ -10,7 +10,7 @@ import * as ethstatsActions from './ethstats.actions'
 export class EthstatsEffects {
 
   listenNewNodes$ = createEffect(() => ({
-    bufferWindow = 1000,
+    bufferWindow = 50,
     scheduler = asyncScheduler
   } = {}) => this.actions$.pipe(
     ofType(ROOT_EFFECTS_INIT),

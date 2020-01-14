@@ -13,8 +13,8 @@
   </thead>
   <tbody>
     <tr class="table__row" *ngFor="let node of nodes; trackBy: trackNodes">
-      <td class="table__cell" *ngFor="let column of columns; trackBy: trackColumn">
-        {{column.accessor(node)}}
+      <td [class]="'table__cell table__cell--' + column.style" *ngFor="let column of node; trackBy: trackColumn">
+        {{column.value}}
       </td>
     </tr>
   </tbody>
