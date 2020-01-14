@@ -1,4 +1,5 @@
 import { TestBed, async } from '@angular/core/testing'
+import { AppModule } from './app.module'
 import { AppComponent } from './app.component'
 
 describe('AppComponent', () => {
@@ -7,6 +8,7 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      imports: [AppModule],
     }).compileComponents()
   }))
 
