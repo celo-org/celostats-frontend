@@ -23,6 +23,14 @@ export interface EthstatsBlock {
   validators: any
 }
 
+export interface EthstatsNodeUptime {
+  started: number
+  up: number
+  down: number
+  lastStatus: boolean
+  lastUpdate: number
+}
+
 export interface EthstatsNode {
   block: EthstatsBlock
   history: number[]
@@ -31,6 +39,8 @@ export interface EthstatsNode {
   pending: number
   propagationAvg: number
   stats: EthstatsStats
+  validatorData: any
+  uptime: EthstatsNodeUptime
 }
 
 export interface EthstatsInfo {

@@ -6,59 +6,12 @@ import { share, combineLatest, map, first, throttleTime, filter, distinctUntilCh
 import { AppState, getEthstatsNodesList, getEthstatsLastBlock } from 'src/app/shared/store'
 import { EthstatsNode } from 'src/app/shared/store/ethstats'
 import { color, colorRange, formatNumber } from 'src/app/shared'
-
-interface Context {
-  block: number
-  node: EthstatsNode
-}
-
-interface Column {
-  name: string
-  icon: string
-  accessor: (node: EthstatsNode) => string | number
-  show?: (value: string | number, context: Context) => string | number
-  color?: (value: string | number, context: Context) => color
-}
+import { Column, columns } from './columns'
 
 interface OrderBy {
   direction: 1 | -1
   column: Column
 }
-
-const columns: Column[] = [
-  {name: 'Name', icon: 'face', accessor: node => node.info?.name},
-  {name: 'ID', icon: 'person', accessor: node => node.id},
-  {
-    name: 'Peers',
-    icon: 'people',
-    accessor: node => node.stats?.peers || 0,
-    color: value => value ? 'ok' : 'no',
-  },
-  {name: 'Pending', icon: 'hourglass_empty', accessor: node => node.pending || 0},
-  {
-    name: 'Block',
-    icon: 'archive',
-    accessor: node => node.block?.number,
-    show: value => value ? '# ' + formatNumber(+value, 0) : 'n/a',
-    color: (value, {block}) => value ? colorRange(block - +value, [, 0, 1, 2, 10]) : 'no',
-  },
-  {name: 'Transactions', icon: 'compare_arrows', accessor: node => node.block?.transactions.length || 0},
-  {
-    name: 'Block Time',
-    icon: 'timer',
-    accessor: node => node.block?.received ? Math.round((Date.now() - +node.block?.received) / 1000) : -Infinity,
-    show: value => value !== -Infinity ? value + ' s ago' : 'n/a',
-    color: value => value !== -Infinity ? colorRange(+value, [, 10, 30, 60, 600]) : 'no',
-  },
-  {
-    name: 'Latency',
-    icon: 'timer',
-    accessor: node => +node.stats?.latency || 0,
-    show: value => value === 0 ? `${value} ms` : value ? `+${value} ms` : '',
-    color: value => colorRange(+value, [0, 10, 100, 1000, 100000]),
-  },
-  {name: 'Propagation', icon: 'wifi', accessor: node => node.block?.propagation},
-]
 
 @Component({
   selector: 'app-dashboard-nodes',
@@ -74,17 +27,18 @@ export class DashboardNodesComponent implements OnInit {
       show: (value, context) => column.show?.(value, context) ?? value,
       color: (value, context) => column.color?.(value, context) || 'ok',
     }))
-  defaultOrderBy = columns[1]
-  firstOrderBy = columns[4]
-
   nodesList: Observable<{value: string | number, style?: color}[][]>
-  orderBy: BehaviorSubject<OrderBy> = new BehaviorSubject({direction: -1, column: this.firstOrderBy})
+  orderBy: BehaviorSubject<OrderBy> = new BehaviorSubject({
+    direction: -1,
+    column: this.columns.find(_ => _.first),
+  })
+  private readonly defaultOrderBy = this.columns.find(_ => _.default)
 
   constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
     this.nodesList = this.store.pipe(
-      throttleTime(100),
+      throttleTime(50),
       filter(() => document.hidden === undefined ? true : !document.hidden),
       select(getEthstatsNodesList),
       combineLatest(
