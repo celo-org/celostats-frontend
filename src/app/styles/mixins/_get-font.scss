@@ -1,0 +1,38 @@
+@mixin get-font($font-name: default, $font-weight: false) {
+
+  @if(map-has-key($typos, $font-name)) {
+
+    $typo: map-get($typos, $font-name);
+
+    font-family: map-get($typo, name);
+
+    @if($font-weight != false) {
+
+      $weights: map-get($typo, variants);
+
+      @if(map-has-key($weights, $font-weight)) {
+
+        font-weight: map-get($weights, $font-weight);
+
+      } @else if(index((100, 200, 300, 400, 500, 600, 700, 800, 900), $font-weight)) {
+        font-weight: $font-weight;
+      } @else {
+        @warn('[get-font] - Font weight "' + $font-weight + '" not found on family "' + map-get($typo, name) + '"');
+      }
+    }
+  } @else {
+    @warn('[get-font] - Font name "' + $font-name + '" not found (use default)');
+    @include get-font($font-weight: $font-weight);
+  }
+}
+
+@mixin get-font-by-map($map: (family: default)) {
+  @if not map-has-key($map, family) {
+    @warn('[get-font-by-map] - Incorrect map. Exemple: (family: text [, weight: regular])');
+    @include get-font();
+  }@else if not map-has-key($map, weight) {
+    @include get-font(map-get($map, family));
+  }@else {
+    @include get-font(map-get($map, family), map-get($map, weight));
+  }
+}

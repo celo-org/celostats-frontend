@@ -1,0 +1,11 @@
+@mixin transition($type: normal, $property: all) {
+  @if ($type == slow) {
+    transition: $property .42s ease;
+  }
+  @if ($type == normal) {
+    transition: $property .26s ease;
+  }
+  @if ($type == fast) {
+    transition: $property .14s ease;
+  }
+}

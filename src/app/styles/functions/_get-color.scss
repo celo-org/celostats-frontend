@@ -1,0 +1,16 @@
+/**
+ * Get color function
+ *
+ * @param  {text} $color-name
+ * @return {color}
+ */
+@function get-color($name) {
+  @if not map-has-key($palette, $name) {
+    @warn('[get-color] Color "' + $name + '" not found');
+  }
+  @return map-get($palette, $name);
+}
+
+@function gc($name) {
+  @return get-color($name);
+}

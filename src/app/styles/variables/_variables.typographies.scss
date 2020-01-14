@@ -1,0 +1,26 @@
+
+$typo---lato: (
+  name: (Roboto, "Helvetica Neue", sans-serif),
+  variants: (
+    light: 300,
+    regular: 400,
+    normal: 400,
+    bold: 600,
+  )
+) !default;
+
+$typo---monospace: (
+  name: monospace,
+  variants: (
+    regular: 400,
+    normal: 400,
+    bold: 600,
+  )
+) !default;
+
+$typos: (
+  default: $typo---lato,
+  monospace: $typo---monospace,
+  text: $typo---lato,
+  heading: $typo---lato,
+) !default;
