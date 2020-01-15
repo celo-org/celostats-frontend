@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, interval } from 'rxjs';
 import { share, combineLatest, map, first, throttleTime, filter, distinctUntilChanged } from 'rxjs/operators';
 
 import { AppState, getEthstatsNodesList, getEthstatsLastBlock } from 'src/app/shared/store'
@@ -48,6 +48,7 @@ export class DashboardNodesComponent implements OnInit {
           map(block => block?.number),
           distinctUntilChanged(),
         ),
+        interval(1000),
       ),
       map(([nodes, {direction, column: {accessor}}, block]) =>
         nodes
