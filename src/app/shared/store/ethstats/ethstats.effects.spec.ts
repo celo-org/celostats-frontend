@@ -77,4 +77,23 @@ describe('EthstatsEffects', () => {
     expect(effects.listenNewNodes$({bufferWindow: time(bufferTimeMarbles), scheduler: getTestScheduler()}))
       .toBeObservable(expected)
   })
+
+  it('should dispatch new charts events', () => {
+    actions$ = of(rootEffectsInit())
+
+    spyOn(ethstatsService, 'data').and.returnValue(
+      cold('-t-at-b', {
+        t: {action: 'test', data: {}},
+        a: {action: 'charts', data: {test: 'charts', n: 1}},
+        b: {action: 'charts', data: {test: 'charts', n: 2}},
+      }),
+    )
+
+    const expected = hot('---a--b', {
+      a: ethstatesActions.updateCharts({charts: {test: 'charts', n: 1} as any}),
+      b: ethstatesActions.updateCharts({charts: {test: 'charts', n: 2} as any}),
+    })
+
+    expect(effects.listenChartsUpdates$).toBeObservable(expected)
+  })
 })

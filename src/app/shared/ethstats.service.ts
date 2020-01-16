@@ -4,12 +4,18 @@ import { mergeMap, share } from 'rxjs/operators'
 
 import { environment } from '../../environments/environment'
 
-import { EthstatsNode } from './store/ethstats'
+import { EthstatsNode, EthstatsCharts } from './store/ethstats'
 
-export interface EthstatsServiceData {
-  action: string
+export interface EthstatsServiceDataNode {
+  action: 'init' | 'add' | 'block' | 'pending' | 'stats'
   data: Partial<EthstatsNode>
 }
+export interface EthstatsServiceDataCharts {
+  action: 'charts'
+  data: EthstatsCharts
+}
+
+export type EthstatsServiceData = EthstatsServiceDataNode | EthstatsServiceDataCharts
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +41,8 @@ export class EthstatsService {
       )
   }
 
-  data() {
-    return this.data$
+  data<type extends 'node' | 'charts'>(): Observable<type extends 'node' ? EthstatsServiceDataNode : EthstatsServiceDataCharts> {
+    return this.data$ as any
   }
 
   private serializeData(message: any): Observable<EthstatsServiceData> {

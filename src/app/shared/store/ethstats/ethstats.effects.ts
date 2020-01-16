@@ -15,7 +15,7 @@ export class EthstatsEffects {
   } = {}) => this.actions$.pipe(
     ofType(ROOT_EFFECTS_INIT),
     mergeMap(() =>
-      this.ethstatsService.data().pipe(
+      this.ethstatsService.data<'node'>().pipe(
         bufferTime(bufferWindow, scheduler),
         filter(({length}) => !!length),
         map(buffer => ethstatsActions.updateNodes({
@@ -32,10 +32,20 @@ export class EthstatsEffects {
   listenNewBlocks$ = createEffect(() => this.actions$.pipe(
     ofType(ROOT_EFFECTS_INIT),
     mergeMap(() =>
-      this.ethstatsService.data().pipe(
+      this.ethstatsService.data<'node'>().pipe(
         filter(({action}) => action === 'block'),
         distinct(_ => _.data.block.number),
         map(({data: {block}}) => ethstatsActions.setLastBlock({block})),
+      ),
+    ),
+  ))
+
+  listenChartsUpdates$ = createEffect(() => this.actions$.pipe(
+    ofType(ROOT_EFFECTS_INIT),
+    mergeMap(() =>
+      this.ethstatsService.data<'charts'>().pipe(
+        filter(({action}) => action === 'charts'),
+        map(({data: charts}) => ethstatsActions.updateCharts({charts}))
       ),
     ),
   ))
