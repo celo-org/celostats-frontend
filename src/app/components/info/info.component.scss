@@ -1,10 +1,14 @@
 @import '../../styles/index';
 
+@mixin info-color($color) {
+  color: gc($color);
+  box-shadow: inset 0 0 0 1px gc($color);
+}
+
 @mixin info() {
 
   width: 310px;
   padding: 15px;
-  box-shadow: 0 0 0 1px green;
 
   &__title {
     @include get-font(text, bold);
@@ -21,13 +25,13 @@
   }
 
   &--style {
-    &-info  { color: gc(s0); }
-    &-ok    { color: gc(s1); }
-    &-warn1 { color: gc(s2); }
-    &-warn2 { color: gc(s3); }
-    &-warn3 { color: gc(s4); }
-    &-warn4 { color: gc(s5); }
-    &-no    { color: gc(g7); }
+    &-info  { @include info-color(s0); }
+    &-ok    { @include info-color(s1); }
+    &-warn1 { @include info-color(s2); }
+    &-warn2 { @include info-color(s3); }
+    &-warn3 { @include info-color(s4); }
+    &-warn4 { @include info-color(s5); }
+    &-no    { @include info-color(g7); }
   }
 
   &--big,

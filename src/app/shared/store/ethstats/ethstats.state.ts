@@ -43,7 +43,10 @@ export interface EthstatsBlock {
   transactionsRoot: string
   trusted: boolean
   uncles: any[]
-  validators: any
+  validators: {
+    registered: number
+    elected: number
+  }
 }
 
 export interface EthstatsNodeUptime {
