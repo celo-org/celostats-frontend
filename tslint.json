@@ -7,7 +7,7 @@
     "component-selector": [
       true,
       "element",
-      "app",
+      ["app", "component"],
       "kebab-case"
     ],
     "contextual-lifecycle": true,

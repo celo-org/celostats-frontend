@@ -1,0 +1,69 @@
+@import '../../styles/index';
+
+@mixin info() {
+
+  width: 310px;
+  padding: 15px;
+  box-shadow: 0 0 0 1px green;
+
+  &__title {
+    @include get-font(text, bold);
+    text-transform: uppercase;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 1px;
+  }
+
+  &__value {
+    @include get-font(text, light);
+
+    font-size: 14px;
+  }
+
+  &--style {
+    &-info  { color: gc(s0); }
+    &-ok    { color: gc(s1); }
+    &-warn1 { color: gc(s2); }
+    &-warn2 { color: gc(s3); }
+    &-warn3 { color: gc(s4); }
+    &-warn4 { color: gc(s5); }
+    &-no    { color: gc(g7); }
+  }
+
+  &--big,
+  &--small {
+    display: flex;
+    align-items: center;
+  }
+  &--big &__icon {
+    font-size: 80px;
+    line-height: 80px;
+    height: 80px;
+    width: 80px;
+    text-align: center;
+  }
+  &--big &__text {
+    padding-left: 20px;
+  }
+  &--big &__value {
+    font-size: 50px;
+    line-height: 55px;
+    letter-spacing: -4px;
+  }
+
+  &--small {
+    padding: 8px 15px;
+  }
+  &--small &__text {
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    flex: 1;
+  }
+}
+
+.info {
+  @include info;
+}

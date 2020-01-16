@@ -5,16 +5,19 @@ import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon'
+import { MatTooltipModule } from '@angular/material/tooltip'
+
+import { environment } from '../environments/environment'
 
 import { AppComponent } from './app.component'
 
 import { PROVIDERS } from './shared'
 import { reducers, metaReducers, effects } from './shared/store'
 
-import { environment } from '../environments/environment';
-import { DASHBOARD_COMPONENTS } from './+dashboard';
+import { DASHBOARD_COMPONENTS } from './+dashboard'
+
+import { InfoModule } from './components/info'
 
 @NgModule({
   declarations: [
@@ -36,6 +39,8 @@ import { DASHBOARD_COMPONENTS } from './+dashboard';
 
     MatIconModule,
     MatTooltipModule,
+
+    InfoModule,
   ],
   providers: [
     ...PROVIDERS,
