@@ -28,7 +28,6 @@ export class EthstatsService {
       this.webSocket.onclose = () => observer.complete()
 
       this.webSocket.onopen = () => this.webSocket.send(JSON.stringify({emit: ['ready']}))
-      // setTimeout(() => this.webSocket.close(), 8000)
     })
       .pipe(
         mergeMap(_ => this.serializeData(_)),

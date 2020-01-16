@@ -34,7 +34,7 @@ export const columns: Column[] = [
     show: value => value ? '# ' + formatNumber(+value, 0) : 'n/a',
     color: (value, {block}) => value ? colorRange(block - +value, [, 0, 1, 5, 30]) : 'no',
   },
-  {name: 'Transactions', icon: 'compare_arrows', accessor: node => node.block?.transactions.length || 0},
+  {name: 'Transactions', icon: 'compare_arrows', accessor: node => node.block?.transactions?.length || 0},
   {
     name: 'Block Time',
     icon: 'timer',
