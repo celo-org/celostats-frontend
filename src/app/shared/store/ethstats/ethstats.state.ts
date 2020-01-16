@@ -1,3 +1,26 @@
+export interface EthstatsCharts {
+  avgBlocktime: number
+  blocktime: number[]
+  difficulty: (string | number)[]
+  gasLimit: number[]
+  gasSpending: number[]
+  height: number[]
+  miners: {miner: string, number: number}[]
+  propagation: {
+    avg: number,
+    histogram: {
+      cumpercent: number
+      cumulative: number
+      dx: number
+      frequency: number
+      x: number
+      y: number
+    }[]
+  }
+  transactions: number[]
+  uncles: number[]
+}
+
 export interface EthstatsBlock {
   number: number
   hash: string
@@ -71,4 +94,5 @@ export interface EthstatsStats {
 export interface State {
   nodes: {[id: string]: EthstatsNode}
   lastBlock: EthstatsBlock
+  charts: EthstatsCharts
 }

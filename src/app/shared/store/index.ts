@@ -32,3 +32,4 @@ export const selectEthstats = (state: AppState) => state.ethstats
 export const getEthstatsNodes = createSelector(selectEthstats, Ethstats.getNodes)
 export const getEthstatsNodesList = createSelector(selectEthstats, Ethstats.getNodesList)
 export const getEthstatsLastBlock = createSelector(selectEthstats, Ethstats.getLastBlock)
+export const getEthstatsCharts = createSelector(selectEthstats, Ethstats.getChars)
