@@ -1,11 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { Observable, BehaviorSubject, interval } from 'rxjs';
-import { share, combineLatest, map, first, throttleTime, filter, distinctUntilChanged } from 'rxjs/operators';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
+import { Store, select } from '@ngrx/store'
+import { Observable, BehaviorSubject, interval } from 'rxjs'
+import { share, combineLatest, map, first, throttleTime, filter, distinctUntilChanged } from 'rxjs/operators'
 
 import { AppState, getEthstatsNodesList, getEthstatsLastBlock } from 'src/app/shared/store'
 import { EthstatsNode } from 'src/app/shared/store/ethstats'
-import { color, colorRange, formatNumber } from 'src/app/shared'
+import { color } from 'src/app/shared'
 import { Column, columns } from './columns'
 
 interface OrderBy {
@@ -48,7 +48,9 @@ export class DashboardNodesComponent implements OnInit {
           map(block => block?.number),
           distinctUntilChanged(),
         ),
-        interval(1000),
+        interval(1000).pipe(
+          filter(() => document.hidden === undefined ? true : !document.hidden),
+        ),
       ),
       map(([nodes, {direction, column: {accessor}}, block]) =>
         nodes

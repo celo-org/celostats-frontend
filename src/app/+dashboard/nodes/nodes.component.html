@@ -5,8 +5,8 @@
         class="table__cell"
         *ngFor="let column of columns; trackBy: trackColumn"
         (click)="changeOrderBy(column)">
-        <mat-icon [matTooltip]="column.name" class="table__head-icon">{{column.icon}}</mat-icon>
-        <mat-icon *ngIf="(orderBy | async)?.column == column" class="table__head-icon table__head-icon--order">
+        <mat-icon fontSet="material-icons-outlined" [matTooltip]="column.name" class="table__head-icon">{{column.icon}}</mat-icon>
+        <mat-icon fontSet="material-icons-outlined" *ngIf="(orderBy | async)?.column == column" class="table__head-icon table__head-icon--order">
           {{(orderBy | async)?.direction == 1 ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}
         </mat-icon>
       </td>

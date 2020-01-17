@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core'
+
 import { color } from 'src/app/shared'
 
 export type infoType = 'big' | 'small' | 'chart' | 'list'

@@ -1,12 +1,12 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { provideMockStore, MockStore } from '@ngrx/store/testing'
 
 import { AppModule } from '../../app.module'
-import { DashboardNodesComponent } from './nodes.component';
+import { DashboardNodesComponent } from './nodes.component'
 
 describe('NodesComponent', () => {
-  let component: DashboardNodesComponent;
-  let fixture: ComponentFixture<DashboardNodesComponent>;
+  let component: DashboardNodesComponent
+  let fixture: ComponentFixture<DashboardNodesComponent>
   const initialState = {ethstats: {nodes: [], lastBlock: {}}}
 
   beforeEach(async(() => {
@@ -14,16 +14,16 @@ describe('NodesComponent', () => {
       declarations: [ DashboardNodesComponent ],
       providers: [ provideMockStore({initialState}) ],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardNodesComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(DashboardNodesComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

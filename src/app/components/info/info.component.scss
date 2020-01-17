@@ -1,17 +1,46 @@
 @import '../../styles/index';
 
-@mixin info-color($color) {
-  color: gc($color);
-  box-shadow: inset 0 0 0 1px gc($color);
+$gradient-steps: 7;
+
+@mixin gradient() {
+  $darken: 5%;
+  background: linear-gradient(
+    60deg,
+    darken(darken(gc(s0), 20%), $darken) #{100% / $gradient-steps * 0},
+    darken(gc(s0), $darken) #{100% / $gradient-steps * 1},
+    darken(gc(s1), $darken) #{100% / $gradient-steps * 2},
+    darken(gc(s2), $darken) #{100% / $gradient-steps * 3},
+    darken(gc(s3), $darken) #{100% / $gradient-steps * 4},
+    darken(gc(s4), $darken) #{100% / $gradient-steps * 5},
+    darken(gc(s5), $darken) #{100% / $gradient-steps * 6},
+    darken(darken(gc(s5), 20%), $darken) #{100% / $gradient-steps * 7},
+  );
+}
+@mixin gradient-position($n) {
+  background-position: #{100% / $gradient-steps * (1 + $n)} 50%;
+  background-size: 100% * $gradient-steps * 1.2;
 }
 
 @mixin info() {
+  @include gradient();
+  @include transition(slow);
 
-  width: 310px;
   padding: 15px;
+  box-shadow:
+    inset 0 10px 10px -10px gc(g0, 0.4),
+    inset 0 -1px gc(g12, 0.1);
+  overflow: hidden;
+  color: gc(g0);
+  filter: saturate(1);
+  text-shadow:
+    0 2px 8px gc(g12, 0.1),
+    0 1px 2px gc(g12, 0.4);
+  height: 100%;
+  box-sizing: border-box;
 
   &__title {
     @include get-font(text, bold);
+
     text-transform: uppercase;
     font-size: 14px;
     line-height: 20px;
@@ -25,13 +54,24 @@
   }
 
   &--style {
-    &-info  { @include info-color(s0); }
-    &-ok    { @include info-color(s1); }
-    &-warn1 { @include info-color(s2); }
-    &-warn2 { @include info-color(s3); }
-    &-warn3 { @include info-color(s4); }
-    &-warn4 { @include info-color(s5); }
-    &-no    { @include info-color(g7); }
+    &-info  { @include gradient-position(0); }
+    &-ok    { @include gradient-position(1); }
+    &-warn1 { @include gradient-position(2); }
+    &-warn2 { @include gradient-position(3); }
+    &-warn3 { @include gradient-position(4); }
+    &-warn4 { @include gradient-position(5); }
+    &-no    {
+      @include gradient-position(1);
+      filter: saturate(0);
+    }
+
+    // &-info  { @include info-color(#00D6D7, #3EADCF); }
+    // &-ok    { @include info-color(#93F9B9, #3ECA90); }
+    // &-warn1 { @include info-color(#FFDD00, #FBC034); }
+    // &-warn2 { @include info-color(s3); }
+    // &-warn3 { @include info-color(s4); }
+    // &-warn4 { @include info-color(s5); }
+    // &-no    { @include info-color(g7); }
   }
 
   &--big,
@@ -48,8 +88,14 @@
   }
   &--big &__text {
     padding-left: 20px;
+    text-shadow:
+      0 0 30px gc(g12, 0.4),
+      0 2px 8px gc(g12, 0.1),
+      0 1px 2px gc(g12, 0.4);
   }
   &--big &__value {
+    @include get-font(text, lighter);
+
     font-size: 50px;
     line-height: 55px;
     letter-spacing: -4px;

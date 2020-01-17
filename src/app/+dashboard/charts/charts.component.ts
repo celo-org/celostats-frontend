@@ -13,12 +13,15 @@ import { blocks, InfoBlock, Context } from './blocks'
   styleUrls: ['./charts.component.scss']
 })
 export class DahsboardChartsComponent implements OnInit {
-  blocks: InfoBlock[] = blocks
-    .map(column => ({
-      ...column,
-      accessor: node => column.accessor(node) ?? '',
-      show: (value, context) => column.show?.(value, context) ?? value,
-    }))
+  blocks: InfoBlock[][] = blocks
+    .map(cards =>
+      cards
+        .map(column => ({
+          ...column,
+          accessor: node => column.accessor(node) ?? '',
+          show: (value, context) => column.show?.(value, context) ?? value,
+        }))
+    )
   context$: Observable<Context>
 
   constructor(private store: Store<AppState>) { }

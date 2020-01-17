@@ -1,0 +1,45 @@
+@import '../../styles/index';
+
+.wrapper {
+  display: flex;
+}
+
+.card {
+  $radius: 10px;
+
+  margin: 20px;
+  overflow: hidden;
+  border-radius: $radius;
+  box-shadow: 0 5px 20px -5px gc(g12);
+  min-width: 320px;
+  width: 320px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  &:before,
+  &:after {
+    height: $radius;
+    content: '';
+    position: absolute;
+    left: 1px;
+    right: 1px;
+  }
+
+  &:before {
+    border-radius: $radius $radius 0 0;
+    top: 0;
+    border-top: 1px solid gc(g0, 0.5);
+    box-shadow: inset 0 2px 2px -2px gc(g12, 0.5);
+  }
+  &:after {
+    border-radius: 0 0 $radius $radius;
+    bottom: 0;
+    border-bottom: 1px solid gc(g12, 0.5);
+    box-shadow: inset 0 -2px 2px -2px gc(g0, 0.5);
+  }
+
+  component-info {
+    flex: 1;
+  }
+}
