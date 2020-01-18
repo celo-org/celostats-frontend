@@ -48,7 +48,7 @@ $gradient-steps: 7;
   }
 
   &__value {
-    @include get-font(text, light);
+    @include get-font(text, normal);
 
     font-size: 14px;
   }
@@ -61,7 +61,7 @@ $gradient-steps: 7;
     &-warn3 { @include gradient-position(4); }
     &-warn4 { @include gradient-position(5); }
     &-no    {
-      @include gradient-position(1);
+      @include gradient-position(3);
       filter: saturate(0);
     }
 

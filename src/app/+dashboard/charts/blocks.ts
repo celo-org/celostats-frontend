@@ -6,6 +6,7 @@ export interface Context {
   block: EthstatsBlock
   nodes: EthstatsNode[]
   charts: EthstatsCharts
+  time: number
 }
 
 export interface InfoBlock {
@@ -30,7 +31,7 @@ export const blocks: InfoBlock[][] = [
       type: 'small',
       title: 'Last block',
       icon: 'hourglass_empty',
-      accessor: ({block}) => Math.round((Date.now() - +block?.received) / 1000),
+      accessor: ({block, time}) => Math.round((time - +block?.received) / 1000),
       show: value => `${value}s ago`,
       color: value => colorRange(+value, [, 10, 30, 60, 600]),
     },
@@ -49,8 +50,7 @@ export const blocks: InfoBlock[][] = [
       title: 'Blocks until epoch',
       icon: 'archive',
       accessor: ({block}) => block.blockRemain,
-      color: () => 'ok',
-      // color: (value, {block}) => colorRange(block?.epochSize - +value, [0, block?.epochSize * 0.5, block?.epochSize * 0.8]),
+      color: (value, {block}) => colorRange((block?.epochSize - +value) / block?.epochSize, [0, 0.5, 0.8]),
     },
     {
       type: 'small',
@@ -67,7 +67,7 @@ export const blocks: InfoBlock[][] = [
       icon: 'remove_from_queue',
       accessor: ({nodes}) => nodes.filter(node => node.stats.active).length,
       show: (value, {nodes}) => `${value}/${nodes.length}`,
-      color: () => 'ok',
+      color: (value, {nodes}) => colorRange((nodes.length - +value) / nodes.length, [, 0.1, 0.2, 0.5, , ]),
     },
     {
       type: 'small',
@@ -91,15 +91,15 @@ export const blocks: InfoBlock[][] = [
       type: 'big',
       title: 'Elected validators',
       icon: 'check_circle_outside',
-      accessor: ({block}) => block.validators.elected,
-      color: () => 'ok',
+      accessor: ({block}) => block.validators?.elected ?? 0,
+      color: value => value ? 'ok' : 'no',
     },
     {
       type: 'small',
       title: 'Registered validators',
       icon: 'check',
-      accessor: ({block}) => block.validators.registered,
-      color: () => 'warn1',
+      accessor: ({block}) => block.validators?.registered ?? 0,
+      color: (value, {block}) => value === block.validators?.elected ? 'warn1' : 'warn2',
     },
   ],
 ]

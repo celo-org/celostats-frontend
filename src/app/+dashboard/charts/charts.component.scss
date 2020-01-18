@@ -1,21 +1,43 @@
 @import '../../styles/index';
 
 .wrapper {
-  display: flex;
+  display: inline-flex;
+  justify-content: center;
+  padding: 20px;
+  min-width: 100%;
 }
 
 .card {
-  $radius: 10px;
+  $radius: 4px;
+  $width: 320px;
 
   margin: 20px;
   overflow: hidden;
+  min-width: $width;
+  width: $width;
   border-radius: $radius;
   box-shadow: 0 5px 20px -5px gc(g12);
-  min-width: 320px;
-  width: 320px;
   position: relative;
   display: flex;
   flex-direction: column;
+  transition: all 1.2s ease;
+  transform-origin: 100% 50%;
+  transform: perspective(600px) rotateY(-45deg) translateX(300px);
+  transform-style: preserve-3d;
+  opacity: 0;
+  margin-right: -20px;
+
+  &--show {
+    transform: perspective(600px) rotateY(0deg) translateX(0px);
+    opacity: 1;
+    margin-right: 20px;
+  }
+
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      transition-delay: 200ms * $i
+    }
+  }
 
   &:before,
   &:after {
@@ -41,5 +63,6 @@
 
   component-info {
     flex: 1;
+    width: $width;
   }
 }

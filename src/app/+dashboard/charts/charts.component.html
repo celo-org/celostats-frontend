@@ -1,5 +1,9 @@
 <div class="wrapper" *ngIf="context$ | async as context">
-  <div class="card" *ngFor="let card of blocks; trackBy: trackBlock">
+  <div
+    class="card"
+    [class.card--show]="enter$ | async"
+    *ngFor="let card of blocks; trackBy: trackBlock">
+
     <component-info
       *ngFor="let block of card; trackBy: trackBlock"
       [type]="block.type"

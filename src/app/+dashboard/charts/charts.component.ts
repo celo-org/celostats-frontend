@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Store, select } from '@ngrx/store'
 import { Observable, BehaviorSubject, interval } from 'rxjs'
-import { share, combineLatest, map, first, throttleTime, filter, distinctUntilChanged } from 'rxjs/operators'
+import { share, combineLatest, map, first, throttleTime, filter, distinctUntilChanged, delay } from 'rxjs/operators'
 
 import { AppState, getEthstatsNodesList, getEthstatsLastBlock, getEthstatsCharts } from 'src/app/shared/store'
 
@@ -23,6 +23,7 @@ export class DahsboardChartsComponent implements OnInit {
         }))
     )
   context$: Observable<Context>
+  enter$: Observable<boolean>
 
   constructor(private store: Store<AppState>) { }
 
@@ -38,8 +39,14 @@ export class DahsboardChartsComponent implements OnInit {
         filter(({nodes, block}) => !!nodes && !!block),
         filter(() => document.hidden === undefined ? true : !document.hidden),
         throttleTime(200),
+        map(_ => ({..._, time: Date.now()})),
         share(),
       )
+    this.enter$ = this.context$.pipe(
+      first(),
+      delay(10),
+      map(() => true)
+    )
   }
 
   trackBlock(index: number): string {
