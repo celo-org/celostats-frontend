@@ -1,0 +1,9 @@
+<div class="chart">
+  <div
+    class="chart__bar"
+    *ngFor="let bar of data$ | async; trackBy: trackBar"
+    [style.height.%]="bar.value"
+    [matTooltip]="bar.label + '\n' + bar.show"
+    @inOutBar>
+  </div>
+</div>
