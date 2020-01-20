@@ -3,13 +3,14 @@
 .wrapper {
   display: inline-flex;
   justify-content: center;
+  justify-content: left;
   padding: 20px;
   min-width: 100%;
 }
 
 .card {
   $radius: 4px;
-  $width: 320px;
+  $width: 336px;
 
   margin: 20px;
   overflow: hidden;
@@ -46,18 +47,19 @@
     position: absolute;
     left: 1px;
     right: 1px;
+    z-index: 2;
   }
 
   &:before {
     border-radius: $radius $radius 0 0;
     top: 0;
-    border-top: 1px solid gc(g0, 0.5);
-    box-shadow: inset 0 2px 2px -2px gc(g12, 0.5);
+    border-top: 1px solid gc(g0, 0.2);
+    box-shadow: inset 0 2px 2px -2px gc(g12, 0.2);
   }
   &:after {
     border-radius: 0 0 $radius $radius;
     bottom: 0;
-    border-bottom: 1px solid gc(g12, 0.5);
+    border-bottom: 1px solid gc(g12, 0.2);
     box-shadow: inset 0 -2px 2px -2px gc(g0, 0.5);
   }
 

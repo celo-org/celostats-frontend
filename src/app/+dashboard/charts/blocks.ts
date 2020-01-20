@@ -1,6 +1,7 @@
 import { EthstatsNode, EthstatsBlock, EthstatsCharts } from 'src/app/shared/store/ethstats'
 import { color, colorRange, formatNumber } from 'src/app/shared'
 import { infoType } from 'src/app/components/info'
+import { chartData, chartSizeType } from 'src/app/components/chart'
 
 export interface Context {
   block: EthstatsBlock
@@ -9,14 +10,22 @@ export interface Context {
   time: number
 }
 
-export interface InfoBlock {
+interface InfoBlockBase<T extends infoType> {
   icon: string
   title: string
-  type: infoType
+  type: T
+}
+interface InfoBlockSingle extends InfoBlockBase<'small' | 'big'> {
   accessor: (context: Context) => string | number
   show?: (value: string | number, context: Context) => string | number
   color: (value: string | number, context: Context) => color
 }
+interface InfoBlockChart extends InfoBlockBase<'chart'> {
+  accessor: (context: Context) => chartData
+  color: (value: chartData, context: Context) => color
+  sizeType: chartSizeType
+}
+export type InfoBlock = InfoBlockSingle | InfoBlockChart
 
 export const blocks: InfoBlock[][] = [
   [
@@ -39,9 +48,23 @@ export const blocks: InfoBlock[][] = [
       type: 'small',
       title: 'Avg Block time',
       icon: 'timer',
-      accessor: ({charts}) => +charts.avgBlocktime,
+      accessor: ({charts}) => +charts?.avgBlocktime,
       show: value => `${(+value).toFixed(2)}s`,
       color: value => colorRange(+value, [, 10, 30, 60, 600]),
+    },
+    {
+      type: 'chart',
+      title: 'Block time',
+      icon: 'av_timer',
+      accessor: ({charts, block: {number}}) => (charts?.blocktime ?? [])
+        .map((value, i, {length}) => ({
+          value,
+          show: `${value.toFixed(3)} s`,
+          index: String(length - charts?.updates + i),
+          label: `#${number - i}`,
+        })),
+      color: () => 'ok',
+      sizeType: 'relative',
     },
   ],
   [
@@ -65,7 +88,7 @@ export const blocks: InfoBlock[][] = [
       type: 'small',
       title: 'Active nodes',
       icon: 'remove_from_queue',
-      accessor: ({nodes}) => nodes.filter(node => node.stats.active).length,
+      accessor: ({nodes}) => nodes.filter(node => node.stats?.active).length,
       show: (value, {nodes}) => `${value}/${nodes.length}`,
       color: (value, {nodes}) => colorRange((nodes.length - +value) / nodes.length, [, 0.1, 0.2, 0.5, , ]),
     },

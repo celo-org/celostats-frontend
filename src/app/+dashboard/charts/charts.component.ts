@@ -18,8 +18,9 @@ export class DahsboardChartsComponent implements OnInit {
       cards
         .map(column => ({
           ...column,
-          accessor: node => column.accessor(node) ?? '',
-          show: (value, context) => column.show?.(value, context) ?? value,
+          accessor: node => column.accessor(node) ?? '' as any,
+          show: (value, context) => (column as any).show?.(value, context) ?? value,
+          color: (value, context) => (column as any).color?.(value, context) ?? 'no',
         }))
     )
   context$: Observable<Context>

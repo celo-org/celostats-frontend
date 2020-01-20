@@ -1,4 +1,5 @@
 export interface EthstatsCharts {
+  updates: number
   avgBlocktime: number
   blocktime: number[]
   difficulty: (string | number)[]

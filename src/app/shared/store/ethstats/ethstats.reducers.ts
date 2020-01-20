@@ -33,7 +33,10 @@ const ethstatsReducer = createReducer(
   })),
   on(ethstatsActions.updateCharts, (state, {charts}) => ({
     ...state,
-    charts,
+    charts: {
+      ...charts,
+      updates: +(state?.charts?.updates ?? 0) + 1,
+    },
   })),
 )
 

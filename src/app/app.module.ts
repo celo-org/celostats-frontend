@@ -17,6 +17,7 @@ import { reducers, metaReducers, effects } from './shared/store'
 
 import { DASHBOARD_COMPONENTS } from './+dashboard'
 
+import { ChartModule } from './components/chart'
 import { InfoModule } from './components/info'
 
 @NgModule({
@@ -40,6 +41,7 @@ import { InfoModule } from './components/info'
     MatIconModule,
     MatTooltipModule,
 
+    ChartModule,
     InfoModule,
   ],
   providers: [
