@@ -82,6 +82,20 @@ export const blocks: InfoBlock[][] = [
       accessor: ({block}) => block.epochSize,
       color: () => 'warn1',
     },
+    {
+      type: 'chart',
+      title: 'Propagation time',
+      icon: 'wifi_tethering',
+      accessor: ({charts, block: {number}}) => (charts?.propagation?.histogram ?? [])
+        .map(({x, dx, y: value, cumpercent}, i, {length}) => ({
+          value,
+          show: `Percent: ${(value * 100).toFixed(2)}%\nCumulative: ${(cumpercent * 100).toFixed(2)}%`,
+          index: String(i),
+          label: `${x / 1000}s - ${(x + dx) / 1000}s`,
+        })),
+      color: () => 'info',
+      sizeType: 'absolute',
+    },
   ],
   [
     {
@@ -107,6 +121,20 @@ export const blocks: InfoBlock[][] = [
       accessor: ({block}) => block.gasLimit,
       show: value => `${value} gas`,
       color: () => 'info',
+    },
+    {
+      type: 'chart',
+      title: 'Gas spending',
+      icon: 'attach_money',
+      accessor: ({charts, block: {number}}) => (charts?.gasSpending ?? [])
+        .map((value, i, {length}) => ({
+          value,
+          show: formatNumber(value, 0),
+          index: String(length - charts?.updates + i),
+          label: `#${number - i}`,
+        })),
+      color: () => 'ok',
+      sizeType: 'relative',
     },
   ],
   [
