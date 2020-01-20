@@ -37,6 +37,8 @@ $gradient-steps: 7;
     0 1px 2px gc(g12, 0.4);
   height: 100%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 
   &__title {
     @include get-font(text, bold);
@@ -64,20 +66,12 @@ $gradient-steps: 7;
       @include gradient-position(3);
       filter: saturate(0);
     }
-
-    // &-info  { @include info-color(#00D6D7, #3EADCF); }
-    // &-ok    { @include info-color(#93F9B9, #3ECA90); }
-    // &-warn1 { @include info-color(#FFDD00, #FBC034); }
-    // &-warn2 { @include info-color(s3); }
-    // &-warn3 { @include info-color(s4); }
-    // &-warn4 { @include info-color(s5); }
-    // &-no    { @include info-color(g7); }
   }
 
-  &--big,
-  &--small {
+  &__content {
     display: flex;
     align-items: center;
+    height: 100%;
   }
   &--big &__icon {
     font-size: 80px;
@@ -101,16 +95,23 @@ $gradient-steps: 7;
     letter-spacing: -4px;
   }
 
-  &--small {
+  &--small,
+  &--chart {
     padding: 8px 15px;
   }
-  &--small &__text {
+  &--small &__text,
+  &--chart &__text {
     line-height: 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-left: 10px;
     flex: 1;
+  }
+
+  &__chart {
+    padding: 12px 0 2px;
+    margin: 0 -7px;
   }
 }
 

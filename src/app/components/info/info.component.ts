@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core'
 
 import { color } from 'src/app/shared'
+import { chartSizeType } from '../chart'
 
 export type infoType = 'big' | 'small' | 'chart' | 'list'
 
@@ -16,6 +17,7 @@ export class InfoComponent implements OnInit {
   @Input() title: string
   @Input() value: string
   @Input() color: color
+  @Input() sizeType: chartSizeType
 
   ngOnInit(): void {
   }
