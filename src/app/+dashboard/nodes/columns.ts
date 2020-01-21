@@ -18,6 +18,13 @@ export interface Column {
 
 export const columns: Column[] = [
   {
+    name: 'Status',
+    icon: 'done',
+    accessor: node => +node.stats?.active,
+    show: value => value ? 'online' : 'offline',
+    color: value => value ? 'ok' : 'warn3',
+  },
+  {
     name: 'Name',
     icon: 'face',
     default: true,
@@ -25,7 +32,7 @@ export const columns: Column[] = [
     show: (value: string) => value.length >= 24 ? `${value.substr(0, 21)}...` : value,
   },
   {
-    name: 'ID',
+    name: 'Address',
     icon: 'person',
     accessor: node => node.id,
     show: value => String(value).replace(/^0x([a-f0-9]{8}).+([a-f0-9]{8})$/i, '0x$1...$2'),
@@ -36,7 +43,12 @@ export const columns: Column[] = [
     accessor: node => node.stats?.peers || 0,
     color: value => value ? 'ok' : 'no',
   },
-  {name: 'Pending', icon: 'hourglass_empty', accessor: node => node.pending || 0},
+  {
+    name: 'Pending',
+    icon: 'hourglass_empty',
+    accessor: node => node.pending || 0,
+    color: value => value ? 'ok' : 'info',
+  },
   {
     name: 'Block',
     icon: 'archive',
@@ -58,9 +70,15 @@ export const columns: Column[] = [
     icon: 'timer',
     accessor: node => +node.stats?.latency || 0,
     show: value => value === 0 ? `${value} ms` : value ? `+${value} ms` : '',
-    color: value => colorRange(+value, [0, 10, 100, 1000, 100000]),
+    color: value => colorRange(+value, [0, 10, 100, 1000, 10000]),
   },
-  {name: 'Propagation', icon: 'wifi', accessor: node => node.block?.propagation || 0},
+  {
+    name: 'Propagation time',
+    icon: 'wifi_tethering',
+    accessor: node => node.block?.propagation || 0,
+    show: value => `${value} ms`,
+    color: value => colorRange(+value, [10, 100, 1000, 10000, 1000000]),
+  },
   {
     name: 'Uptime',
     icon: 'offline_bolt',

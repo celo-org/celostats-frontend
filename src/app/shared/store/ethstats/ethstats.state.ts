@@ -63,6 +63,15 @@ export interface EthstatsNodeUptime {
   lastUpdate: number
 }
 
+export interface EthstatsValidatorData {
+  address: string
+  affiliation: string
+  score: string
+  signer: string
+  registered: boolean
+  elected: boolean
+}
+
 export interface EthstatsNode {
   block: EthstatsBlock
   history: number[]
@@ -71,7 +80,7 @@ export interface EthstatsNode {
   pending: number
   propagationAvg: number
   stats: EthstatsStats
-  validatorData: any
+  validatorData: EthstatsValidatorData
   uptime: EthstatsNodeUptime
 }
 
