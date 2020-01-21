@@ -1,4 +1,8 @@
-<table class="table" *ngIf="nodesList$ | async as nodes">
+<table
+  *ngIf="nodesList$ | async as nodes"
+  class="table"
+  [class.table--show]="enter$ | async">
+
   <thead>
     <tr class="table__head">
       <td

@@ -32,7 +32,7 @@ export class BlockProposersComponent implements OnInit {
             .slice(0, 20)
             .map(({miner}) => miner === mined.miner),
         }))
-        .slice(0, 7)
+        .slice(0, 8)
       this.data$.next(cleanData)
     }
   }

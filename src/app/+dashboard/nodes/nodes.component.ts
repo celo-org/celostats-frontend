@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
 import { Store, select } from '@ngrx/store'
 import { Observable, BehaviorSubject, interval } from 'rxjs'
-import { share, combineLatest, map, first, throttleTime, filter, distinctUntilChanged } from 'rxjs/operators'
+import { share, combineLatest, map, first, throttleTime, filter, distinctUntilChanged, delay } from 'rxjs/operators'
 
 import { AppState, getEthstatsNodesList, getEthstatsLastBlock } from 'src/app/shared/store'
 import { EthstatsNode } from 'src/app/shared/store/ethstats'
@@ -25,13 +25,16 @@ export class DashboardNodesComponent implements OnInit {
       ...column,
       accessor: node => column.accessor(node) ?? '',
       show: (value, context) => column.show?.(value, context) ?? value,
-      color: (value, context) => column.color?.(value, context) || 'ok',
+      color: (value, context) =>
+        column.color?.(value, context)
+        || (context?.node?.stats?.active ? 'ok' : 'no'),
     }))
   nodesList$: Observable<{value: string | number, style?: color}[][]>
   orderBy$: BehaviorSubject<OrderBy> = new BehaviorSubject({
     direction: -1,
     column: this.columns.find(_ => _.first),
   })
+  enter$: Observable<boolean>
   private readonly defaultOrderBy = this.columns.find(_ => _.default)
 
   constructor(private store: Store<AppState>) { }
@@ -71,6 +74,13 @@ export class DashboardNodesComponent implements OnInit {
           )
       ),
       share(),
+    )
+    this.enter$ = this.nodesList$.pipe(
+      filter(({length}) => length > 20), // More than 20
+      filter(([node]) => !!node[0]), // Contains name
+      first(),
+      delay(10),
+      map(() => true)
     )
   }
 
