@@ -52,7 +52,6 @@ export class EthstatsService {
   }
 
   private serializeData(message: any): Observable<EthstatsServiceData> {
-    console.log(message.action)
     if (message.action && message.data) {
       return of(message)
     }

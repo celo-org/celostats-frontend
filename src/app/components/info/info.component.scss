@@ -92,15 +92,17 @@ $gradient-steps: 7;
 
     font-size: 50px;
     line-height: 55px;
-    letter-spacing: -4px;
+    letter-spacing: -2px;
   }
 
   &--small,
-  &--chart {
+  &--chart,
+  &--block-proposers {
     padding: 8px 15px;
   }
   &--small &__text,
-  &--chart &__text {
+  &--chart &__text,
+  &--block-proposers &__text {
     line-height: 14px;
     display: flex;
     align-items: center;
@@ -112,6 +114,9 @@ $gradient-steps: 7;
   &__chart {
     padding: 12px 0 2px;
     margin: 0 -7px;
+  }
+  &__data {
+    padding: 10px 0 2px;
   }
 }
 

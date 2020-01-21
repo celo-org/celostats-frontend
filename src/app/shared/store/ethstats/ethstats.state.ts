@@ -1,3 +1,8 @@
+export interface EthstatsMinedBlock {
+  miner: string
+  number: number
+}
+
 export interface EthstatsCharts {
   updates: number
   avgBlocktime: number
@@ -6,7 +11,7 @@ export interface EthstatsCharts {
   gasLimit: number[]
   gasSpending: number[]
   height: number[]
-  miners: {miner: string, number: number}[]
+  miners: EthstatsMinedBlock[]
   propagation: {
     avg: number,
     histogram: {

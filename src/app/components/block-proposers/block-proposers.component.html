@@ -1,3 +1,17 @@
 <div class="block-proposers">
+  <div
+    *ngFor="let row of data$ | async; let first = first; trackBy: trackRow"
+    class="block-proposers__row"
+    [class.block-proposers__row--first]="first">
 
+    <div class="block-proposers__number">{{row.number}}</div>
+    <div class="block-proposers__content">{{row.miner}}</div>
+    <div class="block-proposers__blocks">
+      <div
+        *ngFor="let mined of row.blocks; trackBy: trackIndex"
+        class="block-proposers__block"
+        [class.block-proposers__block--active]="mined">
+      </div>
+    </div>
+  </div>
 </div>

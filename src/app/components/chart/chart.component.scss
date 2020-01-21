@@ -14,21 +14,22 @@
   }
 
   &__bar {
-    @include transition;
+    @include transition(slow);
 
     width: $size;
     min-height: $size;
     border-radius: 3px;
     margin: 0 (($total-size - $size) / 2);
     display: inline-block;
-    background: gc(g0, 0.7);
+    background: gc(g0);
     box-shadow:
-      0 0 2px gc(g12, 0.2),
-      0 -2px 3px -1.5px gc(g12, 0.4),
-      0 2px 3px -1.5px gc(g12, 0.4);
+      0 0 2px gc(g12, 0.25),
+      0 -2px 3px -1.5px gc(g12, 0.5),
+      0 2px 3px -1.5px gc(g12, 0.5);
+    opacity: 0.7;
 
     &:hover {
-      background: gc(g0, 1);
+      opacity: 1;
     }
 
     &:before {

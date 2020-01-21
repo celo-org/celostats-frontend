@@ -1,7 +1,57 @@
 @import '../../styles/index';
 
 @mixin block-proposers() {
+  @include get-font(monospace);
 
+  font-size: 12px;
+
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1px;
+    opacity: 0.75;
+
+    &--first {
+      opacity: 1;
+    }
+  }
+
+  &__number {
+    @include get-font(monospace, bold);
+  }
+  &__content {
+    padding-left: 8px;
+    padding-right: 4px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    flex: 1;
+  }
+
+  &__blocks {
+    margin-top: -1px;
+  }
+  &__block {
+    $size: 6px;
+
+    display: inline-block;
+    box-sizing: border-box;
+    margin-left: 2px;
+    width: $size;
+    height: $size;
+    border-radius: 1px;
+    border: 1px solid gc(g0);
+    box-shadow:
+      inset 0 0 2px gc(g12, 0.2),
+      0 0 2px gc(g12, 0.3),
+      0 2px 2px -2px gc(g12, 0.5);
+
+    &--active {
+      background: gc(g0, 0.7)
+    }
+  }
 }
 
 .block-proposers {

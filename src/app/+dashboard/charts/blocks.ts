@@ -1,4 +1,4 @@
-import { EthstatsNode, EthstatsBlock, EthstatsCharts } from 'src/app/shared/store/ethstats'
+import { EthstatsNode, EthstatsBlock, EthstatsCharts, EthstatsMinedBlock } from 'src/app/shared/store/ethstats'
 import { color, colorRange, formatNumber } from 'src/app/shared'
 import { infoType } from 'src/app/components/info'
 import { chartData, chartSizeType } from 'src/app/components/chart'
@@ -25,7 +25,11 @@ interface InfoBlockChart extends InfoBlockBase<'chart'> {
   color: (value: chartData, context: Context) => color
   sizeType: chartSizeType
 }
-export type InfoBlock = InfoBlockSingle | InfoBlockChart
+interface InfoBlockBlockProposers extends InfoBlockBase<'block-proposers'> {
+  accessor: (context: Context) => EthstatsMinedBlock[]
+  color: (value: EthstatsMinedBlock[], context: Context) => color
+}
+export type InfoBlock = InfoBlockSingle | InfoBlockChart | InfoBlockBlockProposers
 
 export const blocks: InfoBlock[][] = [
   [
@@ -90,7 +94,6 @@ export const blocks: InfoBlock[][] = [
         .map(({x, dx, y: value, cumpercent}, i, {length}) => ({
           value,
           show: `Percent: ${(value * 100).toFixed(2)}%\nCumulative: ${(cumpercent * 100).toFixed(2)}%`,
-          index: String(i),
           label: `${x / 1000}s - ${(x + dx) / 1000}s`,
         })),
       color: () => 'info',
@@ -151,6 +154,13 @@ export const blocks: InfoBlock[][] = [
       icon: 'check',
       accessor: ({block}) => block.validators?.registered ?? 0,
       color: (value, {block}) => value === block.validators?.elected ? 'warn1' : 'warn2',
+    },
+    {
+      type: 'block-proposers',
+      title: 'Recent block proposers',
+      icon: 'done_all',
+      accessor: ({charts, block: {number}}) => (charts?.miners ?? []),
+      color: () => 'info',
     },
   ],
 ]

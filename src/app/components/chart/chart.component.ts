@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core'
 import { trigger, state, style, animate, transition } from '@angular/animations'
 import { ReplaySubject } from 'rxjs'
-import { first, filter, delay } from 'rxjs/operators'
 
 export interface ChartBar {
   value: number,
