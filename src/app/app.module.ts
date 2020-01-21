@@ -17,6 +17,7 @@ import { reducers, metaReducers, effects } from './shared/store'
 
 import { DASHBOARD_COMPONENTS } from './+dashboard'
 
+import { BlockProposersModule } from './components/block-proposers'
 import { ChartModule } from './components/chart'
 import { InfoModule } from './components/info'
 
@@ -41,6 +42,7 @@ import { InfoModule } from './components/info'
     MatIconModule,
     MatTooltipModule,
 
+    BlockProposersModule,
     ChartModule,
     InfoModule,
   ],

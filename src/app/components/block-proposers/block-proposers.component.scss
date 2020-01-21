@@ -1,0 +1,9 @@
+@import '../../styles/index';
+
+@mixin block-proposers() {
+
+}
+
+.block-proposers {
+  @include block-proposers;
+}
