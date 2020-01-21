@@ -1,27 +1,34 @@
 
-$typo---roboto: (
+$typo---regular: (
   name: (Roboto, "Helvetica Neue", sans-serif),
   variants: (
-    lighter: 200,
     light: 300,
     regular: 400,
     normal: 400,
-    bold: 600,
+    bold: 700,
+  )
+) !default;
+
+$typo---condensed: (
+  name: ("Roboto Condensed", "Helvetica Neue", sans-serif),
+  variants: (
+    light: 300,
   )
 ) !default;
 
 $typo---monospace: (
-  name: monospace,
+  name: ("Roboto Mono", monospace),
   variants: (
     regular: 400,
     normal: 400,
-    bold: 600,
+    bold: 500,
   )
 ) !default;
 
 $typos: (
-  default: $typo---roboto,
+  default: $typo---regular,
+  condensed: $typo---condensed,
   monospace: $typo---monospace,
-  text: $typo---roboto,
-  heading: $typo---roboto,
+  text: $typo---regular,
+  heading: $typo---regular,
 ) !default;

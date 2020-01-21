@@ -88,7 +88,7 @@ $gradient-steps: 7;
       0 1px 2px gc(g12, 0.4);
   }
   &--big &__value {
-    @include get-font(text, lighter);
+    @include get-font(condensed, light);
 
     font-size: 50px;
     line-height: 55px;
