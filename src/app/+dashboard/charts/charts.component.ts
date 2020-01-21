@@ -37,7 +37,7 @@ export class DahsboardChartsComponent implements OnInit {
           this.store.select(getEthstatsCharts),
           (_, nodes, block, charts) => ({nodes, block, charts}),
         ),
-        filter(({nodes, block}) => !!nodes && !!block),
+        filter(({nodes, block, charts}) => !!nodes && !!block && !!charts),
         filter(() => document.hidden === undefined ? true : !document.hidden),
         throttleTime(200),
         map(_ => ({..._, time: Date.now()})),

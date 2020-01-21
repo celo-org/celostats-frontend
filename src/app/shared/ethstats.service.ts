@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Observable, of, empty } from 'rxjs'
 import { mergeMap, share } from 'rxjs/operators'
+import * as io from 'socket.io-client'
 
 import { environment } from '../../environments/environment'
 
@@ -22,18 +23,23 @@ export type EthstatsServiceData = EthstatsServiceDataNode | EthstatsServiceDataC
 })
 export class EthstatsService {
   private data$: Observable<EthstatsServiceData>
-  private webSocket: WebSocket
+  private socket: SocketIOClient.Socket
 
   constructor() {
     const url = environment.ethstatsService
-    this.webSocket = new WebSocket(url)
+    this.socket = io(url, {
+      path: '/client',
+      transports: ['websocket'],
+    })
     this.data$ = new Observable<any>(observer => {
-      this.webSocket.onmessage = ({data}) => observer.next(JSON.parse(data))
-      this.webSocket.onerror = e => observer.error(e)
-      // TODO: Implement reconnection
-      this.webSocket.onclose = () => observer.complete()
+      this.socket.on('b', data => observer.next(data))
+      this.socket.on('charts', data => observer.next({action: 'charts', data}))
+      this.socket.on('init', data => observer.next(['init', data]))
 
-      this.webSocket.onopen = () => this.webSocket.send(JSON.stringify({emit: ['ready']}))
+      this.socket.on('error', e => observer.error(e))
+      this.socket.on('connect', () => this.socket.emit('ready'))
+
+      // setTimeout(() => this.socket.close(), 2000)
     })
       .pipe(
         mergeMap(_ => this.serializeData(_)),
@@ -46,13 +52,14 @@ export class EthstatsService {
   }
 
   private serializeData(message: any): Observable<EthstatsServiceData> {
+    console.log(message.action)
     if (message.action && message.data) {
       return of(message)
     }
-    if (message.emit) {
-      const [action, content] = message.emit
+    if (message instanceof Array) {
+      const [action, content] = message
       switch (action) {
-        case 'init': return of(...content.nodes.map(data => ({action, data})))
+        case 'init': return of(...content.map(data => ({action, data})))
       }
     }
     return empty()

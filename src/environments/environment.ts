@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  ethstatsService: 'wss://baklavastaging-ethstats.celo-testnet.org/primus',
+  ethstatsService: 'wss://baklava-ethstats.celo-testnet.org',
 }
 
 /*

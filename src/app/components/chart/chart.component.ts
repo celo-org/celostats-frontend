@@ -12,7 +12,6 @@ export interface ChartBar {
 export type chartData = ChartBar[]
 export type chartSizeType = 'relative' | 'absolute'
 
-
 const inOutBarTime = 600
 const inOutBarWidth = 4
 const inOutBar = trigger('inOutBar', [
