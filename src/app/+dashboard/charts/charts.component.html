@@ -2,15 +2,15 @@
   <div
     class="card"
     [class.card--show]="enter$ | async"
-    *ngFor="let card of blocks; trackBy: trackBlock">
+    *ngFor="let card of blocks$ | async; trackBy: trackIndex">
 
     <component-info
-      *ngFor="let block of card; trackBy: trackBlock"
+      *ngFor="let block of card; trackBy: trackIndex"
       [type]="block.type"
       [icon]="block.icon"
       [title]="block.title"
-      [value]="block.show(block.accessor(context), context)"
-      [color]="block.color(block.accessor(context), context)"
+      [value]="block.$value"
+      [color]="block.$color"
       [sizeType]="block.sizeType">
     </component-info>
   </div>

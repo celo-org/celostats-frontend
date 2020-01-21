@@ -44,8 +44,6 @@ export class ChartComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     // Note: only allows positive values
     if (changes.data) {
-      // TODO: optimize that checking if it is updated on DashboardCharts component,
-      // writing the content of the block on observable, not in the template
       if (JSON.stringify(changes.data.currentValue) === JSON.stringify(changes.data.previousValue)) {
         return
       }

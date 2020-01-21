@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
 import { Store, select } from '@ngrx/store'
 import { Observable, BehaviorSubject, interval } from 'rxjs'
 import { share, combineLatest, map, first, throttleTime, filter, distinctUntilChanged, delay } from 'rxjs/operators'
@@ -10,7 +10,8 @@ import { blocks, InfoBlock, Context } from './blocks'
 @Component({
   selector: 'app-dashboard-charts',
   templateUrl: './charts.component.html',
-  styleUrls: ['./charts.component.scss']
+  styleUrls: ['./charts.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DahsboardChartsComponent implements OnInit {
   blocks: InfoBlock[][] = blocks
@@ -23,6 +24,7 @@ export class DahsboardChartsComponent implements OnInit {
           color: (value, context) => (column as any).color?.(value, context) ?? 'no',
         }))
     )
+  blocks$: Observable<(InfoBlock & {$raw: any, $value: any, $color: any})[][]>
   context$: Observable<Context>
   enter$: Observable<boolean>
 
@@ -43,6 +45,25 @@ export class DahsboardChartsComponent implements OnInit {
         map(_ => ({..._, time: Date.now()})),
         share(),
       )
+
+    this.blocks$ = this.context$.pipe(
+      map(context =>
+        this.blocks
+          .map(cards =>
+            cards
+              .map(block => ({
+                ...block,
+                $raw: block.accessor(context) as any,
+              }))
+              .map(block => ({
+                ...block,
+                $value: block.show(block.$raw, context),
+                $color: block.color(block.$raw, context),
+              }))
+          )
+      ),
+      share(),
+    )
     this.enter$ = this.context$.pipe(
       first(),
       delay(10),
@@ -50,7 +71,7 @@ export class DahsboardChartsComponent implements OnInit {
     )
   }
 
-  trackBlock(index: number): string {
+  trackIndex(index: number): string {
     return String(index)
   }
 }
