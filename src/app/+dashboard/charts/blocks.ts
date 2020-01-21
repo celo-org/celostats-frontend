@@ -10,25 +10,20 @@ export interface Context {
   time: number
 }
 
-interface InfoBlockBase<T extends infoType> {
+interface InfoBlockBase<T extends infoType, V, R = V> {
   icon: string
   title: string
   type: T
+  accessor: (context: Context) => V
+  color: (value: V, context: Context) => color
+  needsUpdate?: (e1: V, e2: V) => boolean
+  show?: (value: V, context: Context) => R
 }
-interface InfoBlockSingle extends InfoBlockBase<'small' | 'big'> {
-  accessor: (context: Context) => string | number
-  show?: (value: string | number, context: Context) => string | number
-  color: (value: string | number, context: Context) => color
-}
-interface InfoBlockChart extends InfoBlockBase<'chart'> {
-  accessor: (context: Context) => chartData
-  color: (value: chartData, context: Context) => color
+interface InfoBlockSingle extends InfoBlockBase<'small' | 'big', string | number> {}
+interface InfoBlockChart extends InfoBlockBase<'chart', any[], chartData> {
   sizeType: chartSizeType
 }
-interface InfoBlockBlockProposers extends InfoBlockBase<'block-proposers'> {
-  accessor: (context: Context) => EthstatsMinedBlock[]
-  color: (value: EthstatsMinedBlock[], context: Context) => color
-}
+interface InfoBlockBlockProposers extends InfoBlockBase<'block-proposers', EthstatsMinedBlock[]> {}
 export type InfoBlock = InfoBlockSingle | InfoBlockChart | InfoBlockBlockProposers
 
 export const blocks: InfoBlock[][] = [
@@ -60,13 +55,15 @@ export const blocks: InfoBlock[][] = [
       type: 'chart',
       title: 'Block time',
       icon: 'av_timer',
-      accessor: ({charts, block: {number}}) => (charts?.blocktime ?? [])
+      accessor: ({charts, block: {number}}) => (charts?.blocktime ?? []),
+      show: (data, {charts, block: {number}}) => data
         .map((value, i, {length}) => ({
           value,
           show: `${value.toFixed(3)} s`,
           index: String(length - charts?.updates + i),
           label: `#${number - i}`,
         })),
+      needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
       color: () => 'ok',
       sizeType: 'relative',
     },
@@ -90,12 +87,14 @@ export const blocks: InfoBlock[][] = [
       type: 'chart',
       title: 'Propagation time',
       icon: 'wifi_tethering',
-      accessor: ({charts, block: {number}}) => (charts?.propagation?.histogram ?? [])
+      accessor: ({charts, block: {number}}) => (charts?.propagation?.histogram ?? []),
+      show: data => data
         .map(({x, dx, y: value, cumpercent}, i, {length}) => ({
           value,
           show: `Percent: ${(value * 100).toFixed(2)}%\nCumulative: ${(cumpercent * 100).toFixed(2)}%`,
           label: `${x / 1000}s - ${(x + dx) / 1000}s`,
         })),
+      needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
       color: () => 'info',
       sizeType: 'absolute',
     },
@@ -136,6 +135,7 @@ export const blocks: InfoBlock[][] = [
           index: String(length - charts?.updates + i),
           label: `#${number - i}`,
         })),
+      needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
       color: () => 'ok',
       sizeType: 'relative',
     },
@@ -160,6 +160,7 @@ export const blocks: InfoBlock[][] = [
       title: 'Recent block proposers',
       icon: 'done_all',
       accessor: ({charts, block: {number}}) => (charts?.miners ?? []),
+      needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
       color: () => 'info',
     },
   ],

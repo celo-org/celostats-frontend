@@ -1,11 +1,13 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
 import { Store, select } from '@ngrx/store'
 import { Observable, BehaviorSubject, interval } from 'rxjs'
-import { share, combineLatest, map, first, throttleTime, filter, distinctUntilChanged, delay } from 'rxjs/operators'
+import { share, combineLatest, map, first, throttleTime, filter, distinctUntilChanged, delay, scan } from 'rxjs/operators'
 
 import { AppState, getEthstatsNodesList, getEthstatsLastBlock, getEthstatsCharts } from 'src/app/shared/store'
 
 import { blocks, InfoBlock, Context } from './blocks'
+
+type infoBlockExtended = InfoBlock & {$raw: any, $value: any, $color: any}
 
 @Component({
   selector: 'app-dashboard-charts',
@@ -21,10 +23,11 @@ export class DahsboardChartsComponent implements OnInit {
           ...column,
           accessor: node => column.accessor(node) ?? '' as any,
           show: (value, context) => (column as any).show?.(value, context) ?? value,
+          needsUpdate: (a, b) => (column as any).needsUpdate?.(a, b) === false ? false : a !== b,
           color: (value, context) => (column as any).color?.(value, context) ?? 'no',
         }))
     )
-  blocks$: Observable<(InfoBlock & {$raw: any, $value: any, $color: any})[][]>
+  blocks$: Observable<infoBlockExtended[][]>
   context$: Observable<Context>
   enter$: Observable<boolean>
 
@@ -47,20 +50,24 @@ export class DahsboardChartsComponent implements OnInit {
       )
 
     this.blocks$ = this.context$.pipe(
-      map(context =>
-        this.blocks
+      scan((blockList, context) =>
+        blockList
           .map(cards =>
             cards
-              .map(block => ({
-                ...block,
-                $raw: block.accessor(context) as any,
-              }))
-              .map(block => ({
-                ...block,
-                $value: block.show(block.$raw, context),
-                $color: block.color(block.$raw, context),
-              }))
-          )
+              .map(block => {
+                const $raw = block.accessor(context) as any
+                if (block.needsUpdate(block.$raw, $raw)) {
+                  return {
+                    ...block,
+                    $raw,
+                    $value: block.show($raw, context),
+                    $color: block.color($raw, context),
+                  }
+                }
+                return block
+              })
+          ),
+        this.blocks as infoBlockExtended[][],
       ),
       share(),
     )

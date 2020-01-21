@@ -2,10 +2,11 @@
 
 .wrapper {
   display: inline-flex;
-  // justify-content: center;
-  justify-content: left;
+  justify-content: center;
   padding: 20px;
   min-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .card {
