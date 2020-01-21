@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
 import { Store, select } from '@ngrx/store'
 import { Observable, BehaviorSubject, interval } from 'rxjs'
-import { share, combineLatest, map, first, throttleTime, filter, distinctUntilChanged, delay, scan } from 'rxjs/operators'
+import { share, combineLatest, map, first, throttleTime, filter, distinctUntilChanged, delay, scan, startWith, skip } from 'rxjs/operators'
 
 import { AppState, getEthstatsNodesList, getEthstatsLastBlock, getEthstatsCharts } from 'src/app/shared/store'
 
@@ -56,7 +56,7 @@ export class DahsboardChartsComponent implements OnInit {
             cards
               .map(block => {
                 const $raw = block.accessor(context) as any
-                if (block.needsUpdate(block.$raw, $raw)) {
+                if (block.needsUpdate($raw, block.$raw)) {
                   return {
                     ...block,
                     $raw,
@@ -69,9 +69,11 @@ export class DahsboardChartsComponent implements OnInit {
           ),
         this.blocks as infoBlockExtended[][],
       ),
+      startWith(this.blocks as infoBlockExtended[][]),
       share(),
     )
-    this.enter$ = this.context$.pipe(
+    this.enter$ = this.blocks$.pipe(
+      skip(1),
       first(),
       delay(10),
       map(() => true)

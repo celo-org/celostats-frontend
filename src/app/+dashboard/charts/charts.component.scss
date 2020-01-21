@@ -1,5 +1,11 @@
 @import '../../styles/index';
 
+:host {
+  display: block;
+  overflow: auto;
+  max-width: 100%;
+}
+
 .wrapper {
   display: inline-flex;
   justify-content: center;

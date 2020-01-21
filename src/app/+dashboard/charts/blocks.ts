@@ -15,9 +15,9 @@ interface InfoBlockBase<T extends infoType, V, R = V> {
   title: string
   type: T
   accessor: (context: Context) => V
-  color: (value: V, context: Context) => color
-  needsUpdate?: (e1: V, e2: V) => boolean
   show?: (value: V, context: Context) => R
+  needsUpdate?: (newValue: V, oldValue: V) => boolean
+  color: (value: V, context: Context) => color
 }
 interface InfoBlockSingle extends InfoBlockBase<'small' | 'big', string | number> {}
 interface InfoBlockChart extends InfoBlockBase<'chart', any[], chartData> {
@@ -146,6 +146,7 @@ export const blocks: InfoBlock[][] = [
       title: 'Elected validators',
       icon: 'check_circle_outside',
       accessor: ({block}) => block.validators?.elected ?? 0,
+      needsUpdate: (newValue, oldValue) => newValue !== 0 || !oldValue,
       color: value => value ? 'ok' : 'no',
     },
     {
@@ -153,6 +154,7 @@ export const blocks: InfoBlock[][] = [
       title: 'Registered validators',
       icon: 'check',
       accessor: ({block}) => block.validators?.registered ?? 0,
+      needsUpdate: (newValue, oldValue) => newValue !== 0 || !oldValue,
       color: (value, {block}) => value === block.validators?.elected ? 'warn1' : 'warn2',
     },
     {
