@@ -27,8 +27,8 @@ export class DashboardNodesComponent implements OnInit {
       show: (value, context) => column.show?.(value, context) ?? value,
       color: (value, context) => column.color?.(value, context) || 'ok',
     }))
-  nodesList: Observable<{value: string | number, style?: color}[][]>
-  orderBy: BehaviorSubject<OrderBy> = new BehaviorSubject({
+  nodesList$: Observable<{value: string | number, style?: color}[][]>
+  orderBy$: BehaviorSubject<OrderBy> = new BehaviorSubject({
     direction: -1,
     column: this.columns.find(_ => _.first),
   })
@@ -37,12 +37,12 @@ export class DashboardNodesComponent implements OnInit {
   constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.nodesList = this.store.pipe(
+    this.nodesList$ = this.store.pipe(
       throttleTime(50),
       filter(() => document.hidden === undefined ? true : !document.hidden),
       select(getEthstatsNodesList),
       combineLatest(
-        this.orderBy,
+        this.orderBy$,
         this.store.pipe(
           select(getEthstatsLastBlock),
           map(block => block?.number),
@@ -75,13 +75,13 @@ export class DashboardNodesComponent implements OnInit {
   }
 
   changeOrderBy(orderBy: Column) {
-    this.orderBy
+    this.orderBy$
       .pipe(first())
       .subscribe(({column, direction}) => {
         if (orderBy === column) {
-          this.orderBy.next({column: orderBy, direction: (direction * -1) as any})
+          this.orderBy$.next({column: orderBy, direction: (direction * -1) as any})
         } else {
-          this.orderBy.next({column: orderBy, direction: -1})
+          this.orderBy$.next({column: orderBy, direction: -1})
         }
       })
   }

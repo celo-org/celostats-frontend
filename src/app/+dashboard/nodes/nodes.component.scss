@@ -1,14 +1,19 @@
 @import '../../styles/index';
 
-.table {
-  @include get-font(text);
+:host {
+  display: block;
+  max-width: 100%;
+}
 
-  min-width: 100%;
+.table {
+  @include get-font(monospace, light);
+
+  width: 100%;
 
   &__cell {
     white-space: nowrap;
-    padding: 4px 12px;
-    font-size: 12px;
+    padding: 4px 10px;
+    font-size: 10px;
     border-top: 1px solid gc(g9, 0.06);
 
     &--info  { color: gc(s0); }
@@ -25,13 +30,37 @@
 
   &__head {
     &-icon {
+      position: relative;
+
+      &--order {
+        $size: 20px;
+        position: absolute;
+        top: -8px;
+        right: -12px;
+        font-size: 16px;
+        width: $size;
+        height: $size;
+        line-height: $size;
+        text-align: center;
+        border-radius: 50%;
+        background: gc(g9);
+        box-shadow:
+          0 0 4px gc(g12, 0.4)
+          0 2px 2px gc(g12, 0.6);
+      }
     }
   }
 
   &__head &__cell {
+    @include transition;
+
     cursor: pointer;
     border: 0;
     padding-top: 8px;
     padding-bottom: 8px;
+
+    &:hover {
+      background: gc(g0, 0.05);
+    }
   }
 }

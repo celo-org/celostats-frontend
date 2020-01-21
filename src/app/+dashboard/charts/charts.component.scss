@@ -1,9 +1,18 @@
 @import '../../styles/index';
 
+$height: 384px;
+
 :host {
   display: block;
-  overflow: auto;
+  overflow: hidden;
   max-width: 100%;
+  height: $height;
+}
+
+.scroll {
+  width: 100%;
+  overflow-y: hidden;
+  height: $height + 40px;
 }
 
 .wrapper {
@@ -13,6 +22,7 @@
   min-width: 100%;
   box-sizing: border-box;
   overflow: hidden;
+  height: $height;
 }
 
 .card {

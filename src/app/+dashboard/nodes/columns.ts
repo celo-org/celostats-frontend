@@ -17,8 +17,19 @@ export interface Column {
 }
 
 export const columns: Column[] = [
-  {name: 'Name', icon: 'face', default: true, accessor: node => node.info?.name},
-  {name: 'ID', icon: 'person', accessor: node => node.id},
+  {
+    name: 'Name',
+    icon: 'face',
+    default: true,
+    accessor: node => node.info?.name,
+    show: (value: string) => value.length >= 24 ? `${value.substr(0, 21)}...` : value,
+  },
+  {
+    name: 'ID',
+    icon: 'person',
+    accessor: node => node.id,
+    show: value => String(value).replace(/^0x([a-f0-9]{8}).+([a-f0-9]{8})$/i, '0x$1...$2'),
+  },
   {
     name: 'Peers',
     icon: 'people',
@@ -49,7 +60,7 @@ export const columns: Column[] = [
     show: value => value === 0 ? `${value} ms` : value ? `+${value} ms` : '',
     color: value => colorRange(+value, [0, 10, 100, 1000, 100000]),
   },
-  {name: 'Propagation', icon: 'wifi', accessor: node => node.block?.propagation},
+  {name: 'Propagation', icon: 'wifi', accessor: node => node.block?.propagation || 0},
   {
     name: 'Uptime',
     icon: 'offline_bolt',
