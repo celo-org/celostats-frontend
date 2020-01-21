@@ -51,7 +51,7 @@ export class ChartComponent implements OnInit, OnChanges {
       if (JSON.stringify(changes.data.currentValue) === JSON.stringify(changes.data.previousValue)) {
         return
       }
-      const data = changes.data.currentValue
+      const data = changes.data.currentValue.slice(0, 40)
       const {min, max} = data
         .map(({value}) => value)
         .reduce((acc, value) => ({

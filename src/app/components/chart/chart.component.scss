@@ -5,6 +5,7 @@
   $size: 4px;
 
   height: 60px;
+  position: relative;
 
   &:before {
     content: '';
@@ -28,6 +29,16 @@
 
     &:hover {
       background: gc(g0, 1);
+    }
+
+    &:before {
+      content: '';
+      top: 0;
+      bottom: 0;
+      display: block;
+      position: absolute;
+      width: $total-size;
+      margin-left: (($total-size - $size) / -2);
     }
   }
 }
