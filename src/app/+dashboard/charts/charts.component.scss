@@ -39,14 +39,13 @@ $height: 384px;
   display: flex;
   flex-direction: column;
   transition: all 1.2s ease;
-  transform-origin: 100% 50%;
-  transform: perspective(600px) rotateY(-45deg) translateX(300px);
+  transform-origin: 50% 0%;
+  transform: perspective(600px) rotateX(-65deg) translateY(300px);
   transform-style: preserve-3d;
   opacity: 0;
-  margin-right: -20px;
 
   &--show {
-    transform: perspective(600px) rotateY(0deg) translateX(0px);
+    transform: perspective(600px) rotateX(0deg) translateY(0px);
     opacity: 1;
     margin-right: 20px;
   }
