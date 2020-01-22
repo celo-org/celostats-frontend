@@ -113,6 +113,7 @@ export const blocks: InfoBlock[][] = [
       title: 'Gas price',
       icon: 'money',
       accessor: ({nodes}) => nodes[0]?.stats?.gasPrice / 10 ** 9,
+      needsUpdate: (newValue, oldValue) => newValue !== 0 || !oldValue,
       show: value => `${value} gwei`,
       color: () => 'info',
     },

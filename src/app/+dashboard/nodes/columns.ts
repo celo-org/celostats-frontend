@@ -38,6 +38,19 @@ export const columns: Column[] = [
     show: value => String(value).replace(/^0x([a-f0-9]{8}).+([a-f0-9]{8})$/i, '0x$1...$2'),
   },
   {
+    name: 'Validator group',
+    icon: 'group',
+    accessor: node => node.validatorData?.affiliation,
+    show: value => String(value).replace(/^0x([a-f0-9]{8}).+([a-f0-9]{8})$/i, '0x$1...$2'),
+  },
+  {
+    name: 'Validator',
+    icon: 'done_all',
+    accessor: node => +node.validatorData?.registered + (+(node.validatorData?.elected || node.stats?.elected) << 1),
+    show: value => value === 0 ? 'Full Node' : value === 1 ? 'Registered' : 'Elected',
+    color: value => colorRange(3 - +value, [, 1, 2, , , ,])
+  },
+  {
     name: 'Peers',
     icon: 'people',
     accessor: node => node.stats?.peers || 0,
@@ -76,8 +89,8 @@ export const columns: Column[] = [
     name: 'Propagation time',
     icon: 'wifi_tethering',
     accessor: node => node.block?.propagation || 0,
-    show: value => `${value} ms`,
-    color: value => colorRange(+value, [10, 100, 1000, 10000, 1000000]),
+    show: (value, {node}) => !node.stats?.active ? 'n/a' : `${value} ms`,
+    color: (value, {node}) => !node.stats?.active ? 'no' : colorRange(+value, [10, 100, 1000, 10000, 100000]),
   },
   {
     name: 'Uptime',
