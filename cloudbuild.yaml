@@ -1,0 +1,19 @@
+steps:
+  - name: 'node:13'
+    entrypoint: yarn
+    args: ['install']
+  - name: 'node:13'
+    entrypoint: yarn
+    args: ['test']
+  - name: "docker"
+    entrypoint: docker
+    args: [
+      "build",
+      "-f", "Dockerfile",
+      "-t", "gcr.io/$PROJECT_ID/celostats-frontend:$COMMIT_SHA",
+      "."
+    ]
+    waitFor: ["-"]
+timeout: 1200s
+images:
+  - "gcr.io/$PROJECT_ID/celostats-frontend:$COMMIT_SHA"

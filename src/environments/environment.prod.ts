@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  ethstatsService: 'wss://baklava-ethstats.celo-testnet.org',
 };
