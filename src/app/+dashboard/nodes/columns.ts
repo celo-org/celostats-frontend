@@ -1,4 +1,4 @@
-import { EthstatsNode } from 'src/app/shared/store/ethstats'
+import { EthstatsNode, StakingState } from 'src/app/shared/store/ethstats'
 import { color, colorRange, formatNumber } from 'src/app/shared'
 
 export interface Context {
@@ -15,6 +15,22 @@ export interface Column {
   accessor: (node: EthstatsNode) => string | number
   show?: (value: string | number, context: Context) => string | number
   color?: (value: string | number, context: Context) => color
+}
+
+function evaluateStakingState(node: EthstatsNode) {
+  if (node.stats?.proxy) {
+    return StakingState.Proxy
+  }
+
+  if (node.validatorData?.elected || node.stats?.elected) {
+    return StakingState.Elected
+  }
+
+  if (node.validatorData?.registered) {
+    return StakingState.Registered
+  }
+
+  return StakingState["Full Node"]
 }
 
 export const columns: Column[] = [
@@ -48,8 +64,8 @@ export const columns: Column[] = [
     name: 'Validator',
     icon: 'done_all',
     variants: ['large'],
-    accessor: node => +node.validatorData?.registered + (+(node.validatorData?.elected || node.stats?.elected) << 1),
-    show: value => value === 0 ? 'Full Node' : value === 1 ? 'Registered' : 'Elected',
+    accessor: node => evaluateStakingState(node),
+    show: value => StakingState[value],
     color: value => colorRange(3 - +value, [, 1, 2, , , ,])
   },
   {

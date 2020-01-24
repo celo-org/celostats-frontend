@@ -100,6 +100,7 @@ export interface EthstatsInfo {
 export interface EthstatsStats {
   active: boolean
   elected: boolean
+  proxy: boolean
   gasPrice: number
   hashrate: number
   latency: string
@@ -110,7 +111,14 @@ export interface EthstatsStats {
 }
 
 export interface State {
-  nodes: {[id: string]: EthstatsNode}
+  nodes: { [id: string]: EthstatsNode }
   lastBlock: EthstatsBlock
   charts: EthstatsCharts
+}
+
+export enum StakingState {
+  "Full Node",
+  Registered,
+  Elected,
+  Proxy
 }
