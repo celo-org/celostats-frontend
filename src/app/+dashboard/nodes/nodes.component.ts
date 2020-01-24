@@ -13,6 +13,11 @@ interface OrderBy {
   column: Column
 }
 
+const transformVariants = ({variants}: Column) =>
+  (variants || [])
+    .map(variant => ` table__cell--${variant} `)
+    .join() as any
+
 @Component({
   selector: 'app-dashboard-nodes',
   templateUrl: './nodes.component.html',
@@ -20,9 +25,10 @@ interface OrderBy {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardNodesComponent implements OnInit {
-  columns: Column[] = columns
+  columns = columns
     .map(column => ({
       ...column,
+      textVariants: transformVariants(column),
       accessor: node => column.accessor(node) ?? '',
       show: (value, context) => column.show?.(value, context) ?? value,
       color: (value, context) =>
@@ -70,6 +76,7 @@ export class DashboardNodesComponent implements OnInit {
                 raw: column.$value,
                 value: column.show(column.$value, column.$context),
                 style: column.color(column.$value, column.$context),
+                variants: transformVariants(column),
               }))
           )
       ),

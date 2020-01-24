@@ -8,8 +8,8 @@
       <td
         matRipple
         matRippleColor="rgba(255, 255, 255, 0.2)"
-        class="table__cell"
         *ngFor="let column of columns; trackBy: trackColumn"
+        [class]="'table__cell ' + column.textVariants"
         (click)="changeOrderBy(column)">
 
         <mat-icon fontSet="material-icons-outlined" [matTooltip]="column.name" class="table__head-icon">
@@ -27,7 +27,10 @@
   </thead>
   <tbody>
     <tr class="table__row" *ngFor="let node of nodes; trackBy: trackNodes">
-      <td [class]="'table__cell table__cell--' + column.style" *ngFor="let column of node; trackBy: trackColumn">
+      <td
+        *ngFor="let column of node; trackBy: trackColumn"
+        [class]="'table__cell table__cell--' + column.style + column.variants">
+
         {{column.value}}
       </td>
     </tr>

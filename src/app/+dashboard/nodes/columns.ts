@@ -11,6 +11,7 @@ export interface Column {
   icon: string
   default?: boolean
   first?: boolean
+  variants?: ('xsmall' | 'small' | 'medium' | 'large' | 'xlarge')[],
   accessor: (node: EthstatsNode) => string | number
   show?: (value: string | number, context: Context) => string | number
   color?: (value: string | number, context: Context) => color
@@ -20,6 +21,7 @@ export const columns: Column[] = [
   {
     name: 'Status',
     icon: 'done',
+    variants: ['small'],
     accessor: node => +node.stats?.active,
     show: value => value ? 'online' : 'offline',
     color: value => value ? 'ok' : 'warn3',
@@ -29,7 +31,6 @@ export const columns: Column[] = [
     icon: 'face',
     default: true,
     accessor: node => node.info?.name,
-    show: (value: string) => value.length >= 24 ? `${value.substr(0, 21)}...` : value,
   },
   {
     name: 'Address',
@@ -46,6 +47,7 @@ export const columns: Column[] = [
   {
     name: 'Validator',
     icon: 'done_all',
+    variants: ['large'],
     accessor: node => +node.validatorData?.registered + (+(node.validatorData?.elected || node.stats?.elected) << 1),
     show: value => value === 0 ? 'Full Node' : value === 1 ? 'Registered' : 'Elected',
     color: value => colorRange(3 - +value, [, 1, 2, , , ,])
@@ -53,12 +55,14 @@ export const columns: Column[] = [
   {
     name: 'Peers',
     icon: 'people',
+    variants: ['xsmall'],
     accessor: node => node.stats?.peers || 0,
     color: value => value ? 'ok' : 'no',
   },
   {
     name: 'Pending',
     icon: 'hourglass_empty',
+    variants: ['xsmall'],
     accessor: node => node.pending || 0,
     color: value => value ? 'ok' : 'info',
   },
@@ -66,14 +70,21 @@ export const columns: Column[] = [
     name: 'Block',
     icon: 'archive',
     first: true,
+    variants: ['medium'],
     accessor: node => node.block?.number,
     show: value => value ? '# ' + formatNumber(+value, 0) : 'n/a',
     color: (value, {block}) => value ? colorRange(block - +value, [, 0, 1, 5, 30]) : 'no',
   },
-  {name: 'Transactions', icon: 'compare_arrows', accessor: node => node.block?.transactions?.length || 0},
+  {
+    name: 'Transactions',
+    icon: 'compare_arrows',
+    variants: ['xsmall'],
+    accessor: node => node.block?.transactions?.length || 0,
+  },
   {
     name: 'Block Time',
     icon: 'timer',
+    variants: ['medium'],
     accessor: node => node.block?.received ? Math.round((Date.now() - +node.block?.received) / 1000) : -Infinity,
     show: value => value !== -Infinity ? value + ' s ago' : 'n/a',
     color: value => value !== -Infinity ? colorRange(+value, [, 10, 30, 60, 600]) : 'no',
@@ -81,6 +92,7 @@ export const columns: Column[] = [
   {
     name: 'Latency',
     icon: 'timer',
+    variants: ['medium'],
     accessor: node => +node.stats?.latency || 0,
     show: value => value === 0 ? `${value} ms` : value ? `+${value} ms` : '',
     color: value => colorRange(+value, [0, 10, 100, 1000, 10000]),
@@ -88,6 +100,7 @@ export const columns: Column[] = [
   {
     name: 'Propagation time',
     icon: 'wifi_tethering',
+    variants: ['medium'],
     accessor: node => node.block?.propagation || 0,
     show: (value, {node}) => !node.stats?.active ? 'n/a' : `${value} ms`,
     color: (value, {node}) => !node.stats?.active ? 'no' : colorRange(+value, [10, 100, 1000, 10000, 100000]),
@@ -95,6 +108,7 @@ export const columns: Column[] = [
   {
     name: 'Uptime',
     icon: 'offline_bolt',
+    variants: ['small'],
     accessor: node => node.stats?.uptime,
     show: value => `${value} %`,
     color: value => colorRange(100 - +value, [, 0.1, 1, 5, 10, 20]),
