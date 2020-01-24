@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   ethstatsService: 'wss://baklava-ethstats.celo-testnet.org',
+  //ethstatsService: 'ws://localhost:3000',
 }
 
 /*
