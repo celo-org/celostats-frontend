@@ -24,6 +24,7 @@
   transform-style: preserve-3d;
   transform-origin: 50% 0%;
   opacity: 0;
+  table-layout: fixed;
 
   &--show {
     transform: perspective(600px) rotateX(0deg) translateY(0px);
@@ -35,6 +36,9 @@
     padding: 4px 10px;
     font-size: 10px;
     border-top: 1px solid gc(g9, 0.06);
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &--info  { color: gc(s0); }
     &--ok    { color: gc(s1); }
@@ -43,6 +47,12 @@
     &--warn3 { color: gc(s4); }
     &--warn4 { color: gc(s5); }
     &--no    { color: gc(g7); }
+
+    &--xsmall { width: 48px; }
+    &--small  { width: 64px; }
+    &--medium { width: 76px; }
+    &--large  { width: 94px; }
+    &--xlarge { width: 116px; }
   }
   &__row:nth-child(odd) &__cell {
     background: gc(g0, 0.03);
