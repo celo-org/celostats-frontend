@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
 import { Store, select } from '@ngrx/store'
-import { Observable, BehaviorSubject, interval } from 'rxjs'
-import { share, combineLatest, map, first, throttleTime, filter, distinctUntilChanged, delay } from 'rxjs/operators'
+import { Observable, BehaviorSubject, interval, of } from 'rxjs'
+import { share, combineLatest, map, first, throttleTime, filter, distinctUntilChanged, delay, mergeMap } from 'rxjs/operators'
 
 import { AppState, getEthstatsNodesList, getEthstatsLastBlock } from 'src/app/shared/store'
 import { EthstatsNode } from 'src/app/shared/store/ethstats'
@@ -76,8 +76,8 @@ export class DashboardNodesComponent implements OnInit {
       share(),
     )
     this.enter$ = this.nodesList$.pipe(
-      filter(({length}) => length > 20), // More than 20
-      filter(([node]) => !!node[0]), // Contains name
+      filter(([node]) => !!node?.[0]), // Contains names
+      mergeMap(({length}) => length > 20 ? of(undefined) : interval(1000)),
       first(),
       delay(10),
       map(() => true)
