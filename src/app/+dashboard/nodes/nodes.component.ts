@@ -63,6 +63,7 @@ export class DashboardNodesComponent implements OnInit {
       ),
       map(([nodes, {direction, column: {accessor}}, block]) =>
         nodes
+          .filter(({id}) => !!id)
           .sort((a, b) => this.defaultOrderBy.accessor(a) > this.defaultOrderBy.accessor(b) ? 1 : -1)
           .sort((a, b) => direction * (accessor(a) > accessor(b) ? 1 : -1))
           .map(node =>
@@ -74,6 +75,7 @@ export class DashboardNodesComponent implements OnInit {
               }))
               .map(column => ({
                 raw: column.$value,
+                type: column.type,
                 value: column.show(column.$value, column.$context),
                 style: column.color(column.$value, column.$context),
                 variants: transformVariants(column),
@@ -83,11 +85,11 @@ export class DashboardNodesComponent implements OnInit {
       share(),
     )
     this.enter$ = this.nodesList$.pipe(
-      filter(([node]) => !!node?.[0]), // Contains names
+      filter(([node]) => !!node?.[0]), // Contains name
       mergeMap(({length}) => length > 20 ? of(undefined) : interval(1000)),
       first(),
       delay(10),
-      map(() => true)
+      map(() => true),
     )
   }
 

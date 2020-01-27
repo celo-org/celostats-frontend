@@ -11,6 +11,7 @@ export interface Column {
   icon: string
   default?: boolean
   first?: boolean
+  type?: 'icon' | 'address'
   variants?: ('xsmall' | 'small' | 'medium' | 'large' | 'xlarge')[],
   accessor: (node: EthstatsNode) => string | number
   show?: (value: string | number, context: Context) => string | number
@@ -18,18 +19,11 @@ export interface Column {
 }
 
 function evaluateStakingState(node: EthstatsNode) {
-  if (node.stats?.proxy) {
-    return StakingState.Proxy
+  switch (true) {
+    case node.stats?.proxy: return StakingState.Proxy
+    case node.validatorData?.elected || node.stats?.elected: return StakingState.Elected
+    case node.validatorData?.registered: return StakingState.Registered
   }
-
-  if (node.validatorData?.elected || node.stats?.elected) {
-    return StakingState.Elected
-  }
-
-  if (node.validatorData?.registered) {
-    return StakingState.Registered
-  }
-
   return StakingState["Full Node"]
 }
 
@@ -37,9 +31,10 @@ export const columns: Column[] = [
   {
     name: 'Status',
     icon: 'done',
-    variants: ['small'],
+    type: 'icon',
+    variants: ['xsmall'],
     accessor: node => +node.stats?.active,
-    show: value => value ? 'online' : 'offline',
+    show: value => value ? 'wifi' : 'wifi_off',
     color: value => value ? 'ok' : 'warn3',
   },
   {
@@ -51,14 +46,14 @@ export const columns: Column[] = [
   {
     name: 'Address',
     icon: 'person',
+    type: 'address',
     accessor: node => node.id,
-    show: value => String(value).replace(/^0x([a-f0-9]{8}).+([a-f0-9]{8})$/i, '0x$1...$2'),
   },
   {
     name: 'Validator group',
     icon: 'group',
+    type: 'address',
     accessor: node => node.validatorData?.affiliation,
-    show: value => String(value).replace(/^0x([a-f0-9]{8}).+([a-f0-9]{8})$/i, '0x$1...$2'),
   },
   {
     name: 'Validator',
@@ -66,7 +61,7 @@ export const columns: Column[] = [
     variants: ['large'],
     accessor: node => evaluateStakingState(node),
     show: value => StakingState[value],
-    color: value => colorRange(3 - +value, [, 1, 2, , , ,])
+    color: value => colorRange(3 - +value, [0, 1, 2, , , ,])
   },
   {
     name: 'Peers',
