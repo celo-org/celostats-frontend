@@ -57,10 +57,10 @@ export const blocks: InfoBlock[][] = [
       icon: 'av_timer',
       accessor: ({charts, block: {number}}) => (charts?.blocktime ?? []),
       show: (data, {charts, block: {number}}) => data
-        .map((value, i, {length}) => ({
+        .map((value, i) => ({
           value,
           show: `${value.toFixed(3)} s`,
-          index: String(length - charts?.updates + i),
+          index: String(number - i),
           label: `#${number - i}`,
         })),
       needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
