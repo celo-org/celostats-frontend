@@ -53,6 +53,50 @@
     &--medium { width: 76px; }
     &--large  { width: 94px; }
     &--xlarge { width: 116px; }
+
+    &--type {
+      &-icon {
+        padding-top: 0;
+        padding-bottom: 0;
+        vertical-align: middle;
+        text-align: center;
+      }
+      &-address {
+        text-overflow: initial;
+      }
+    }
+
+    &-icon {
+      $size: 16px;
+
+      height: $size;
+      width: $size;
+      font-size: $size;
+      text-align: center;
+    }
+    &-address {
+      display: flex;
+      max-width: 100%;
+      flex-direction: row;
+      justify-content: flex-start;
+      line-height: 11px;
+      margin-top: -1px;
+
+      &-start {
+        flex-grow: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &:before {
+          content: '0x';
+          opacity: 0.6;
+        }
+      }
+      &-end {
+        flex-grow: 1;
+      }
+    }
   }
   &__row:nth-child(odd) &__cell {
     background: gc(g0, 0.03);
