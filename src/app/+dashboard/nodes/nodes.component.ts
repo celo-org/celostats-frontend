@@ -30,6 +30,7 @@ export class DashboardNodesComponent implements OnInit {
       ...column,
       textVariants: transformVariants(column),
       accessor: node => column.accessor(node) ?? '',
+      link: (value, context) => column.link?.(value, context) || undefined,
       show: (value, context) => column.show?.(value, context) ?? value,
       color: (value, context) =>
         column.color?.(value, context)
@@ -78,6 +79,7 @@ export class DashboardNodesComponent implements OnInit {
                 type: column.type,
                 value: column.show(column.$value, column.$context),
                 style: column.color(column.$value, column.$context),
+                link: column.link(column.$value, column.$context),
                 variants: transformVariants(column),
               }))
           )
@@ -103,6 +105,12 @@ export class DashboardNodesComponent implements OnInit {
           this.orderBy$.next({column: orderBy, direction: -1})
         }
       })
+  }
+
+  goTo(url?: string) {
+    if (url) {
+      window.open(url, '_blank')
+    }
   }
 
   trackNodes(index: number, node: any): string {
