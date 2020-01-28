@@ -66,6 +66,32 @@
       }
     }
 
+    &--link {
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+
+      &:before {
+        content: '';
+        position: absolute;
+        background: currentColor;
+        z-index: -1;
+        height: 4px;
+        bottom: 4px;
+        left: 2px;
+        right: 2px;
+        opacity: 0.4;
+        display: none;
+      }
+      &:hover {
+        text-shadow: 0 1px 3px gc(g12);
+
+        &:before {
+          display: block;
+        }
+      }
+    }
+
     &-icon {
       $size: 16px;
 

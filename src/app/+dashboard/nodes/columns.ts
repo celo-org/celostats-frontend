@@ -1,3 +1,4 @@
+import { environment } from '../../../environments/environment'
 import { EthstatsNode, StakingState } from 'src/app/shared/store/ethstats'
 import { color, colorRange, formatNumber } from 'src/app/shared'
 
@@ -14,6 +15,7 @@ export interface Column {
   type?: 'icon' | 'address'
   variants?: ('xsmall' | 'small' | 'medium' | 'large' | 'xlarge')[],
   accessor: (node: EthstatsNode) => string | number
+  link?: (value: string | number, context: Context) => string
   show?: (value: string | number, context: Context) => string | number
   color?: (value: string | number, context: Context) => color
 }
@@ -48,12 +50,14 @@ export const columns: Column[] = [
     icon: 'person',
     type: 'address',
     accessor: node => node.id,
+    link: value => value && `${environment.blockscoutUrl}/address/${value}/transactions`,
   },
   {
     name: 'Validator group',
     icon: 'group',
     type: 'address',
     accessor: node => node.validatorData?.affiliation,
+    link: value => value && `${environment.blockscoutUrl}/address/${value}/transactions`,
   },
   {
     name: 'Validator',
@@ -61,7 +65,7 @@ export const columns: Column[] = [
     variants: ['large'],
     accessor: node => evaluateStakingState(node),
     show: value => StakingState[value],
-    color: value => colorRange(3 - +value, [0, 1, 2, , , ,])
+    color: value => colorRange(3 - +value, [0, 1, 2, , , ,]),
   },
   {
     name: 'Peers',
@@ -83,6 +87,7 @@ export const columns: Column[] = [
     first: true,
     variants: ['medium'],
     accessor: node => node.block?.number,
+    link: value => value && `${environment.blockscoutUrl}/blocks/${value}/transactions`,
     show: value => value ? '# ' + formatNumber(+value, 0) : 'n/a',
     color: (value, {block}) => value ? colorRange(block - +value, [, 0, 1, 5, 30]) : 'no',
   },

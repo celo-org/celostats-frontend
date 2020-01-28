@@ -29,7 +29,13 @@
     <tr class="table__row" *ngFor="let node of nodes; trackBy: trackNodes">
       <td
         *ngFor="let column of node; trackBy: trackColumn"
-        [class]="'table__cell table__cell--' + column.style + ' table__cell--type-' + column.type + column.variants">
+        [class]="
+          'table__cell'
+          + ' table__cell--' + column.style
+          + ' table__cell--type-' + column.type
+          + (column.link ? ' table__cell--link' : '')
+          + column.variants"
+        (click)="goTo(column.link)">
 
         <ng-container [ngSwitch]="column.type">
           <mat-icon *ngSwitchCase="'icon'" fontSet="material-icons-outlined" class="table__cell-icon">
