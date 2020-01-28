@@ -4,25 +4,38 @@ $gradient-steps: 7;
 
 @mixin gradient() {
   $darken: 5%;
-  background: linear-gradient(
-    60deg,
-    darken(darken(gc(s0), 20%), $darken) #{100% / $gradient-steps * 0},
-    darken(gc(s0), $darken) #{100% / $gradient-steps * 1},
-    darken(gc(s1), $darken) #{100% / $gradient-steps * 2},
-    darken(gc(s2), $darken) #{100% / $gradient-steps * 3},
-    darken(gc(s3), $darken) #{100% / $gradient-steps * 4},
-    darken(gc(s4), $darken) #{100% / $gradient-steps * 5},
-    darken(gc(s5), $darken) #{100% / $gradient-steps * 6},
-    darken(darken(gc(s5), 20%), $darken) #{100% / $gradient-steps * 7},
-  );
+  $grid-color: gc(g12, 0.05);
+
+  background:
+    linear-gradient($grid-color 1px, transparent 1px),
+    linear-gradient(90deg, $grid-color 1px, transparent 1px),
+    linear-gradient(
+      60deg,
+      darken(darken(gc(s0), 20%), $darken) #{100% / $gradient-steps * 0},
+      darken(gc(s0), $darken) #{100% / $gradient-steps * 1},
+      darken(gc(s1), $darken) #{100% / $gradient-steps * 2},
+      darken(gc(s2), $darken) #{100% / $gradient-steps * 3},
+      darken(gc(s3), $darken) #{100% / $gradient-steps * 4},
+      darken(gc(s4), $darken) #{100% / $gradient-steps * 5},
+      darken(gc(s5), $darken) #{100% / $gradient-steps * 6},
+      darken(darken(gc(s5), 20%), $darken) #{100% / $gradient-steps * 7},
+    );
 }
 @mixin gradient-position($n) {
-  background-position: #{100% / $gradient-steps * (1 + $n)} 50%;
-  background-size: 100% * $gradient-steps * 1.2;
+  $grid-size: 3px;
+
+  background-position:
+    -1px -1px,
+    -1px -1px,
+    #{100% / $gradient-steps * (1 + $n)} 50%;
+  background-size:
+    $grid-size $grid-size,
+    $grid-size $grid-size,
+    100% * $gradient-steps * 1.2;
 }
 
 @mixin info() {
-  @include gradient();
+  @include gradient;
   @include transition(slow);
 
   padding: 15px;

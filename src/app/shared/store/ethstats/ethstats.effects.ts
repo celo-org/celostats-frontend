@@ -38,7 +38,7 @@ export class EthstatsEffects {
     mergeMap(() =>
       this.ethstatsService.data<'node'>().pipe(
         filter(({action}) => action === 'block'),
-        distinct(_ => _.data.block.number),
+        distinct(({data}) => data.block.number),
         map(({data: {block}}) => ethstatsActions.setLastBlock({block})),
       ),
     ),
