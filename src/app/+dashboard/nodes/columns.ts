@@ -13,7 +13,7 @@ export interface Column {
   default?: boolean
   first?: boolean
   type?: 'icon' | 'address'
-  variants?: ('xsmall' | 'small' | 'medium' | 'large' | 'xlarge')[],
+  variants?: ('xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'address')[],
   accessor: (node: EthstatsNode) => string | number
   link?: (value: string | number, context: Context) => string
   show?: (value: string | number, context: Context) => string | number
@@ -49,6 +49,7 @@ export const columns: Column[] = [
     name: 'Address',
     icon: 'person',
     type: 'address',
+    variants: ['address'],
     accessor: node => node.id,
     link: value => value && `${environment.blockscoutUrl}/address/${value}/transactions`,
   },
@@ -56,6 +57,7 @@ export const columns: Column[] = [
     name: 'Validator group',
     icon: 'group',
     type: 'address',
+    variants: ['address'],
     accessor: node => node.validatorData?.affiliation,
     link: value => value && `${environment.blockscoutUrl}/address/${value}/transactions`,
   },
