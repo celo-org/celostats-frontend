@@ -33,11 +33,10 @@
           'table__cell'
           + ' table__cell--' + column.style
           + ' table__cell--type-' + column.type
-          + (column.link ? ' table__cell--link' : '')
           + column.variants"
         (click)="goTo(column.link)">
 
-        <ng-container [ngSwitch]="column.type">
+        <span [ngSwitch]="column.type" [class.table__cell-link]="column.link">
           <mat-icon *ngSwitchCase="'icon'" fontSet="material-icons-outlined" class="table__cell-icon">
             {{column.value}}
           </mat-icon>
@@ -46,7 +45,7 @@
             <span class="table__cell-address-end">{{column.value.substr(36, 42)}}</span>
           </span>
           <ng-container *ngSwitchDefault>{{column.value}}</ng-container>
-        </ng-container>
+        </span>
       </td>
     </tr>
   </tbody>
