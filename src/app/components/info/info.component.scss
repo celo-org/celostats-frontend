@@ -4,7 +4,7 @@ $gradient-steps: 7;
 
 @mixin gradient() {
   $darken: 5%;
-  $grid-color: gc(g12, 0.05);
+  $grid-color: gc(g12, 0.03);
 
   background:
     linear-gradient($grid-color 1px, transparent 1px),

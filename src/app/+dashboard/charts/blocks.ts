@@ -41,7 +41,7 @@ export const blocks: InfoBlock[][] = [
       icon: 'hourglass_empty',
       accessor: ({block, time}) => Math.round((time - +block?.received) / 1000),
       show: value => `${value}s ago`,
-      color: value => colorRange(+value, [, 4, 10, 30, 60, 120]),
+      color: value => colorRange(+value, [4, 10, 30, 60, 120, 300]),
     },
     {
       type: 'small',
