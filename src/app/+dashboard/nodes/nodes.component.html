@@ -10,9 +10,10 @@
         matRippleColor="rgba(255, 255, 255, 0.2)"
         *ngFor="let column of columns; trackBy: trackColumn"
         [class]="'table__cell ' + column.textVariants"
-        (click)="changeOrderBy(column)">
+        (click)="changeOrderBy(column)"
+        [matTooltip]="column.name">
 
-        <mat-icon fontSet="material-icons-outlined" [matTooltip]="column.name" class="table__head-icon">
+        <mat-icon fontSet="material-icons-outlined" class="table__head-icon">
           {{column.icon}}
 
           <mat-icon
