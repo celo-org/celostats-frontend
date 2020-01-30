@@ -34,10 +34,13 @@
           'table__cell'
           + ' table__cell--' + column.style
           + ' table__cell--type-' + column.type
-          + column.variants"
-        (click)="goTo(column.link)">
+          + column.variants">
 
-        <span [ngSwitch]="column.type" [class.table__cell-link]="column.link">
+        <span
+          [ngSwitch]="column.type"
+          [class.table__cell-link]="column.link"
+          (click)="goTo(column.link)">
+
           <mat-icon *ngSwitchCase="'icon'" fontSet="material-icons-outlined" class="table__cell-icon">
             {{column.value}}
           </mat-icon>
