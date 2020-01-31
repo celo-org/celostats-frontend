@@ -7,7 +7,7 @@ import {
 } from '@ngrx/store'
 import { Effect } from '@ngrx/effects'
 
-import { environment } from '../../../environments/environment'
+import { environment } from 'src/environments/environment'
 
 import * as Ethstats from './ethstats'
 

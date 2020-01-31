@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects'
 import { of, empty, asyncScheduler } from 'rxjs'
 import { mergeMap, map, bufferTime, filter, distinct } from 'rxjs/operators'
 
-import { EthstatsService } from '../../ethstats.service'
+import { EthstatsService } from 'src/app/shared/ethstats.service'
 import * as ethstatsActions from './ethstats.actions'
 
 @Injectable()
