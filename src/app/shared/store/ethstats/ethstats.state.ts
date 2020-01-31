@@ -115,10 +115,3 @@ export interface State {
   lastBlock: EthstatsBlock
   charts: EthstatsCharts
 }
-
-export enum StakingState {
-  "Full Node",
-  Registered,
-  Elected,
-  Proxy
-}

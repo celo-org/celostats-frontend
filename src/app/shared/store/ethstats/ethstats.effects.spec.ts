@@ -4,7 +4,7 @@ import { rootEffectsInit } from '@ngrx/effects'
 import { Observable, of } from 'rxjs'
 import { hot, cold, time, getTestScheduler } from 'jasmine-marbles'
 
-import { EthstatsService } from '../../ethstats.service'
+import { EthstatsService } from 'src/app/shared/ethstats.service'
 import { EthstatsEffects } from './ethstats.effects'
 import * as ethstatesActions from './ethstats.actions'
 

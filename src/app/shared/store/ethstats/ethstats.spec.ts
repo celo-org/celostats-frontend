@@ -68,13 +68,13 @@ describe('Ethstats Store reducers', () => {
     expect(fromEthstats.getLastBlock(finalState)).toEqual({number: 2} as EthstatsBlock)
   })
 
-  it('should set last chars data', () => {
+  it('should set last charts data', () => {
     const finalState = reduceActions(reducer, [
       ethstatesActions.updateCharts({charts: {test: 1} as any}),
       ethstatesActions.updateCharts({charts: {test: 2} as any}),
       ethstatesActions.updateCharts({charts: {test: 3} as any}),
     ])
 
-    expect(fromEthstats.getChars(finalState)).toEqual({test: 3} as any)
+    expect(fromEthstats.getChars(finalState)).toEqual({test: 3, updates: 3} as any)
   })
 })

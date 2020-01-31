@@ -3,7 +3,7 @@ import { Observable, of, empty } from 'rxjs'
 import { mergeMap, share } from 'rxjs/operators'
 import * as io from 'socket.io-client'
 
-import { environment } from '../../environments/environment'
+import { environment } from 'src/environments/environment'
 
 import { EthstatsNode, EthstatsCharts } from './store/ethstats'
 

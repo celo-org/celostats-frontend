@@ -1,5 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { provideMockStore, MockStore } from '@ngrx/store/testing'
+import { DragScrollModule } from 'ngx-drag-scroll'
+
+import { InfoModule } from 'src/app/components/info'
 
 import { DahsboardChartsComponent } from './charts.component'
 
@@ -11,6 +14,10 @@ describe('DahsboardChartsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ DahsboardChartsComponent ],
+      imports: [
+        DragScrollModule,
+        InfoModule,
+      ],
       providers: [ provideMockStore({initialState}) ],
     })
     .compileComponents()
