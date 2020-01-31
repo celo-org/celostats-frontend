@@ -82,6 +82,7 @@ export interface EthstatsNode {
   stats: EthstatsStats
   validatorData: EthstatsValidatorData
   uptime: EthstatsNodeUptime
+  updates?: number
 }
 
 export interface EthstatsInfo {

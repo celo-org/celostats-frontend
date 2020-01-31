@@ -20,7 +20,7 @@ describe('Ethstats Store reducers', () => {
     const finalState = reduceActions(reducer, [
       ethstatesActions.updateNodes({nodes: [{id: '0x0'}] as EthstatsNode[]}),
     ])
-    expect(fromEthstats.getNodes(finalState)).toEqual({'0x0': {id: '0x0'} as EthstatsNode})
+    expect(fromEthstats.getNodes(finalState)).toEqual({'0x0': {id: '0x0', updates: 1} as EthstatsNode})
   })
 
   it('should add multiples nodes and not repeat them', () => {
@@ -37,9 +37,9 @@ describe('Ethstats Store reducers', () => {
       .map(({length}) => length)
 
     expect(fromEthstats.getNodes(finalState)).toEqual({
-      '0x0': {id: '0x0'} as EthstatsNode,
-      '0x1': {id: '0x1'} as EthstatsNode,
-      '0x2': {id: '0x2'} as EthstatsNode,
+      '0x0': {id: '0x0', updates: 2} as EthstatsNode,
+      '0x1': {id: '0x1', updates: 2} as EthstatsNode,
+      '0x2': {id: '0x2', updates: 1} as EthstatsNode,
     })
 
     expect(nodesLength).toEqual([0, 1, 2, 3])

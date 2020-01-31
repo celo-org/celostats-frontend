@@ -18,6 +18,7 @@ const ethstatsReducer = createReducer(
         nodesState[node.id] = {
           ...nodesState[node.id],
           ...node,
+          updates: (nodesState[node.id]?.updates || 0) + 1,
         }
       })
     return {
