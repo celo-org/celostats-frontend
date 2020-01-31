@@ -8,7 +8,7 @@ import { columns } from './columns.data'
 import { NodesSortingEffects } from './nodes-sorting.effects'
 import * as nodesSortingActions from './nodes-sorting.actions'
 
-fdescribe('EthstatsEffects', () => {
+describe('EthstatsEffects', () => {
   let actions$: Observable<any>
   let effects: NodesSortingEffects
 
