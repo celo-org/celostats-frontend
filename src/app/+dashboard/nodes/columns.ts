@@ -13,7 +13,7 @@ export interface Column {
   default?: boolean
   first?: boolean
   type?: 'icon' | 'address'
-  variants?: ('xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'address')[],
+  variants?: ('xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'address' | 'sticky')[],
   accessor: (node: EthstatsNode) => string | number
   link?: (value: string | number, context: Context) => string
   show?: (value: string | number, context: Context) => string | number
@@ -42,6 +42,7 @@ export const columns: Column[] = [
   {
     name: 'Name',
     icon: 'face',
+    variants: ['sticky'],
     default: true,
     accessor: node => node.info?.name,
   },

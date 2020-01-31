@@ -36,10 +36,11 @@ $table-border-radius: 3px;
     white-space: nowrap;
     padding: 4px 10px;
     font-size: 10px;
-    border-top: 1px solid gc(g9, 0.06);
+    border-top: 1px solid mix(gc(g0), gc(g11), 6%);
     box-sizing: border-box;
     overflow: hidden;
     text-overflow: ellipsis;
+    background: gc(g11);
 
     &:last-child {
       border-radius: 0 0 $table-border-radius $table-border-radius;
@@ -59,6 +60,12 @@ $table-border-radius: 3px;
     &--large   { width: 94px; }
     &--xlarge  { width: 116px; }
     &--address { max-width: 274px; }
+
+    &--sticky {
+      position: sticky;
+      z-index: 2;
+      left: 0;
+    }
 
     &--type {
       &-icon {
@@ -128,7 +135,7 @@ $table-border-radius: 3px;
     }
   }
   &__row:nth-child(odd) &__cell {
-    background: gc(g0, 0.03);
+    background: mix(gc(g0), gc(g11), 3%);
   }
 
   &__head {
@@ -165,10 +172,14 @@ $table-border-radius: 3px;
     background: gc(g11);
     top: 0;
     border-radius: $table-border-radius $table-border-radius 0 0;
-    z-index: 2;
+    z-index: 3;
 
     &:hover {
       background: gc(g10);
+    }
+
+    &--sticky {
+      z-index: 4;
     }
   }
 }
