@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { rootEffectsInit } from '@ngrx/effects'
-import { Observable, of } from 'rxjs'
+import { Observable, of, Subject } from 'rxjs'
 import { hot, cold } from 'jasmine-marbles'
 
 import { columns } from './columns.data'
@@ -27,11 +27,16 @@ describe('NodesSortingEffects', () => {
     expect(effects).toBeTruthy()
   })
 
-  it('should dispatch the columns config', () => {
-    actions$ = cold('-r', {r: rootEffectsInit()})
+  it('should dispatch the columns config', (done) => {
+    actions$ = new Subject()
 
-    const expected = hot('-a', {a: nodesSortingActions.setColumns({columns})})
+    effects.setColumns$
+      .subscribe(({columns: _}) => {
+        const getName = ({name}) => name
+        expect(_.map(getName)).toEqual(columns.map(getName))
+        done()
+      })
 
-    expect(effects.setColumns$).toBeObservable(expected)
+    ;(actions$ as Subject<any>).next(rootEffectsInit())
   })
 })
