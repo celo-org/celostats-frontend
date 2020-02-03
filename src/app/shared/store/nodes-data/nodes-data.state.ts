@@ -23,5 +23,3 @@ export interface State {
 export interface AppState {
   nodesData: State
 }
-
-export const select = (state: AppState) => state.nodesData

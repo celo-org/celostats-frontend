@@ -1,11 +1,12 @@
 import { Action, createReducer, on, createSelector, createFeatureSelector } from '@ngrx/store'
 
-import { State } from './nodes-sorting.state'
+import { AppState, State, sortingDirection } from './nodes-sorting.state'
 import * as nodesSortingActions from './nodes-sorting.actions'
 
 export const initialState: State = {
   columns: [],
   sorting: undefined,
+  default: undefined,
 }
 
 const nodesSortingReducer = createReducer(
@@ -15,13 +16,17 @@ const nodesSortingReducer = createReducer(
       ...state,
       columns,
       sorting: {
-        direction: -1 as -1,
+        direction: columns.find(_ => _.first)?.first as sortingDirection,
         column: columns.find(_ => _.first),
-      }
+      },
+      default: {
+        direction: columns.find(_ => _.default)?.default as sortingDirection,
+        column: columns.find(_ => _.default),
+      },
     }
   }),
   on(nodesSortingActions.sortNodes, (state, {column}) => {
-    const direction: 1 | -1 = state.sorting.column === column ? state.sorting.direction * -1 as any : -1
+    const direction: sortingDirection = state.sorting.column === column ? state.sorting.direction * -1 as any : -1
     return {
       ...state,
       sorting: {
@@ -36,5 +41,8 @@ export function reducer(state: State | undefined, action: Action) {
   return nodesSortingReducer(state, action)
 }
 
+export const select = (state: AppState) => state.nodesSorting
+
 export const getColumns = (state: State) => state.columns
 export const getSorting = (state: State) => state.sorting
+export const getFullSorting = (state: State) => ({sorting: state.sorting, default: state.default})

@@ -5,13 +5,14 @@ import { rootEffectsInit } from '@ngrx/effects'
 import { Observable, of } from 'rxjs'
 import { hot, cold } from 'jasmine-marbles'
 
+import { actions as ethstatsActions } from 'src/app/shared/store/ethstats'
 import { NodesDataEffects } from './nodes-data.effects'
 import * as nodesDataActions from './nodes-data.actions'
 
 describe('NodesDataEffects', () => {
   let actions$: Observable<any>
   let effects: NodesDataEffects
-  const initialState = {ethstats: {nodes: [], lastBlock: {}}}
+  const initialState = {ethstats: {nodes: {}, lastBlock: {}}}
 
   beforeEach(() => {
     TestBed.configureTestingModule({

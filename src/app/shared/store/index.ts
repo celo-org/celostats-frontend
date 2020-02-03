@@ -41,6 +41,7 @@ export const getEthstatsCharts = createSelector(Ethstats.select, Ethstats.getCha
 // Nodes (sorting)
 export const getNodesSortingColumns = createSelector(NodesSorting.select, NodesSorting.getColumns)
 export const getNodesSortingSorting = createSelector(NodesSorting.select, NodesSorting.getSorting)
+export const getNodesSortingFullSorting = createSelector(NodesSorting.select, NodesSorting.getFullSorting)
 
 // Nodes (data)
 export const getNodesDataRawData = createSelector(NodesData.select, NodesData.getRawData)
