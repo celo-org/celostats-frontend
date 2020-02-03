@@ -5,10 +5,10 @@ import { Observable } from 'rxjs'
 import { reduceActions } from '../testing-utils'
 
 import { Column } from './nodes-sorting.state'
-import * as fromEthstats from './nodes-sorting.reducers'
+import * as fromNodesSorting from './nodes-sorting.reducers'
 import * as nodesSortingActions from './nodes-sorting.actions'
 
-const reducer = fromEthstats.reducer
+const reducer = fromNodesSorting.reducer
 
 describe('Nodes (sorting) Store reducers', () => {
   it('should be auto-initialized', () => {
@@ -23,8 +23,8 @@ describe('Nodes (sorting) Store reducers', () => {
       nodesSortingActions.setColumns({columns: [column]}),
     ])
 
-    expect(fromEthstats.getColumns(finalState)).toEqual([column])
-    expect(fromEthstats.getSorting(finalState)).toEqual({direction: -1, column})
+    expect(fromNodesSorting.getColumns(finalState)).toEqual([column])
+    expect(fromNodesSorting.getSorting(finalState)).toEqual({direction: -1, column})
   })
 
   it('should update the sorting', () => {
@@ -39,7 +39,7 @@ describe('Nodes (sorting) Store reducers', () => {
     ], true)
 
     const sorting = states
-      .map(fromEthstats.getSorting)
+      .map(fromNodesSorting.getSorting)
 
     expect(sorting).toEqual([
       undefined,
