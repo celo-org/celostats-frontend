@@ -26,3 +26,9 @@ export interface State {
     column: Column
   }
 }
+
+export interface AppState {
+  nodesSorting: State
+}
+
+export const select = (state: AppState) => state.nodesSorting
