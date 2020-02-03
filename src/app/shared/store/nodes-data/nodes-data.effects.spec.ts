@@ -1,4 +1,5 @@
 import { TestBed, inject } from '@angular/core/testing'
+import { provideMockStore } from '@ngrx/store/testing'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { rootEffectsInit } from '@ngrx/effects'
 import { Observable, of } from 'rxjs'
@@ -10,12 +11,14 @@ import * as nodesDataActions from './nodes-data.actions'
 describe('NodesDataEffects', () => {
   let actions$: Observable<any>
   let effects: NodesDataEffects
+  const initialState = {ethstats: {nodes: [], lastBlock: {}}}
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         NodesDataEffects,
-        provideMockActions(() => actions$)
+        provideMockActions(() => actions$),
+        provideMockStore({initialState}),
       ]
     })
 
