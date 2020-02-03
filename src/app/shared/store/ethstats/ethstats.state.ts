@@ -120,5 +120,3 @@ export interface State {
 export interface AppState {
   ethstats: State
 }
-
-export const select = (state: AppState) => state.ethstats

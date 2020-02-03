@@ -1,6 +1,6 @@
 import { Action, createReducer, on, createSelector, createFeatureSelector } from '@ngrx/store'
 
-import { State } from './ethstats.state'
+import { AppState, State } from './ethstats.state'
 import * as ethstatsActions from './ethstats.actions'
 
 export const initialState: State = {
@@ -44,6 +44,8 @@ const ethstatsReducer = createReducer(
 export function reducer(state: State | undefined, action: Action) {
   return ethstatsReducer(state, action)
 }
+
+export const select = (state: AppState) => state.ethstats
 
 export const getNodes = (state: State) => state.nodes
 export const getNodesList = (state: State) => Object.values(state.nodes)

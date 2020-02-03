@@ -1,6 +1,6 @@
 import { Action, createReducer, on, createSelector, createFeatureSelector } from '@ngrx/store'
 
-import { State } from './nodes-data.state'
+import { AppState, State } from './nodes-data.state'
 import * as nodesDataActions from './nodes-data.actions'
 
 export const initialState: State = {
@@ -31,5 +31,8 @@ export function reducer(state: State | undefined, action: Action) {
   return nodesDataReducer(state, action)
 }
 
+export const select = (state: AppState) => state.nodesData
+
 export const getRawData = (state: State) => state.rawData
+export const getRawDataList = (state: State) => Object.values(state.rawData)
 export const getCleanData = (state: State) => state.cleanData
