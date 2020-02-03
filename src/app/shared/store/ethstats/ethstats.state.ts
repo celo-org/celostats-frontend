@@ -116,3 +116,9 @@ export interface State {
   lastBlock: EthstatsBlock
   charts: EthstatsCharts
 }
+
+export interface AppState {
+  ethstats: State
+}
+
+export const select = (state: AppState) => state.ethstats

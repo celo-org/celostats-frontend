@@ -19,3 +19,9 @@ export interface State {
   rawData: {[id: string]: DataRow}
   cleanData: DataRow[]
 }
+
+export interface AppState {
+  nodesData: State
+}
+
+export const select = (state: AppState) => state.nodesData

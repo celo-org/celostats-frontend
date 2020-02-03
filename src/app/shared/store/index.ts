@@ -19,11 +19,10 @@ export const effects: any[] = [
   NodesData.Effects,
 ]
 
-export interface AppState {
-  ethstats: Ethstats.State
-  nodesSorting: NodesSorting.State,
-  nodesData: NodesData.State,
-}
+export type AppState =
+  Ethstats.AppState &
+  NodesSorting.AppState &
+  NodesData.AppState
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production ? [] : []
 
@@ -33,22 +32,17 @@ export const reducers: ActionReducerMap<AppState> = {
   nodesData: NodesData.reducer,
 }
 
-// Root selectors
-export const selectEthstats = (state: AppState) => state.ethstats
-export const selectNodesSorting = (state: AppState) => state.nodesSorting
-export const selectNodesData = (state: AppState) => state.nodesData
-
 // Ethstats Selectors
-export const getEthstatsNodes = createSelector(selectEthstats, Ethstats.getNodes)
-export const getEthstatsNodesList = createSelector(selectEthstats, Ethstats.getNodesList)
-export const getEthstatsLastBlock = createSelector(selectEthstats, Ethstats.getLastBlock)
-export const getEthstatsCharts = createSelector(selectEthstats, Ethstats.getChars)
+export const getEthstatsNodes = createSelector(Ethstats.select, Ethstats.getNodes)
+export const getEthstatsNodesList = createSelector(Ethstats.select, Ethstats.getNodesList)
+export const getEthstatsLastBlock = createSelector(Ethstats.select, Ethstats.getLastBlock)
+export const getEthstatsCharts = createSelector(Ethstats.select, Ethstats.getChars)
 
 // Nodes (sorting)
-export const getNodesSortingColumns = createSelector(selectNodesSorting, NodesSorting.getColumns)
-export const getNodesSortingSorting = createSelector(selectNodesSorting, NodesSorting.getSorting)
+export const getNodesSortingColumns = createSelector(NodesSorting.select, NodesSorting.getColumns)
+export const getNodesSortingSorting = createSelector(NodesSorting.select, NodesSorting.getSorting)
 
 // Nodes (data)
-export const getNodesDataRawData = createSelector(selectNodesData, NodesData.getRawData)
-export const getNodesDataCleanData = createSelector(selectNodesData, NodesData.getCleanData)
+export const getNodesDataRawData = createSelector(NodesData.select, NodesData.getRawData)
+export const getNodesDataCleanData = createSelector(NodesData.select, NodesData.getCleanData)
 
