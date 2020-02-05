@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
 import { Store, select } from '@ngrx/store'
-import { Observable, BehaviorSubject, interval, of } from 'rxjs'
-import { share, map, first, filter, delay, mergeMap, tap, throttleTime, skip } from 'rxjs/operators'
+import { Observable, BehaviorSubject, interval, of, merge, animationFrameScheduler } from 'rxjs'
+import { share, map, first, filter, delay, mergeMap, tap, throttle, skip } from 'rxjs/operators'
 
 import { AppState, getNodesDataCleanData, getNodesSortingColumns, getNodesSortingSorting } from 'src/app/shared/store'
 import { EthstatsNode } from 'src/app/shared/store/ethstats'
@@ -30,6 +30,11 @@ export class DashboardNodesComponent implements OnInit {
     )
     this.nodesList$ = this.store.pipe(
       select(getNodesDataCleanData),
+      // Wait until the next animation frame is ready or 0.5s, first of both. It makes the changes smoother.
+      throttle(() => merge(
+        interval(500),
+        interval(0, animationFrameScheduler),
+      )),
       share(),
     )
     this.sorting$ = this.store.pipe(
@@ -38,7 +43,7 @@ export class DashboardNodesComponent implements OnInit {
     )
     this.enter$ = this.nodesList$.pipe(
       filter(([node]) => !!node?.columns?.[0]), // Contains name
-      mergeMap(({length}) => length > 20 ? of(undefined) : interval(2000)),
+      mergeMap(({length}) => length > 20 ? of(undefined) : interval(3000)),
       first(),
       delay(10),
       map(() => true),
