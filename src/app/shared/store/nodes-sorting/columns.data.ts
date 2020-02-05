@@ -85,7 +85,7 @@ export const columns: Column[] = [
     name: 'Block Time',
     icon: 'timer',
     variants: ['medium'],
-    accessor: node => node.block?.received ? Math.round((Date.now() - +node.block?.received) / 1000) : -Infinity,
+    accessor: (node, {time}) => node.block?.received ? Math.round((time - +node.block?.received) / 1000) : -Infinity,
     show: value => value !== -Infinity ? value + ' s ago' : 'n/a',
     color: value => value !== -Infinity ? colorRange(+value, [, 10, 30, 60, 600]) : 'no',
   },
