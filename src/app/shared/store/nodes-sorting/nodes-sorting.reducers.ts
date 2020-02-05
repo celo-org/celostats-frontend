@@ -25,7 +25,7 @@ const nodesSortingReducer = createReducer(
       },
     }
   }),
-  on(nodesSortingActions.sortNodes, (state, {column}) => {
+  on(nodesSortingActions.orderBy, (state, {column}) => {
     const direction: sortingDirection = state.sorting.column === column ? state.sorting.direction * -1 as any : -1
     return {
       ...state,

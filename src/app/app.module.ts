@@ -37,7 +37,7 @@ import { InfoModule } from './components/info'
         strictActionImmutability: true
       }
     }),
-    // StoreDevtoolsModule.instrument({ maxAge: 5, logOnly: environment.production }),
+    // ...(!environment.production ? [StoreDevtoolsModule.instrument({maxAge: 5})] : []),
     EffectsModule.forRoot(effects),
     BrowserAnimationsModule,
 
