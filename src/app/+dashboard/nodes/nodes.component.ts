@@ -6,7 +6,6 @@ import { share, map, first, filter, delay, mergeMap, tap, throttle, skip } from 
 import { AppState, getNodesDataCleanData, getNodesSortingColumns, getNodesSortingSorting } from 'src/app/shared/store'
 import { EthstatsNode } from 'src/app/shared/store/ethstats'
 import { Column, Sorting, actions as nodesSortingActions } from 'src/app/shared/store/nodes-sorting'
-import { DataRow } from 'src/app/shared/store/nodes-data'
 import { color } from 'src/app/shared'
 
 @Component({
@@ -16,7 +15,7 @@ import { color } from 'src/app/shared'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardNodesComponent implements OnInit {
-  nodesList$: Observable<DataRow[]>
+  nodesList$: Observable<string[]>
   columns$: Observable<Column[]>
   enter$: Observable<boolean>
   sorting$: Observable<Sorting>
@@ -42,7 +41,6 @@ export class DashboardNodesComponent implements OnInit {
       share(),
     )
     this.enter$ = this.nodesList$.pipe(
-      filter(([node]) => !!node?.columns?.[0]), // Contains name
       mergeMap(({length}) => length > 20 ? of(undefined) : interval(3000)),
       first(),
       delay(10),
@@ -66,8 +64,8 @@ export class DashboardNodesComponent implements OnInit {
       .join() as any
   }
 
-  trackNodes(index: number, node: DataRow): string {
-    return node.id
+  trackNodes(index: number, id: string): string {
+    return id
   }
 }
 

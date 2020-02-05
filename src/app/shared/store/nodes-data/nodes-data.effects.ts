@@ -98,12 +98,12 @@ export class NodesDataEffects {
           return ({columns: a}, {columns: b}) =>
             direction * (a[index].raw > b[index].raw ? 1 : -1)
         }
-      const r = rawData
+      return rawData
         .sort(sortingFn(sorting.default))
         .sort(sortingFn(sorting.sorting))
-      return r
+        .map(({id}) => id)
     }),
-    map(rows => nodesDataActions.setCleanData({rows})),
+    map(ids => nodesDataActions.setCleanDataId({ids})),
   ))
 
   constructor(private actions$: Actions, private store: Store<fromEthstats.AppState & fromNodesSorting.AppState & AppState>) {}
