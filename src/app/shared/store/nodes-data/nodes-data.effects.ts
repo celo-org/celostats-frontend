@@ -50,27 +50,27 @@ export class NodesDataEffects {
         distinctUntilChanged(),
       ),
     ),
-    map(([nodes, columns, block]) =>
-      nodes
+    map(([nodes, columns, block]) => {
+      const time = Date.now()
+      return nodes
         .filter(({id}) => !!id)
         .map(node => ({
           id: node.id,
           columns: columns
-            .map(column => ({
-              ...column,
-              $value: column.accessor(node),
-              $context: {block, node},
-            }))
-            .map(column => ({
-              raw: column.$value,
-              type: column.type,
-              value: column.show(column.$value, column.$context),
-              style: column.color(column.$value, column.$context),
-              link: column.link(column.$value, column.$context),
-              variants: column.variants,
-            })),
+            .map(column => {
+              const context = {block, node, time}
+              const value = column.accessor(node, context)
+              return {
+                raw: value,
+                type: column.type,
+                value: column.show(value, context),
+                style: column.color(value, context),
+                link: column.link(value, context),
+                variants: column.variants,
+              }
+            }),
         }))
-    ),
+    }),
     map(rows => nodesDataActions.updateRawData({rows})),
   ))
 
