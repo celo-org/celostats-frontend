@@ -33,9 +33,9 @@ describe('Nodes (sorting) Store reducers', () => {
 
     const states = reduceActions(reducer, [
       nodesSortingActions.setColumns({columns: [columnA, columnB]}),
-      nodesSortingActions.sortNodes({column: columnB}),
-      nodesSortingActions.sortNodes({column: columnA}),
-      nodesSortingActions.sortNodes({column: columnA}),
+      nodesSortingActions.orderBy({column: columnB}),
+      nodesSortingActions.orderBy({column: columnA}),
+      nodesSortingActions.orderBy({column: columnA}),
     ], true)
 
     const sorting = states
