@@ -1,10 +1,6 @@
 <td
   *ngFor="let column of columns$ | async; trackBy: trackColumn"
-  [class]="
-    'table__cell'
-    + ' table__cell--' + column.style
-    + ' table__cell--type-' + column.type
-    + variants(column.variants)">
+  [class]="column.classNames">
 
   <span
     [ngSwitch]="column.type"
