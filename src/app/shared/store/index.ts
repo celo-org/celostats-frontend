@@ -45,5 +45,7 @@ export const getNodesSortingFullSorting = createSelector(NodesSorting.select, No
 
 // Nodes (data)
 export const getNodesDataRawData = createSelector(NodesData.select, NodesData.getRawData)
+export const getNodesDataRawDataList = createSelector(NodesData.select, NodesData.getRawDataList)
 export const getNodesDataCleanData = createSelector(NodesData.select, NodesData.getCleanData)
+export const getNodesDataDataOf = createSelector(NodesData.select, NodesData.getDataOf)
 
