@@ -9,7 +9,7 @@ $table-border-radius: 3px;
   margin: auto;
 }
 
-.table {
+::ng-deep .table {
   @include get-font(monospace, light);
 
   width: 100%;
@@ -106,7 +106,7 @@ $table-border-radius: 3px;
       }
     }
 
-    &-icon {
+    &-icon.mat-icon {
       $size: 16px;
 
       height: $size;
@@ -151,7 +151,7 @@ $table-border-radius: 3px;
         font-size: 16px;
         width: $size;
         height: $size;
-        line-height: $size;
+        line-height: $size + 5px;
         text-align: center;
         border-radius: 50%;
         background: gc(g9);
@@ -172,8 +172,14 @@ $table-border-radius: 3px;
     position: sticky;
     background: gc(g11);
     top: 0;
-    border-radius: $table-border-radius $table-border-radius 0 0;
     z-index: 3;
+
+    &:first-child {
+      border-radius: $table-border-radius 0 0 0;
+    }
+    &:last-child {
+      border-radius: 0 $table-border-radius 0 0;
+    }
 
     &:hover {
       background: gc(g10);

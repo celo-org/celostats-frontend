@@ -27,30 +27,10 @@
       </td>
   </thead>
   <tbody>
-    <tr class="table__row" *ngFor="let node of nodes; trackBy: trackNodes">
-      <td
-        *ngFor="let column of node.columns; trackBy: trackColumn"
-        [class]="
-          'table__cell'
-          + ' table__cell--' + column.style
-          + ' table__cell--type-' + column.type
-          + variants(column.variants)">
-
-        <span
-          [ngSwitch]="column.type"
-          [class.table__cell-link]="column.link"
-          (click)="goTo(column.link)">
-
-          <mat-icon *ngSwitchCase="'icon'" fontSet="material-icons-outlined" class="table__cell-icon">
-            {{column.value}}
-          </mat-icon>
-          <span *ngSwitchCase="column.value && 'address'" class="table__cell-address">
-            <span class="table__cell-address-start">{{column.value.substr(2, 34)}}</span>
-            <span class="table__cell-address-end">{{column.value.substr(36, 42)}}</span>
-          </span>
-          <ng-container *ngSwitchDefault>{{column.value}}</ng-container>
-        </span>
-      </td>
-    </tr>
+    <app-dashboard-nodes-row
+      class="table__row"
+      *ngFor="let node of nodes; let odd = odd; trackBy: trackNodes"
+      [rowId]="node.id">
+    </app-dashboard-nodes-row>
   </tbody>
 </table>

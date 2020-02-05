@@ -69,10 +69,6 @@ export class DashboardNodesComponent implements OnInit {
   trackNodes(index: number, node: DataRow): string {
     return node.id
   }
-
-  trackColumn(index: number): string {
-    return String(index)
-  }
 }
 
 
