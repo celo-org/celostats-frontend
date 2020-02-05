@@ -17,7 +17,7 @@ export interface DataRow {
 
 export interface State {
   rawData: {[id: string]: DataRow}
-  cleanData: DataRow[]
+  cleanDataIds: string[]
 }
 
 export interface AppState {

@@ -29,8 +29,8 @@
   <tbody>
     <app-dashboard-nodes-row
       class="table__row"
-      *ngFor="let node of nodes; let odd = odd; trackBy: trackNodes"
-      [rowId]="node.id">
+      *ngFor="let id of nodes; trackBy: trackNodes"
+      [rowId]="id">
     </app-dashboard-nodes-row>
   </tbody>
 </table>

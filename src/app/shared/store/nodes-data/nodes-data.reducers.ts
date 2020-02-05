@@ -5,7 +5,7 @@ import * as nodesDataActions from './nodes-data.actions'
 
 export const initialState: State = {
   rawData: {},
-  cleanData: [],
+  cleanDataIds: [],
 }
 
 const nodesDataReducer = createReducer(
@@ -19,10 +19,10 @@ const nodesDataReducer = createReducer(
       rawData,
     }
   }),
-  on(nodesDataActions.setCleanData, (state, {rows: cleanData}) => {
+  on(nodesDataActions.setCleanDataId, (state, {ids: cleanDataIds}) => {
     return {
       ...state,
-      cleanData,
+      cleanDataIds,
     }
   }),
 )
@@ -35,5 +35,5 @@ export const select = (state: AppState) => state.nodesData
 
 export const getRawData = (state: State) => state.rawData
 export const getRawDataList = (state: State) => Object.values(state.rawData)
-export const getCleanData = (state: State) => state.cleanData
+export const getCleanData = (state: State) => state.cleanDataIds
 export const getDataOf = (state: State, {rowId}: {rowId: string}) => state.rawData[rowId]

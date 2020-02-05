@@ -34,18 +34,11 @@ describe('Nodes (data) Store reducers', () => {
 
   it('should set the clean data', () => {
     const finalState = reduceActions(reducer, [
-      nodesDataActions.setCleanData({rows: [
-        {id: 't1', columns: [undefined, undefined]},
-      ]}),
-      nodesDataActions.setCleanData({rows: [
-        {id: 't1', columns: [undefined]},
-        {id: 't2', columns: [undefined]},
-      ]}),
+      nodesDataActions.setCleanDataId({ids: ['t1']}),
+      nodesDataActions.setCleanDataId({ids: ['t1', 't2']}),
+      nodesDataActions.setCleanDataId({ids: ['t2', 't3']}),
     ])
 
-    expect(fromNodesData.getCleanData(finalState)).toEqual([
-        {id: 't1', columns: [undefined]},
-        {id: 't2', columns: [undefined]},
-    ])
+    expect(fromNodesData.getCleanData(finalState)).toEqual(['t2', 't3'])
   })
 })
