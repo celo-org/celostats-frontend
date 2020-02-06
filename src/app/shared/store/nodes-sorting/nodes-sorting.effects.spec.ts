@@ -37,6 +37,7 @@ describe('NodesSortingEffects', () => {
         done()
       })
 
-    ;(actions$ as Subject<any>).next(rootEffectsInit())
+    ;
+    (actions$ as Subject<any>).next(rootEffectsInit())
   })
 })

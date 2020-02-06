@@ -10,7 +10,7 @@ import { NodesDataEffects } from './nodes-data.effects'
 import * as nodesDataActions from './nodes-data.actions'
 
 describe('NodesDataEffects', () => {
-  let actions$: Observable<any>
+  const actions$: Observable<any>
   let effects: NodesDataEffects
   const initialState = {ethstats: {nodes: {}, lastBlock: {}}}
 
