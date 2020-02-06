@@ -17,7 +17,7 @@ describe('Nodes (sorting) Store reducers', () => {
   })
 
   it('should set columns', () => {
-    const column = {name: 'test', first: 1} as Column
+    const column = {name: 'test', first: -1} as Column
 
     const finalState = reduceActions(reducer, [
       nodesSortingActions.setColumns({columns: [column]}),
@@ -29,7 +29,7 @@ describe('Nodes (sorting) Store reducers', () => {
 
   it('should update the sorting', () => {
     const columnA = {name: 'A'} as Column
-    const columnB = {name: 'B', first: 1} as Column
+    const columnB = {name: 'B', first: -1} as Column
 
     const states = reduceActions(reducer, [
       nodesSortingActions.setColumns({columns: [columnA, columnB]}),
