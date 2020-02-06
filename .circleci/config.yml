@@ -76,7 +76,9 @@ jobs:
     steps:
       - checkout
       - *CHECKOUT-WORKSPACE
-      - run: npm run build
+      - run: npm run build -- --base-href "./"
+      - store_artifacts:
+          path: dist
       - persist_to_workspace:
           root: .
           paths:
