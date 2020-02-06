@@ -53,20 +53,14 @@ export class DashboardNodesComponent implements OnInit {
     this.store.dispatch(nodesSortingActions.orderBy({column}))
   }
 
-  goTo(url?: string) {
-    if (url) {
-      window.open(url, '_blank')
-    }
-  }
-
   variants(variants: Column['variants']) {
     return (variants || [])
       .map(variant => ` table__cell--${variant} `)
       .join() as any
   }
 
-  trackNodes(index: number, id: string): string {
-    return id
+  trackColumn(index: number): string {
+    return String(index)
   }
 }
 
