@@ -1,6 +1,6 @@
 import { environment } from 'src/environments/environment'
 import { EthstatsNode } from 'src/app/shared/store/ethstats'
-import { color, colorRange, formatNumber } from 'src/app/shared'
+import { color, colorRange, formatNumber, timeAgo } from 'src/app/shared'
 import { Column } from './nodes-sorting.state'
 
 export enum StakingState {
@@ -86,8 +86,8 @@ export const columns: Column[] = [
     icon: 'timer',
     variants: ['medium'],
     accessor: (node, {time}) => node.block?.received ? Math.round((time - +node.block?.received) / 1000) : -Infinity,
-    show: value => value !== -Infinity ? value + ' s ago' : 'n/a',
-    color: value => value !== -Infinity ? colorRange(+value, [, 10, 30, 60, 600]) : 'no',
+    show: value => value !== -Infinity ? timeAgo(+value) : 'n/a',
+    color: value => value !== -Infinity ? colorRange(+value, [, 10, 30, 60, 60 * 60]) : 'no',
   },
   {
     name: 'Peers',

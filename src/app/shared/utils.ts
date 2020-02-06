@@ -16,3 +16,14 @@ export function formatNumber(n: number, decimals: number = 2) {
   decimal = decimal.replace(/0+$/, '')
   return natural + (decimal ? '.' + decimal : '')
 }
+
+
+export function timeAgo(time: number) {
+  if (time < 60) {
+    return `${Math.floor(time)} s`
+  }
+  if (time < (60 * 60)) {
+    return `${Math.floor(time / 60)} m`
+  }
+  return `${Math.floor(time / 60 / 60)} h`
+}

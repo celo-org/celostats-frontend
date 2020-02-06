@@ -1,4 +1,4 @@
-import { formatNumber, colorRange } from './utils'
+import { formatNumber, colorRange, timeAgo } from './utils'
 
 describe('Util', () => {
   describe('formatNumber', () => {
@@ -51,6 +51,19 @@ describe('Util', () => {
       expect(colorRange(Infinity, new Array(4))).toBe('warn3')
       expect(colorRange(Infinity, new Array(5))).toBe('warn4')
       expect(colorRange(Infinity, new Array(6))).toBe('no')
+    })
+  })
+
+  describe('timeAgo', () => {
+    it('should return the elapsed time in the correct measure', () => {
+      expect(timeAgo(0)).toBe('0 s')
+      expect(timeAgo(59.9)).toBe('59 s')
+      expect(timeAgo(60)).toBe('1 m')
+      expect(timeAgo(70)).toBe('1 m')
+      expect(timeAgo(60 * 12 + 20)).toBe('12 m')
+      expect(timeAgo(60 * 59 + 59)).toBe('59 m')
+      expect(timeAgo(60 * 59 + 60)).toBe('1 h')
+      expect(timeAgo(60 * 60 * 100)).toBe('100 h')
     })
   })
 })
