@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
 import { Store, select } from '@ngrx/store'
 import { Observable, Subscription } from 'rxjs'
 import { pluck, map, share, pairwise, filter, startWith, scan, tap } from 'rxjs/operators'
@@ -69,6 +69,7 @@ export class DashboardNodesRowComponent implements OnInit, OnDestroy {
     )
       .subscribe(updates => {
         // Internal data to know if the change detector is attached
+        // tslint:disable-next-line no-bitwise
         const isAttached = !!((this.cdr as any)._lView[2] & 128)
 
         if (!isAttached && !updates) {

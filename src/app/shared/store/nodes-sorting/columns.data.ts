@@ -4,7 +4,7 @@ import { color, colorRange, formatNumber } from 'src/app/shared'
 import { Column } from './nodes-sorting.state'
 
 export enum StakingState {
-  "Full Node",
+  'Full Node',
   Registered,
   Elected,
   Proxy
@@ -16,7 +16,7 @@ function evaluateStakingState(node: EthstatsNode) {
     case node.validatorData?.elected || node.stats?.elected: return StakingState.Elected
     case node.validatorData?.registered: return StakingState.Registered
   }
-  return StakingState["Full Node"]
+  return StakingState['Full Node']
 }
 
 export const columns: Column[] = [
@@ -57,7 +57,7 @@ export const columns: Column[] = [
     variants: ['large'],
     accessor: node => evaluateStakingState(node),
     show: value => StakingState[value],
-    color: value => colorRange(3 - +value, [0, 1, 2, , , ,]),
+    color: value => colorRange(3 - +value, [0, 1, 2, , , , ]),
   },
   {
     name: 'Pending transactions',

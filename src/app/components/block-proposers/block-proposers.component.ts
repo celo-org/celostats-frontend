@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core'
+import { Component, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core'
 import { ReplaySubject } from 'rxjs'
 
 import { EthstatsMinedBlock } from 'src/app/shared/store/ethstats'
@@ -9,13 +9,10 @@ import { EthstatsMinedBlock } from 'src/app/shared/store/ethstats'
   styleUrls: ['./block-proposers.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BlockProposersComponent implements OnInit {
+export class BlockProposersComponent implements OnChanges {
   @Input() data: EthstatsMinedBlock[]
 
   data$ = new ReplaySubject<(EthstatsMinedBlock & {blocks: boolean[]})[]>()
-
-  ngOnInit(): void {
-  }
 
   ngOnChanges(changes: SimpleChanges) {
     // Note: only allows positive values
@@ -37,8 +34,8 @@ export class BlockProposersComponent implements OnInit {
     }
   }
 
-  trackRow(i: number, {number}: EthstatsMinedBlock): string {
-    return String(number)
+  trackRow(i: number, block: EthstatsMinedBlock): string {
+    return String(block.number)
   }
 
   trackIndex(index: number): string {

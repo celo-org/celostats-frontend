@@ -55,13 +55,13 @@ export const blocks: InfoBlock[][] = [
       type: 'chart',
       title: 'Block time',
       icon: 'av_timer',
-      accessor: ({charts, block: {number}}) => (charts?.blocktime ?? []),
-      show: (data, {charts, block: {number}}) => data
+      accessor: ({charts}) => (charts?.blocktime ?? []),
+      show: (data, {charts, block: {number: block}}) => data
         .map((value, i) => ({
           value,
           show: `${value.toFixed(3)} s`,
-          index: String(number - i),
-          label: `#${number - i}`,
+          index: String(block - i),
+          label: `#${block - i}`,
         })),
       needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
       color: () => 'ok',
@@ -87,7 +87,7 @@ export const blocks: InfoBlock[][] = [
       type: 'chart',
       title: 'Propagation time',
       icon: 'wifi_tethering',
-      accessor: ({charts, block: {number}}) => (charts?.propagation?.histogram ?? []),
+      accessor: ({charts}) => (charts?.propagation?.histogram ?? []),
       show: data => data
         .map(({x, dx, y: value, cumpercent}, i, {length}) => ({
           value,
@@ -129,12 +129,12 @@ export const blocks: InfoBlock[][] = [
       type: 'chart',
       title: 'Gas spending',
       icon: 'attach_money',
-      accessor: ({charts, block: {number}}) => (charts?.gasSpending ?? [])
+      accessor: ({charts, block: {number: block}}) => (charts?.gasSpending ?? [])
         .map((value, i, {length}) => ({
           value,
           show: formatNumber(value, 0),
           index: String(length - charts?.updates + i),
-          label: `#${number - i}`,
+          label: `#${block - i}`,
         })),
       needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
       color: () => 'ok',
@@ -162,7 +162,7 @@ export const blocks: InfoBlock[][] = [
       type: 'block-proposers',
       title: 'Recent block proposers',
       icon: 'done_all',
-      accessor: ({charts, block: {number}}) => (charts?.miners ?? []),
+      accessor: ({charts}) => (charts?.miners ?? []),
       needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
       color: () => 'info',
     },

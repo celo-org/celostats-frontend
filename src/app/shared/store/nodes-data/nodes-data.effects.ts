@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Store, select, Action } from '@ngrx/store';
+import { Store, select, Action } from '@ngrx/store'
 import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects'
 import { interval } from 'rxjs'
 import { mergeMap, filter, first, pairwise, startWith, tap, map, combineLatest, distinctUntilChanged } from 'rxjs/operators'

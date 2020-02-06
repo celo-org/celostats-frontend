@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Observable, of, empty } from 'rxjs'
+import { Observable, of, EMPTY } from 'rxjs'
 import { mergeMap, share } from 'rxjs/operators'
 import * as io from 'socket.io-client'
 
@@ -61,6 +61,6 @@ export class EthstatsService {
         case 'init': return of(...content.map(data => ({action, data})))
       }
     }
-    return empty()
+    return EMPTY
   }
 }
