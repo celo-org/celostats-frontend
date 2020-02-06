@@ -7,7 +7,11 @@ import { DashboardNodesComponent } from './nodes.component'
 describe('NodesComponent', () => {
   let component: DashboardNodesComponent
   let fixture: ComponentFixture<DashboardNodesComponent>
-  const initialState = {ethstats: {nodes: [], lastBlock: {}}}
+  const initialState = {
+    ethstats: {nodes: [], lastBlock: {}, charts: {}},
+    nodesData: {rawData: {}},
+    nodesSorting: {columns: []},
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

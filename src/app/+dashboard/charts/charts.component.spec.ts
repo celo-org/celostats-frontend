@@ -9,7 +9,11 @@ import { DahsboardChartsComponent } from './charts.component'
 describe('DahsboardChartsComponent', () => {
   let component: DahsboardChartsComponent
   let fixture: ComponentFixture<DahsboardChartsComponent>
-  const initialState = {ethstats: {nodes: [], lastBlock: {}, charts: {}}}
+  const initialState = {
+    ethstats: {nodes: [], lastBlock: {}, charts: {}},
+    nodesData: {rawData: {}},
+    nodesSorting: {columns: []},
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
