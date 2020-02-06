@@ -6,7 +6,11 @@ import { DashboardNodesRowComponent } from './nodes-row.component'
 describe('NodesRowComponent', () => {
   let component: DashboardNodesRowComponent
   let fixture: ComponentFixture<DashboardNodesRowComponent>
-  const initialState = {}
+  const initialState = {
+    ethstats: {nodes: [], lastBlock: {}, charts: {}},
+    nodesData: {rawData: {}},
+    nodesSorting: {columns: []},
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

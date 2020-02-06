@@ -26,6 +26,7 @@ export class DashboardNodesRowComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.row$ = this.store.pipe(
       select(getNodesDataDataOf, {rowId: this.rowId}),
+      filter(_ => !!_),
       share(),
     )
     this.columns$ = this.row$.pipe(

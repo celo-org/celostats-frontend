@@ -10,9 +10,13 @@ import { NodesDataEffects } from './nodes-data.effects'
 import * as nodesDataActions from './nodes-data.actions'
 
 describe('NodesDataEffects', () => {
-  const actions$: Observable<any>
+  let actions$: Observable<any>
   let effects: NodesDataEffects
-  const initialState = {ethstats: {nodes: {}, lastBlock: {}}}
+  const initialState = {
+    ethstats: {nodes: [], lastBlock: {}, charts: {}},
+    nodesData: {rawData: {}},
+    nodesSorting: {columns: []},
+  }
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -28,5 +32,7 @@ describe('NodesDataEffects', () => {
 
   it('should be created', () => {
     expect(effects).toBeTruthy()
+
+    actions$ = undefined // Preventing errors
   })
 })
