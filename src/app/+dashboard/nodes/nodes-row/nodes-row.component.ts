@@ -38,7 +38,11 @@ export class DashboardNodesRowComponent implements OnInit, OnDestroy {
               table__cell
               table__cell--${column.style}
               table__cell--type-${column.type}
-              ${this.variants(column.variants)}
+              ${
+                (column.variants || [])
+                  .map(variant => ` table__cell--${variant} `)
+                  .join()
+              }
             `.replace(/\s+/g, ' ').trim(),
           }))
       )
@@ -77,10 +81,10 @@ export class DashboardNodesRowComponent implements OnInit, OnDestroy {
       })
   }
 
-  variants(variants: Column['variants']) {
-    return (variants || [])
-      .map(variant => ` table__cell--${variant} `)
-      .join() as any
+  goTo(url?: string) {
+    if (url) {
+      window.open(url, '_blank')
+    }
   }
 
   trackColumn(index: number): string {
