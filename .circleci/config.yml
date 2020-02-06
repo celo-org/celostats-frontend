@@ -55,6 +55,10 @@ jobs:
       - checkout
       - *CHECKOUT-WORKSPACE
       - run: npm run test
+      - store_test_results:
+          path: coverage/junit
+      - store_artifacts:
+          path: coverage
       - persist_to_workspace:
           root: .
           paths:
