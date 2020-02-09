@@ -1,19 +1,33 @@
-<td
-  *ngFor="let column of columns$ | async; trackBy: trackColumn"
-  [class]="column.classNames">
+<ng-container *ngIf="columns$ | async as columns">
+  <td
+    class="table__cell table__cell--xsmall table__cell--type-icon table__cell-pin"
+    (click)=pinNode()>
 
-  <span
-    [ngSwitch]="column.type"
-    [class.table__cell-link]="column.link"
-    (click)="goTo(column.link)"><!--
+    <mat-icon
+      fontSet="material-icons-outlined"
+      class="table__cell-icon table__cell-icon--pinned"
+      [class.table__cell--warn3]="pinned$ | async">
 
- --><mat-icon *ngSwitchCase="'icon'" fontSet="material-icons-outlined" class="table__cell-icon">
-      {{column.value}}
-    </mat-icon><!--
- --><span *ngSwitchCase="column.value && 'address'" class="table__cell-address">
-      <span class="table__cell-address-start">{{column.value.substr(2, 34)}}</span>
-      <span class="table__cell-address-end">{{column.value.substr(36, 42)}}</span>
-    </span><!--
- --><ng-container *ngSwitchDefault>{{column.value}}</ng-container>
-  </span>
-</td>
+      {{(pinned$ | async) ? 'favorite' : 'favorite_border'}}
+    </mat-icon>
+  </td>
+  <td
+    *ngFor="let column of columns; trackBy: trackColumn"
+    [class]="column.classNames">
+
+    <span
+      [ngSwitch]="column.type"
+      [class.table__cell-link]="column.link"
+      (click)="goTo(column.link)"><!--
+
+   --><mat-icon *ngSwitchCase="'icon'" fontSet="material-icons-outlined" class="table__cell-icon">
+        {{column.value}}
+      </mat-icon><!--
+   --><span *ngSwitchCase="column.value && 'address'" class="table__cell-address">
+        <span class="table__cell-address-start">{{column.value.substr(2, 34)}}</span>
+        <span class="table__cell-address-end">{{column.value.substr(36, 42)}}</span>
+      </span><!--
+   --><ng-container *ngSwitchDefault>{{column.value}}</ng-container>
+    </span>
+  </td>
+</ng-container>

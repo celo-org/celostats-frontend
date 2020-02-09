@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
 import { Store, select } from '@ngrx/store'
 import { Observable, Subscription } from 'rxjs'
-import { pluck, map, share, pairwise, filter, startWith, scan, tap } from 'rxjs/operators'
+import { pluck, map, share, shareReplay, pairwise, filter, startWith, scan, tap, first } from 'rxjs/operators'
 
-import { AppState, getNodesDataDataOf } from 'src/app/shared/store'
+import { AppState, getNodesDataDataOf, isSettingsPinnedNode } from 'src/app/shared/store'
 import { DataRow } from 'src/app/shared/store/nodes-data'
 import { Column } from 'src/app/shared/store/nodes-sorting'
+import { actions as settingsActions } from 'src/app/shared/store/settings'
 
 @Component({
   selector: 'app-dashboard-nodes-row',
@@ -17,6 +18,7 @@ export class DashboardNodesRowComponent implements OnInit, OnDestroy {
   @Input() rowId: string
 
   columns$: Observable<DataRow['columns'] & {classNames: string}[]>
+  pinned$: Observable<boolean>
   private row$: Observable<DataRow>
   private changeDetectionsSubscription: Subscription
   private readonly detachAfter = 6
@@ -47,6 +49,10 @@ export class DashboardNodesRowComponent implements OnInit, OnDestroy {
             `.replace(/\s+/g, ' ').trim(),
           }))
       )
+    )
+    this.pinned$ = this.store.pipe(
+      select(isSettingsPinnedNode, {rowId: this.rowId}),
+      shareReplay(),
     )
 
     this.checkChanges()
@@ -87,6 +93,13 @@ export class DashboardNodesRowComponent implements OnInit, OnDestroy {
     if (url) {
       window.open(url, '_blank')
     }
+  }
+
+  pinNode() {
+    this.pinned$.pipe(first())
+      .subscribe(pinned => {
+        this.store.dispatch(settingsActions.pinNode({node: this.rowId, pin: !pinned}))
+      })
   }
 
   trackColumn(index: number): string {

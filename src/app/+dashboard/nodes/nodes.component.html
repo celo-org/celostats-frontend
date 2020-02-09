@@ -6,6 +6,14 @@
   <thead>
     <tr class="table__head" *ngIf="sorting$ | async as sorting">
       <td
+        class="table__cell table__cell--xsmall table__cell--type-pinned"
+        matTooltip="Pin node">
+
+        <mat-icon fontSet="material-icons-outlined" class="table__head-icon">
+          favorite_border
+        </mat-icon>
+      </td>
+      <td
         matRipple
         matRippleColor="rgba(255, 255, 255, 0.2)"
         *ngFor="let column of columns$ | async; trackBy: trackColumn"
@@ -25,6 +33,7 @@
           </mat-icon>
         </mat-icon>
       </td>
+    </tr>
   </thead>
   <tbody>
     <app-dashboard-nodes-row

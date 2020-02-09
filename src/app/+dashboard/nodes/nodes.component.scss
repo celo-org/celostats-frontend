@@ -81,6 +81,9 @@ $table-border-radius: 3px;
       &-address {
         text-overflow: initial;
       }
+      &-pinned {
+        text-align: center;
+      }
     }
 
     &-link {
@@ -117,6 +120,10 @@ $table-border-radius: 3px;
       width: $size;
       font-size: $size;
       text-align: center;
+    }
+
+    &-icon--pinned.mat-icon {
+      cursor: pointer;
     }
     &-address {
       display: inline-flex;
