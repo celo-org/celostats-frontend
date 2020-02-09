@@ -32,3 +32,4 @@ export function reducer(state: State | undefined, action: Action) {
 export const select = (state: AppState) => state.settings
 
 export const getPinnedNodes = (state: State) => state.pinnedNodes
+export const isPinnedNode = (state: State, {rowId}: {rowId: string}) => state.pinnedNodes?.includes(rowId)
