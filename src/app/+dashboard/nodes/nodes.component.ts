@@ -31,10 +31,10 @@ export class DashboardNodesComponent implements OnInit {
       select(getNodesDataCleanData),
       distinctUntilChanged((a, b) => a.join('|') === b.join('|')),
       // Wait until the next animation frame is ready or 0.5s, first of both. It makes the changes smoother.
-      throttle(() => merge(
-        interval(500),
-        interval(0, animationFrameScheduler),
-      )),
+      // throttle(() => merge(
+      //   interval(500),
+      //   interval(0, animationFrameScheduler),
+      // )),
       share(),
     )
     this.sorting$ = this.store.pipe(

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
+import { Component, OnInit, OnDestroy, Input, HostBinding, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
 import { Store, select } from '@ngrx/store'
 import { Observable, Subscription } from 'rxjs'
 import { pluck, map, share, shareReplay, pairwise, filter, startWith, scan, tap, first } from 'rxjs/operators'
@@ -22,6 +22,12 @@ export class DashboardNodesRowComponent implements OnInit, OnDestroy {
   private row$: Observable<DataRow>
   private changeDetectionsSubscription: Subscription
   private readonly detachAfter = 6
+
+  get isAttached() {
+    // Internal data to know if the change detector is attached
+    // tslint:disable-next-line no-bitwise
+    return !!((this.cdr as any)._lView[2] & 128)
+  }
 
   constructor(private store: Store<AppState>, private cdr: ChangeDetectorRef) { }
 
@@ -75,15 +81,11 @@ export class DashboardNodesRowComponent implements OnInit, OnDestroy {
       scan((updates, [a, b]) => a !== b ? 0 : updates + 1, 0),
     )
       .subscribe(updates => {
-        // Internal data to know if the change detector is attached
-        // tslint:disable-next-line no-bitwise
-        const isAttached = !!((this.cdr as any)._lView[2] & 128)
-
-        if (!isAttached && !updates) {
+        if (!this.isAttached && !updates) {
           this.cdr.detectChanges()
           this.cdr.reattach()
         }
-        if (isAttached && updates >= this.detachAfter) {
+        if (this.isAttached && updates >= this.detachAfter) {
           this.cdr.detach()
         }
       })
@@ -96,9 +98,16 @@ export class DashboardNodesRowComponent implements OnInit, OnDestroy {
   }
 
   pinNode() {
-    this.pinned$.pipe(first())
+    this.store
+      .pipe(
+        select(isSettingsPinnedNode, {rowId: this.rowId}),
+        first(),
+      )
       .subscribe(pinned => {
         this.store.dispatch(settingsActions.pinNode({node: this.rowId, pin: !pinned}))
+        if (!this.isAttached) {
+          this.cdr.detectChanges()
+        }
       })
   }
 

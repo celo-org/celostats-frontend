@@ -1,6 +1,7 @@
 @import '../../styles/index';
 
 $table-border-radius: 3px;
+$table-pinned-background-color: gc(s1);
 
 :host {
   display: block;
@@ -148,6 +149,19 @@ $table-border-radius: 3px;
   }
   &__row:nth-child(odd) &__cell {
     background: mix(gc(g0), gc(g11), 3%);
+  }
+
+  &__row--pinned &__cell {
+    background: mix($table-pinned-background-color, gc(g11), 4%);
+    border-top: 1px solid mix($table-pinned-background-color, gc(g11), 12%);
+  }
+  &__row--pinned:nth-child(odd) &__cell {
+    background: mix($table-pinned-background-color, gc(g11), 8%);
+  }
+
+  &__row--pinned:first-child &__cell,
+  &__row--pinned + :not(#{&}__row--pinned) &__cell {
+    border-top: 1px solid mix($table-pinned-background-color, gc(g11), 24%);
   }
 
   &__head {
