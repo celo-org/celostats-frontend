@@ -6,6 +6,8 @@ import { mergeMap, filter, first, pairwise, startWith, tap, map, combineLatest, 
 
 import { actions as ethstatsActions } from 'src/app/shared/store/ethstats'
 import * as fromEthstats from 'src/app/shared/store/ethstats'
+import { actions as settingsActions } from 'src/app/shared/store/settings'
+import * as fromSettings from 'src/app/shared/store/settings'
 import { actions as nodesSortingActions } from 'src/app/shared/store/nodes-sorting'
 import * as fromNodesSorting from 'src/app/shared/store/nodes-sorting'
 import * as fromNodesData from './nodes-data.reducers'
@@ -82,19 +84,20 @@ export class NodesDataEffects {
     ))
 
   cleanRowsData$ = createEffect(() => this.actions$.pipe(
-    ofType(nodesDataActions.updateRawData, nodesSortingActions.orderBy),
+    ofType(nodesDataActions.updateRawData, nodesSortingActions.orderBy, settingsActions.pinNode),
     mergeMap(() =>
       this.store.pipe(
         map(state => ({
           rawData: fromNodesData.getRawDataList(fromNodesData.select(state)),
           columns: fromNodesSorting.getColumns(fromNodesSorting.select(state)),
           sorting: fromNodesSorting.getFullSorting(fromNodesSorting.select(state)),
+          pinnedNodes: fromSettings.getPinnedNodes(fromSettings.select(state)),
         })),
         filter(({rawData, columns, sorting}) => !!rawData && !!columns && !!sorting.sorting),
         first(),
       ),
     ),
-    map(({rawData, columns, sorting}) => {
+    map(({rawData, columns, sorting, pinnedNodes}) => {
       const sortingFn =
         ({column, direction}: typeof sorting.sorting) => {
           const index = columns.indexOf(column)
@@ -102,12 +105,17 @@ export class NodesDataEffects {
             direction * ((a[index].raw ?? -Infinity) > (b[index].raw ?? -Infinity) ? 1 : -1)
         }
       return rawData
+        .map(row => ({...row, pinned: pinnedNodes.includes(row.id)}))
         .sort(sortingFn(sorting.default))
         .sort(sortingFn(sorting.sorting))
+        .sort(({pinned: a}, {pinned: b}) => a === b ? 0 : a ? -1 : 1)
         .map(({id}) => id)
     }),
     map(ids => nodesDataActions.setCleanDataId({ids})),
   ))
 
-  constructor(private actions$: Actions, private store: Store<fromEthstats.AppState & fromNodesSorting.AppState & AppState>) {}
+  constructor(
+    private actions$: Actions,
+    private store: Store<fromEthstats.AppState & fromNodesSorting.AppState & fromSettings.AppState & AppState>,
+  ) {}
 }

@@ -29,7 +29,7 @@ export class SettingsEffects {
     map(([, settings]) => this.setSettings(settings))
   ), {dispatch: false})
 
-  constructor(private actions$: Actions, private store: Store<AppState>) { console.log(this) }
+  constructor(private actions$: Actions, private store: Store<AppState>) { }
 
   getSettings(): Settings {
     return JSON.parse(localStorage.getItem(SETTINGS_KEY))
