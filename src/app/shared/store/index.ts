@@ -12,17 +12,20 @@ import { environment } from 'src/environments/environment'
 import * as Ethstats from './ethstats'
 import * as NodesSorting from './nodes-sorting'
 import * as NodesData from './nodes-data'
+import * as Settings from './settings'
 
 export const effects: any[] = [
   Ethstats.Effects,
   NodesSorting.Effects,
   NodesData.Effects,
+  Settings.Effects,
 ]
 
 export type AppState =
   Ethstats.AppState &
   NodesSorting.AppState &
-  NodesData.AppState
+  NodesData.AppState &
+  Settings.AppState
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production ? [] : []
 
@@ -30,6 +33,7 @@ export const reducers: ActionReducerMap<AppState> = {
   ethstats: Ethstats.reducer,
   nodesSorting: NodesSorting.reducer,
   nodesData: NodesData.reducer,
+  settings: Settings.reducer,
 }
 
 // Ethstats Selectors
@@ -48,4 +52,7 @@ export const getNodesDataRawData = createSelector(NodesData.select, NodesData.ge
 export const getNodesDataRawDataList = createSelector(NodesData.select, NodesData.getRawDataList)
 export const getNodesDataCleanData = createSelector(NodesData.select, NodesData.getCleanData)
 export const getNodesDataDataOf = createSelector(NodesData.select, NodesData.getDataOf)
+
+// Settings
+export const getSettingsPinnedNodes = createSelector(Settings.select, Settings.getPinnesNodes)
 
