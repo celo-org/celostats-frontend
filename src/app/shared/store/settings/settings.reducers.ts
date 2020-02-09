@@ -12,6 +12,17 @@ const settingsReducer = createReducer(
   on(settingsActions.setSettings, (state, {settings}) => {
     return {...settings}
   }),
+  on(settingsActions.pinNode, (state, {node, pin}) => {
+    const pinnedNodes = [...state.pinnedNodes]
+      .filter(_ => _ !== node)
+    if (pin) {
+      pinnedNodes.push(node)
+    }
+    return {
+      ...state,
+      pinnedNodes,
+    }
+  }),
 )
 
 export function reducer(state: State | undefined, action: Action) {
@@ -20,4 +31,4 @@ export function reducer(state: State | undefined, action: Action) {
 
 export const select = (state: AppState) => state.settings
 
-export const getPinnesNodes = (state: State) => state.pinnedNodes
+export const getPinnedNodes = (state: State) => state.pinnedNodes

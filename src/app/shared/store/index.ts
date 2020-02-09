@@ -54,5 +54,5 @@ export const getNodesDataCleanData = createSelector(NodesData.select, NodesData.
 export const getNodesDataDataOf = createSelector(NodesData.select, NodesData.getDataOf)
 
 // Settings
-export const getSettingsPinnedNodes = createSelector(Settings.select, Settings.getPinnesNodes)
+export const getSettingsPinnedNodes = createSelector(Settings.select, Settings.getPinnedNodes)
 
