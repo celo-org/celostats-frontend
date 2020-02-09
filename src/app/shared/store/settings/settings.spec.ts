@@ -14,4 +14,15 @@ describe('Settings Store reducers', () => {
     const finalState = reduceActions(reducer)
     expect(finalState).not.toBeUndefined()
   })
+
+  it('should pin nodes', () => {
+    const finalState = reduceActions(reducer, [
+      settingsActions.pinNode({node: 't1', pin: true}),
+      settingsActions.pinNode({node: 't2', pin: true}),
+      settingsActions.pinNode({node: 't3', pin: true}),
+      settingsActions.pinNode({node: 't2', pin: false}),
+    ])
+
+    expect(fromSettings.getPinnedNodes(finalState)).toEqual(['t1', 't3'])
+  })
 })
