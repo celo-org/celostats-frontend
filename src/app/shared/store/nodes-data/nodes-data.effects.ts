@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { Store, select, Action } from '@ngrx/store'
 import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects'
 import { interval } from 'rxjs'
-import { mergeMap, filter, first, pairwise, startWith, tap, map, combineLatest, distinctUntilChanged } from 'rxjs/operators'
+import { mergeMap, filter, first, pairwise, startWith, tap, map, combineLatest, distinctUntilChanged, throttle } from 'rxjs/operators'
 
 import { actions as ethstatsActions } from 'src/app/shared/store/ethstats'
 import * as fromEthstats from 'src/app/shared/store/ethstats'
@@ -27,7 +27,10 @@ export class NodesDataEffects {
       ),
       startWith({} as fromEthstats.State['nodes']),
       combineLatest(interval(1000)),
+      // Stop refreshing data if the app is in background
       filter(() => document.hidden === undefined ? true : !document.hidden),
+      // If the app is not focused, the refreshing time is 1s
+      throttle(() => new Promise(resolve => setTimeout(resolve, document.hasFocus() ? 50 : 1000))),
       pairwise(),
     )
     .pipe(
