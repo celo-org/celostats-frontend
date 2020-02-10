@@ -82,9 +82,6 @@ $table-pinned-background-color: gc(s1);
       &-address {
         text-overflow: initial;
       }
-      &-pinned {
-        text-align: center;
-      }
     }
 
     &-link {
@@ -212,6 +209,14 @@ $table-pinned-background-color: gc(s1);
 
     &--sticky {
       z-index: 4;
+    }
+    &--pinned {
+      text-align: center;
+      cursor: default;
+
+      &:hover {
+        background: none;
+      }
     }
   }
 }
