@@ -20,8 +20,9 @@ function evaluateStakingState(node: EthstatsNode) {
 }
 
 function truncateToDecimals(num: number, dec: number = 2) {
-  const calcDec = Math.pow(10, dec)
-  return Math.trunc(num * calcDec) / calcDec
+  const calcDec = 10 ** dec
+  // tslint:disable-next-line:no-bitwise
+  return (~~(num * calcDec) / calcDec).toFixed(dec)
 }
 
 export const columns: Column[] = [
@@ -40,13 +41,6 @@ export const columns: Column[] = [
     default: 1,
     variants: ['sticky'],
     accessor: node => node.info?.name,
-  },
-  {
-    name: 'Score',
-    icon: 'score',
-    variants: ['medium'],
-    accessor: node => node.validatorData.score,
-    show: (value: number) => `${truncateToDecimals(value, 5).toFixed(5).padStart(8, '0')}%`,
   },
   {
     name: 'Address',
@@ -107,6 +101,14 @@ export const columns: Column[] = [
     variants: ['xsmall'],
     accessor: node => node.stats?.peers || 0,
     color: value => value ? 'ok' : 'no',
+  },
+  {
+    name: 'Score',
+    icon: 'trending_up',
+    variants: ['medium', 'pre'],
+    accessor: node => node.validatorData?.score,
+    show: (value: number) => `${truncateToDecimals(value, 4).padStart(8, ' ')}%`,
+    color: value => colorRange(100 - +value, [0, 0.1, 1, 5, 20, 90]),
   },
   {
     name: 'Latency',

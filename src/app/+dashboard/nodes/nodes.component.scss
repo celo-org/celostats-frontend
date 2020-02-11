@@ -67,6 +67,10 @@ $table-border-radius: 3px;
       left: 0;
     }
 
+    &--pre {
+      white-space: pre;
+    }
+
     &--type {
       &-icon {
         padding-top: 0;
