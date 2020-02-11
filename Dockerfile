@@ -15,4 +15,4 @@ RUN yarn build --prod
 RUN rm -rf ./src ./e2e ./node_modules
 
 EXPOSE 5000
-CMD ["serve", "-s", "./dist/ethstats-frontend"]
+CMD ["serve", "-s", "./dist"]
