@@ -69,7 +69,7 @@ export const columns: Column[] = [
     name: 'Pending transactions',
     icon: 'hourglass_empty',
     variants: ['xsmall'],
-    accessor: node => node.pending || 0,
+    accessor: node => node.stats.pending || 0,
     color: value => value ? 'ok' : 'info',
   },
   {
@@ -131,7 +131,7 @@ export const columns: Column[] = [
     icon: 'offline_bolt',
     variants: ['small'],
     accessor: node => node.stats?.uptime,
-    show: value => `${value} %`,
+    show: value => `${value || 0} %`,
     color: value => colorRange(100 - +value, [, 0.1, 1, 5, 10, 20]),
   },
 ]
