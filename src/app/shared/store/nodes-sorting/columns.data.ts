@@ -63,7 +63,7 @@ export const columns: Column[] = [
     name: 'Pending transactions',
     icon: 'hourglass_empty',
     variants: ['xsmall'],
-    accessor: node => node.pending || 0,
+    accessor: node => node.stats.pending || 0,
     color: value => value ? 'ok' : 'info',
   },
   {

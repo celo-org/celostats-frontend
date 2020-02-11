@@ -102,6 +102,7 @@ export interface EthstatsStats {
   active: boolean
   elected: boolean
   proxy: boolean
+  pending: number
   gasPrice: number
   hashrate: number
   latency: string
