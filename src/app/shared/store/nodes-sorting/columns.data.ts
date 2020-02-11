@@ -117,7 +117,7 @@ export const columns: Column[] = [
     icon: 'offline_bolt',
     variants: ['small'],
     accessor: node => node.stats?.uptime,
-    show: value => `${value} %`,
+    show: value => `${value || 0} %`,
     color: value => colorRange(100 - +value, [, 0.1, 1, 5, 10, 20]),
   },
 ]
