@@ -19,6 +19,11 @@ function evaluateStakingState(node: EthstatsNode) {
   return StakingState['Full Node']
 }
 
+function truncateToDecimals(num: number, dec: number = 2) {
+  const calcDec = Math.pow(10, dec);
+  return Math.trunc(num * calcDec) / calcDec;
+}
+
 export const columns: Column[] = [
   {
     name: 'Status',
@@ -35,6 +40,13 @@ export const columns: Column[] = [
     default: 1,
     variants: ['sticky'],
     accessor: node => node.info?.name,
+  },
+  {
+    name: 'Score',
+    icon: 'score',
+    variants: ['medium'],
+    accessor: node => node.validatorData.score,
+    show: (value: number) => `${truncateToDecimals(value, 5).toFixed(5).padStart(8, "0")}%`,
   },
   {
     name: 'Address',
