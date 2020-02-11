@@ -15,7 +15,7 @@ export interface Column {
   default?: sortingDirection
   first?: sortingDirection
   type?: 'icon' | 'address'
-  variants?: ('xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'address' | 'sticky')[],
+  variants?: ('xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'address' | 'sticky' | 'pre')[],
   accessor: (node: EthstatsNode, context: Context) => string | number
   link?: (value: string | number, context: Context) => string
   show?: (value: string | number, context: Context) => string | number
