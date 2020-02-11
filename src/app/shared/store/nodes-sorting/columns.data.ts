@@ -20,8 +20,8 @@ function evaluateStakingState(node: EthstatsNode) {
 }
 
 function truncateToDecimals(num: number, dec: number = 2) {
-  const calcDec = Math.pow(10, dec);
-  return Math.trunc(num * calcDec) / calcDec;
+  const calcDec = Math.pow(10, dec)
+  return Math.trunc(num * calcDec) / calcDec
 }
 
 export const columns: Column[] = [
@@ -46,7 +46,7 @@ export const columns: Column[] = [
     icon: 'score',
     variants: ['medium'],
     accessor: node => node.validatorData.score,
-    show: (value: number) => `${truncateToDecimals(value, 5).toFixed(5).padStart(8, "0")}%`,
+    show: (value: number) => `${truncateToDecimals(value, 5).toFixed(5).padStart(8, '0')}%`,
   },
   {
     name: 'Address',
