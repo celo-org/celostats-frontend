@@ -12,9 +12,12 @@ export enum StakingState {
 
 function evaluateStakingState(node: EthstatsNode) {
   switch (true) {
-    case node.stats?.proxy: return StakingState.Proxy
-    case node.validatorData?.elected || node.stats?.elected: return StakingState.Elected
-    case node.validatorData?.registered: return StakingState.Registered
+    case node.stats?.proxy:
+      return StakingState.Proxy
+    case node.validatorData?.elected || node.stats?.elected:
+      return StakingState.Elected
+    case node.validatorData?.registered:
+      return StakingState.Registered
   }
   return StakingState['Full Node']
 }
@@ -63,20 +66,20 @@ export const columns: Column[] = [
     variants: ['large'],
     accessor: node => evaluateStakingState(node),
     show: (value: string) => StakingState[value],
-    color: value => colorRange(3 - +value, [0, 1, 2, , , , ]),
+    color: value => colorRange(3 - +value, [0, 1, 2, , , ,]),
   },
   {
     name: 'Pending transactions',
     icon: 'hourglass_empty',
     variants: ['xsmall'],
-    accessor: node => node.stats.pending || 0,
-    color: value => value ? 'ok' : 'info',
+    accessor: node => node.stats.pending === null ? 'n/a' : node.stats.pending,
+    color: value => value === 'n/a' ? 'no' : value > 0 ? 'ok' : 'info',
   },
   {
     name: 'Transactions in last block',
     icon: 'compare_arrows',
     variants: ['xsmall'],
-    accessor: node => node.block?.transactions?.length || 0,
+    accessor: node => !node.block ? 'n/a' : node.block.transactions.length || 0,
   },
   {
     name: 'Block',
@@ -99,8 +102,8 @@ export const columns: Column[] = [
     name: 'Peers',
     icon: 'people',
     variants: ['xsmall'],
-    accessor: node => node.stats?.peers || 0,
-    color: value => value ? 'ok' : 'no',
+    accessor: node => node.stats?.peers !== null ? node.stats?.peers : 'n/a',
+    color: value => value === 'n/a' ? 'no' : value ? 'ok' : 'no',
   },
   {
     name: 'Score',
@@ -114,24 +117,24 @@ export const columns: Column[] = [
     name: 'Latency',
     icon: 'timer',
     variants: ['medium'],
-    accessor: node => +node.stats?.latency || 0,
-    show: value => value === 0 ? `${value} ms` : value ? `+${value} ms` : '',
-    color: value => colorRange(+value, [0, 10, 100, 1000, 10000]),
+    accessor: node => node.stats?.latency === null ? 'n/a' : node.stats?.latency,
+    show: value => value === 'n/a' ? value : value === 0 ? `${value} ms` : value ? `+${value} ms` : '',
+    color: value => value === 'n/a' ? 'no' : colorRange(+value, [0, 10, 100, 1000, 10000]),
   },
   {
     name: 'Propagation time',
     icon: 'wifi_tethering',
     variants: ['medium'],
-    accessor: node => node.block?.propagation || 0,
-    show: (value, {node}) => !node.stats?.active ? 'n/a' : `${value} ms`,
-    color: (value, {node}) => !node.stats?.active ? 'no' : colorRange(+value, [10, 100, 1000, 10000, 100000]),
+    accessor: node => node.block?.propagation,
+    show: (value, {node}) => value === null || value === '' ? 'n/a' : `${value} ms`,
+    color: (value, {node}) => value === null || value === '' ? 'no' : colorRange(+value, [10, 100, 1000, 10000, 100000]),
   },
   {
     name: 'Uptime',
     icon: 'offline_bolt',
     variants: ['small'],
     accessor: node => node.stats?.uptime,
-    show: value => `${value || 0} %`,
-    color: value => colorRange(100 - +value, [, 0.1, 1, 5, 10, 20]),
+    show: value => value === '' ? 'n/a' : `${value} %`,
+    color: value => value === 'n/a' ? 'no' : colorRange(100 - +value, [, 0.1, 1, 5, 10, 20]),
   },
 ]
