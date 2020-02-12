@@ -96,7 +96,7 @@ export const columns: Column[] = [
     variants: ['medium'],
     // tslint:disable-next-line:no-bitwise
     accessor: (node, {time}) => !node.block?.received ? null : ~~((time - +node.block?.received) / 1000),
-    show: value => timeAgo(value),
+    show: value => timeAgo(value as number),
     color: value => value !== null ? colorRange(+value, [, 10, 30, 60, 60 * 60]) : 'no',
   },
   {
