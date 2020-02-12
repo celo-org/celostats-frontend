@@ -19,6 +19,10 @@ export function formatNumber(n: number, decimals: number = 2) {
 
 
 export function timeAgo(time: number) {
+  if (time === null || time === undefined) {
+    return null
+  }
+  time = +time
   if (time < 60) {
     return `${Math.floor(time)} s`
   }

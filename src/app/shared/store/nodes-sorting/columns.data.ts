@@ -12,9 +12,12 @@ export enum StakingState {
 
 function evaluateStakingState(node: EthstatsNode) {
   switch (true) {
-    case node.stats?.proxy: return StakingState.Proxy
-    case node.validatorData?.elected || node.stats?.elected: return StakingState.Elected
-    case node.validatorData?.registered: return StakingState.Registered
+    case node.stats?.proxy:
+      return StakingState.Proxy
+    case node.validatorData?.elected || node.stats?.elected:
+      return StakingState.Elected
+    case node.validatorData?.registered:
+      return StakingState.Registered
   }
   return StakingState['Full Node']
 }
@@ -40,7 +43,7 @@ export const columns: Column[] = [
     icon: 'face',
     default: 1,
     variants: ['sticky'],
-    accessor: node => node.info?.name,
+    accessor: node => node.info?.name || '',
   },
   {
     name: 'Address',
@@ -53,7 +56,7 @@ export const columns: Column[] = [
     name: 'Validator group',
     icon: 'group',
     type: 'address',
-    accessor: node => node.validatorData?.affiliation,
+    accessor: node => node.validatorData?.affiliation || '',
     link: value => value && `${environment.blockscoutUrl}/address/${value}/transactions`,
   },
   {
@@ -63,20 +66,20 @@ export const columns: Column[] = [
     variants: ['large'],
     accessor: node => evaluateStakingState(node),
     show: (value: string) => StakingState[value],
-    color: value => colorRange(3 - +value, [0, 1, 2, , , , ]),
+    color: value => colorRange(3 - +value, [0, 1, 2, , , ,]),
   },
   {
     name: 'Pending transactions',
     icon: 'hourglass_empty',
     variants: ['xsmall'],
-    accessor: node => node.stats.pending || 0,
-    color: value => value ? 'ok' : 'info',
+    accessor: node => node.stats?.pending,
+    color: value => value === 0 ? 'info' : !value ? 'no' : 'ok',
   },
   {
     name: 'Transactions in last block',
     icon: 'compare_arrows',
     variants: ['xsmall'],
-    accessor: node => node.block?.transactions?.length || 0,
+    accessor: node => !node.block ? null : node.block?.transactions.length || 0,
   },
   {
     name: 'Block',
@@ -84,23 +87,24 @@ export const columns: Column[] = [
     variants: ['medium'],
     accessor: node => node.block?.number,
     link: value => value && `${environment.blockscoutUrl}/blocks/${value}/transactions`,
-    show: value => value ? '# ' + formatNumber(+value, 0) : 'n/a',
+    show: value => value ? '# ' + formatNumber(+value, 0) : null,
     color: (value, {block}) => value ? colorRange(block - +value, [, 0, 1, 5, 30]) : 'no',
   },
   {
     name: 'Block Time',
     icon: 'timer',
     variants: ['medium'],
-    accessor: (node, {time}) => node.block?.received ? Math.round((time - +node.block?.received) / 1000) : -Infinity,
-    show: value => value !== -Infinity ? timeAgo(+value) : 'n/a',
-    color: value => value !== -Infinity ? colorRange(+value, [, 10, 30, 60, 60 * 60]) : 'no',
+    // tslint:disable-next-line:no-bitwise
+    accessor: (node, {time}) => !node.block?.received ? null : ~~((time - +node.block?.received) / 1000),
+    show: value => timeAgo(value as number),
+    color: value => value !== null ? colorRange(+value, [, 10, 30, 60, 60 * 60]) : 'no',
   },
   {
     name: 'Peers',
     icon: 'people',
     variants: ['xsmall'],
-    accessor: node => node.stats?.peers || 0,
-    color: value => value ? 'ok' : 'no',
+    accessor: node => node.stats?.peers,
+    color: value => value === 0 ? 'warn3' : value ? 'ok' : 'no',
   },
   {
     name: 'Score',
@@ -114,24 +118,24 @@ export const columns: Column[] = [
     name: 'Latency',
     icon: 'timer',
     variants: ['medium'],
-    accessor: node => +node.stats?.latency || 0,
-    show: value => value === 0 ? `${value} ms` : value ? `+${value} ms` : '',
-    color: value => colorRange(+value, [0, 10, 100, 1000, 10000]),
+    accessor: node => node.stats?.latency,
+    show: value =>  value === 0 ? `0 ms` : value ? `+${value} ms` : null,
+    color: value => value === null ? 'no' : colorRange(+value, [0, 10, 100, 1000, 10000]),
   },
   {
     name: 'Propagation time',
     icon: 'wifi_tethering',
     variants: ['medium'],
-    accessor: node => node.block?.propagation || 0,
-    show: (value, {node}) => !node.stats?.active ? 'n/a' : `${value} ms`,
-    color: (value, {node}) => !node.stats?.active ? 'no' : colorRange(+value, [10, 100, 1000, 10000, 100000]),
+    accessor: node => node.block?.propagation,
+    show: (value, {node}) => value ? `${value} ms` : null,
+    color: (value, {node}) => value === null ? 'no' : colorRange(+value, [10, 100, 1000, 10000, 100000]),
   },
   {
     name: 'Uptime',
     icon: 'offline_bolt',
     variants: ['small'],
     accessor: node => node.stats?.uptime,
-    show: value => `${value || 0} %`,
-    color: value => colorRange(100 - +value, [, 0.1, 1, 5, 10, 20]),
+    show: value => value !== null ? `${value} %` : null,
+    color: value => value === null ? 'no' : colorRange(100 - +value, [, 0.1, 1, 5, 10, 20]),
   },
 ]

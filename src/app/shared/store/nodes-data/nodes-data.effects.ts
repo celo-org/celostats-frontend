@@ -99,7 +99,7 @@ export class NodesDataEffects {
         ({column, direction}: typeof sorting.sorting) => {
           const index = columns.indexOf(column)
           return ({columns: a}, {columns: b}) =>
-            direction * (a[index].raw > b[index].raw ? 1 : -1)
+            direction * ((a[index].raw ?? -Infinity) > (b[index].raw ?? -Infinity) ? 1 : -1)
         }
       return rawData
         .sort(sortingFn(sorting.default))
