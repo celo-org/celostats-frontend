@@ -5,7 +5,7 @@ steps:
     args: [
       "build",
       "-f", "Dockerfile",
-      "-t", "gcr.io/$PROJECT_ID/celostats-server:$BRANCH_NAME",
+      "-t", "gcr.io/$PROJECT_ID/celostats-frontend:$BRANCH_NAME",
       "."
     ]
     waitFor: ["-"]
@@ -13,8 +13,8 @@ steps:
     id: "docker_tag"
     args: [
       "tag",
-      "gcr.io/$PROJECT_ID/celostats-server:$BRANCH_NAME",
-      "gcr.io/$PROJECT_ID/celostats-server:$COMMIT_SHA"
+      "gcr.io/$PROJECT_ID/celostats-frontend:$BRANCH_NAME",
+      "gcr.io/$PROJECT_ID/celostats-frontend:$COMMIT_SHA"
     ]
     wait_for: ["docker"]
   - name: "gcr.io/cloud-builders/kubectl"
@@ -24,7 +24,7 @@ steps:
       "image",
       "--namespace=baklavastaging",
       "deployment/baklavastaging-celostats-frontend",
-      "ethstats=gcr.io/$PROJECT_ID/celostats-server:$COMMIT_SHA"
+      "ethstats=gcr.io/$PROJECT_ID/celostats-frontend:$COMMIT_SHA"
     ]
     env:
     - "CLOUDSDK_COMPUTE_ZONE=us-west1-a"
@@ -32,5 +32,5 @@ steps:
     waitFor: ["docker_tag"]
 timeout: 1200s
 images:
-  - "gcr.io/$PROJECT_ID/celostats-server:$BRANCH_NAME"
-  - "gcr.io/$PROJECT_ID/celostats-server:$COMMIT_SHA"
+  - "gcr.io/$PROJECT_ID/celostats-frontend:$BRANCH_NAME"
+  - "gcr.io/$PROJECT_ID/celostats-frontend:$COMMIT_SHA"
