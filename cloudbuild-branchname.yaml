@@ -24,7 +24,7 @@ steps:
       "image",
       "--namespace=baklavastaging",
       "deployment/baklavastaging-celostats-frontend",
-      "ethstats=gcr.io/$PROJECT_ID/celostats-frontend:$COMMIT_SHA"
+      "celostats-frontend=gcr.io/$PROJECT_ID/celostats-frontend:$COMMIT_SHA"
     ]
     env:
     - "CLOUDSDK_COMPUTE_ZONE=us-west1-a"
