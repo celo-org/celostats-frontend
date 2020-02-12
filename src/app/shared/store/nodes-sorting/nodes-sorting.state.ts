@@ -16,10 +16,10 @@ export interface Column {
   first?: sortingDirection
   type?: 'icon' | 'address'
   variants?: ('xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'address' | 'sticky' | 'pre')[],
-  accessor: (node: EthstatsNode, context: Context) => string | number
-  link?: (value: string | number, context: Context) => string
-  show?: (value: string | number, context: Context) => string | number
-  color?: (value: string | number, context: Context) => color
+  accessor: (node: EthstatsNode, context: Context) => string | number | boolean
+  link?: (value: string | number | boolean, context: Context) => string
+  show?: (value: string | number | boolean, context: Context) => string | number | boolean
+  color?: (value: string | number | boolean, context: Context) => color
 }
 
 export interface Sorting {

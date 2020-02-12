@@ -31,9 +31,9 @@ export const columns: Column[] = [
     icon: 'done',
     type: 'icon',
     variants: ['xsmall'],
-    accessor: node => +node.stats?.active,
+    accessor: node => node.stats?.active,
     show: value => value ? 'wifi' : 'wifi_off',
-    color: value => value ? 'ok' : 'warn3',
+    color: value => value === true ? 'ok' : value === false ? 'warn3' : 'no',
   },
   {
     name: 'Name',
@@ -62,7 +62,7 @@ export const columns: Column[] = [
     first: -1,
     variants: ['large'],
     accessor: node => evaluateStakingState(node),
-    show: value => StakingState[value],
+    show: (value: string) => StakingState[value],
     color: value => colorRange(3 - +value, [0, 1, 2, , , , ]),
   },
   {
