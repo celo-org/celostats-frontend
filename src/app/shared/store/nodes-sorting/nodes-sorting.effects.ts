@@ -14,9 +14,9 @@ export class NodesSortingEffects {
       columns: columns
         .map(column => ({
           ...column,
-          accessor: (node, context) => column.accessor(node, context) ?? '',
+          accessor: (node, context) => column.accessor(node, context) ?? null,
           link: (value, context) => column.link?.(value, context) || undefined,
-          show: (value, context) => column.show?.(value, context) ?? value,
+          show: (value, context) => column.show?.(value, context) ?? value ?? 'n/a',
           color: (value, context) =>
             column.color?.(value, context)
             || (context?.node?.stats?.active ? 'ok' : 'no'),
