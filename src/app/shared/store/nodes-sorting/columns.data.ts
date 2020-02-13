@@ -69,18 +69,6 @@ export const columns: Column[] = [
     color: value => colorRange(3 - +value, [0, 1, 2, , , ,]),
   },
   {
-    name: 'ECDSA Public Key',
-    icon: 'vpn_key',
-    variants: ['medium'],
-    accessor: node => node.validatorData?.ecdsaPublicKey,
-  },
-  {
-    name: 'BLS Public Key',
-    icon: 'vpn_key',
-    variants: ['medium'],
-    accessor: node => node.validatorData?.blsPublicKey,
-  },
-  {
     name: 'Pending transactions',
     icon: 'hourglass_empty',
     variants: ['xsmall'],
@@ -149,5 +137,17 @@ export const columns: Column[] = [
     accessor: node => node.stats?.uptime,
     show: value => value !== null ? `${value} %` : null,
     color: value => value === null ? 'no' : colorRange(100 - +value, [, 0.1, 1, 5, 10, 20]),
+  },
+  {
+    name: 'ECDSA Public Key',
+    icon: 'lock',
+    variants: ['medium'],
+    accessor: node => node.validatorData?.ecdsaPublicKey,
+  },
+  {
+    name: 'BLS Public Key',
+    icon: 'lock',
+    variants: ['medium'],
+    accessor: node => node.validatorData?.blsPublicKey,
   },
 ]
