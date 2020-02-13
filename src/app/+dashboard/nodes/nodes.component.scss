@@ -37,7 +37,7 @@ $table-pinned-background-color: gc(s1);
     white-space: nowrap;
     padding: 4px 10px;
     font-size: 10px;
-    border-top: 1px solid mix(gc(g0), gc(g11), 6%);
+    border-top: 1px solid mix(gc(g0), gc(g11), 9%);
     box-sizing: border-box;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -150,7 +150,7 @@ $table-pinned-background-color: gc(s1);
 
   &__row--pinned &__cell {
     background: mix($table-pinned-background-color, gc(g11), 4%);
-    border-top: 1px solid mix($table-pinned-background-color, gc(g11), 12%);
+    border-top: 1px solid mix($table-pinned-background-color, gc(g11), 16%);
   }
   &__row--pinned:nth-child(odd) &__cell {
     background: mix($table-pinned-background-color, gc(g11), 8%);
