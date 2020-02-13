@@ -119,7 +119,7 @@ export const columns: Column[] = [
     icon: 'timer',
     variants: ['medium'],
     accessor: node => node.stats?.latency,
-    show: value =>  value === 0 ? `0 ms` : value ? `+${value} ms` : null,
+    show: value => value === 0 ? `0 ms` : value ? `+${value} ms` : null,
     color: value => value === null ? 'no' : colorRange(+value, [0, 10, 100, 1000, 10000]),
   },
   {
@@ -137,5 +137,17 @@ export const columns: Column[] = [
     accessor: node => node.stats?.uptime,
     show: value => value !== null ? `${value} %` : null,
     color: value => value === null ? 'no' : colorRange(100 - +value, [, 0.1, 1, 5, 10, 20]),
+  },
+  {
+    name: 'ECDSA Public Key',
+    icon: 'lock',
+    variants: ['medium'],
+    accessor: node => node.validatorData?.ecdsaPublicKey,
+  },
+  {
+    name: 'BLS Public Key',
+    icon: 'lock',
+    variants: ['medium'],
+    accessor: node => node.validatorData?.blsPublicKey,
   },
 ]
