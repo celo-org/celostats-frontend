@@ -72,13 +72,13 @@ export const columns: Column[] = [
     name: 'ECDSA Public Key',
     icon: 'vpn_key',
     variants: ['medium'],
-    accessor: node => node.validatorData?.ecdsaPublicKey || 'n/a',
+    accessor: node => node.validatorData?.ecdsaPublicKey,
   },
   {
     name: 'BLS Public Key',
     icon: 'vpn_key',
     variants: ['medium'],
-    accessor: node => node.validatorData?.blsPublicKey || 'n/a',
+    accessor: node => node.validatorData?.blsPublicKey,
   },
   {
     name: 'Pending transactions',
