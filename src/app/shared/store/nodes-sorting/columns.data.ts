@@ -69,6 +69,18 @@ export const columns: Column[] = [
     color: value => colorRange(3 - +value, [0, 1, 2, , , ,]),
   },
   {
+    name: 'ECDSA Public Key',
+    icon: 'vpn_key',
+    variants: ['medium'],
+    accessor: node => node.validatorData?.ecdsaPublicKey || 'n/a',
+  },
+  {
+    name: 'BLS Public Key',
+    icon: 'vpn_key',
+    variants: ['medium'],
+    accessor: node => node.validatorData?.blsPublicKey || 'n/a',
+  },
+  {
     name: 'Pending transactions',
     icon: 'hourglass_empty',
     variants: ['xsmall'],
@@ -119,7 +131,7 @@ export const columns: Column[] = [
     icon: 'timer',
     variants: ['medium'],
     accessor: node => node.stats?.latency,
-    show: value =>  value === 0 ? `0 ms` : value ? `+${value} ms` : null,
+    show: value => value === 0 ? `0 ms` : value ? `+${value} ms` : null,
     color: value => value === null ? 'no' : colorRange(+value, [0, 10, 100, 1000, 10000]),
   },
   {

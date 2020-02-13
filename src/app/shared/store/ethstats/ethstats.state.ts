@@ -66,6 +66,8 @@ export interface EthstatsNodeUptime {
 export interface EthstatsValidatorData {
   address: string
   affiliation: string
+  readonly blsPublicKey: string
+  readonly ecdsaPublicKey: string
   score: string
   signer: string
   registered: boolean
