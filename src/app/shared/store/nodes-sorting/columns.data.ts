@@ -4,10 +4,10 @@ import { color, colorRange, formatNumber, timeAgo } from 'src/app/shared'
 import { Column } from './nodes-sorting.state'
 
 export enum StakingState {
-  'Full Node',
-  Registered,
+  Proxy,
   Elected,
-  Proxy
+  Registered,
+  'Full Node',
 }
 
 function evaluateStakingState(node: EthstatsNode) {
@@ -41,9 +41,10 @@ export const columns: Column[] = [
   {
     name: 'Name',
     icon: 'face',
-    default: 1,
+    default: -1,
     variants: ['sticky'],
-    accessor: node => node.info?.name || '',
+    accessor: node => node.info?.name,
+    show: value => value || '',
   },
   {
     name: 'Address',
@@ -56,7 +57,8 @@ export const columns: Column[] = [
     name: 'Validator group',
     icon: 'group',
     type: 'address',
-    accessor: node => node.validatorData?.affiliation || '',
+    accessor: node => node.validatorData?.affiliation,
+    show: value => value || '',
     link: value => value && `${environment.blockscoutUrl}/address/${value}/transactions`,
   },
   {
@@ -66,7 +68,7 @@ export const columns: Column[] = [
     variants: ['large'],
     accessor: node => evaluateStakingState(node),
     show: (value: string) => StakingState[value],
-    color: value => colorRange(3 - +value, [0, 1, 2, , , ,]),
+    color: value => colorRange(+value, [0, 1, 2, , , ,]),
   },
   {
     name: 'Pending transactions',

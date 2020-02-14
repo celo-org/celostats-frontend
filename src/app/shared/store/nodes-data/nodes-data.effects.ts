@@ -101,8 +101,21 @@ export class NodesDataEffects {
       const sortingFn =
         ({column, direction}: typeof sorting.sorting) => {
           const index = columns.indexOf(column)
-          return ({columns: a}, {columns: b}) =>
-            direction * ((a[index].raw ?? -Infinity) > (b[index].raw ?? -Infinity) ? 1 : -1)
+          return ({columns: a}, {columns: b}) => {
+            a = a[index].raw
+            b = b[index].raw
+
+            if (a === b) {
+              return 0
+            }
+            if (a === null || b === null) {
+              return direction * ((a === null) ? -1 : 1)
+            }
+
+            a = typeof a !== 'string' ? a : a.toLowerCase()
+            b = typeof b !== 'string' ? b : b.toLowerCase()
+            return direction * (a > b ? -1 : 1)
+          }
         }
       return rawData
         .map(row => ({...row, pinned: pinnedNodes.includes(row.id)}))
