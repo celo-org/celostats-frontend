@@ -113,6 +113,9 @@ export interface EthstatsStats {
   peers: number
   syncing: boolean
   uptime: number
+  block?: {
+    transactions: number
+  }
 }
 
 export interface State {
