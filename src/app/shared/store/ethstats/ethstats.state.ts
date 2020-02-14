@@ -103,6 +103,7 @@ export interface EthstatsInfo {
 export interface EthstatsStats {
   active: boolean
   elected: boolean
+  registered: boolean
   proxy: boolean
   pending: number
   gasPrice: number
