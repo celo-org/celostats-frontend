@@ -66,7 +66,7 @@ export class EthstatsService {
   private serializeData(message: any): Observable<EthstatsServiceData> {
     const {action, data} = message
     if (action === 'init') {
-      return of(...data.map(data => ({action, data})))
+      return of(...data.map((node) => ({action, data: node})))
     }
     return of(message)
   }
