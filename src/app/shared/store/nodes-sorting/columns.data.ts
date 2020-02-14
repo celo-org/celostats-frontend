@@ -12,12 +12,12 @@ export enum StakingState {
 
 function evaluateStakingState(node: EthstatsNode) {
   switch (true) {
-    case node.stats?.proxy:
-      return StakingState.Proxy
     case node.validatorData?.elected || node.stats?.elected:
       return StakingState.Elected
-    case node.validatorData?.registered:
+    case node.validatorData?.registered || node.stats?.registered:
       return StakingState.Registered
+    case node.stats?.proxy:
+      return StakingState.Proxy
   }
   return StakingState['Full Node']
 }
