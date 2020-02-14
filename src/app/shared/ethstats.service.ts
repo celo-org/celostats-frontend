@@ -32,9 +32,15 @@ export class EthstatsService {
       transports: ['websocket'],
     })
     this.data$ = new Observable<any>(observer => {
-      this.socket.on('b', data => observer.next(data))
+      this.socket.on('block', data => observer.next({action: 'block', data}))
+      this.socket.on('lastBlock', data => observer.next({action: 'lastBlock', data}))
+      this.socket.on('pending', data => observer.next({action: 'pending', data}))
+      this.socket.on('latency', data => observer.next({action: 'latency', data}))
+      this.socket.on('add', data => observer.next({action: 'add', data}))
+      this.socket.on('stats', data => observer.next({action: 'stats', data}))
       this.socket.on('charts', data => observer.next({action: 'charts', data}))
-      this.socket.on('init', data => observer.next(['init', data]))
+      this.socket.on('init', data => observer.next({action: 'init', data}))
+      this.socket.on('inactive', data => observer.next({action: 'inactive', data}))
 
       this.socket.on('error', e => observer.error(e))
       this.socket.on('connect', () => this.socket.emit('ready'))
@@ -42,25 +48,12 @@ export class EthstatsService {
       // setTimeout(() => this.socket.close(), 2000)
     })
       .pipe(
-        mergeMap(_ => this.serializeData(_)),
+        mergeMap(_ => of(_)),
         share(),
       )
   }
 
   data<type extends 'node' | 'charts'>(): Observable<type extends 'node' ? EthstatsServiceDataNode : EthstatsServiceDataCharts> {
     return this.data$ as any
-  }
-
-  private serializeData(message: any): Observable<EthstatsServiceData> {
-    if (message.action && message.data) {
-      return of(message)
-    }
-    if (message instanceof Array) {
-      const [action, content] = message
-      switch (action) {
-        case 'init': return of(...content.map(data => ({action, data})))
-      }
-    }
-    return EMPTY
   }
 }
