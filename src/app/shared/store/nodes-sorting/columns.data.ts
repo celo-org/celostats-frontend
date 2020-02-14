@@ -79,7 +79,7 @@ export const columns: Column[] = [
     name: 'Transactions in last block',
     icon: 'compare_arrows',
     variants: ['xsmall'],
-    accessor: node => !node.stats.active ? null : node.stats?.block?.transactions || 0,
+    accessor: node => !node.stats?.active ? null : node.stats?.block?.transactions || 0,
   },
   {
     name: 'Block',
