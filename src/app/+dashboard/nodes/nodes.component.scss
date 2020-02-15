@@ -137,10 +137,10 @@ $table-pinned-background-color: gc(s1);
         text-overflow: ellipsis;
         white-space: nowrap;
 
-        &:before {
-          content: '0x';
-          opacity: 0.6;
-        }
+        // &:before {
+        //   content: '0x';
+        //   opacity: 0.6;
+        // }
       }
     }
   }
