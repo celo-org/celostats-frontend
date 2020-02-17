@@ -16,6 +16,7 @@ import { actions as settingsActions } from 'src/app/shared/store/settings'
 })
 export class DashboardNodesRowComponent implements OnInit, OnDestroy {
   @Input() rowId: string
+  @HostBinding('class.table__row--pinned') pinned: boolean
 
   columns$: Observable<DataRow['columns'] & {classNames: string}[]>
   pinned$: Observable<boolean>
@@ -59,6 +60,7 @@ export class DashboardNodesRowComponent implements OnInit, OnDestroy {
     this.pinned$ = this.store.pipe(
       select(isSettingsPinnedNode, {rowId: this.rowId}),
       shareReplay(),
+      tap(pinned => this.pinned = pinned),
     )
 
     this.checkChanges()
