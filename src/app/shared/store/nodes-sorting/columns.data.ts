@@ -49,14 +49,14 @@ export const columns: Column[] = [
     name: 'Address',
     icon: 'person',
     type: 'address',
-    accessor: node => node.id,
+    accessor: node => node.id.toString(),
     link: value => value && `${environment.blockscoutUrl}/address/${value}/transactions`,
   },
   {
     name: 'Validator group',
     icon: 'group',
     type: 'address',
-    accessor: node => node.validatorData?.affiliation || '',
+    accessor: node => node.validatorData?.affiliation?.toString() || '',
     link: value => value && `${environment.blockscoutUrl}/address/${value}/transactions`,
   },
   {

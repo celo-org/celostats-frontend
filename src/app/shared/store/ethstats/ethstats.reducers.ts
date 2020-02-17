@@ -1,7 +1,8 @@
 import { Action, createReducer, on, createSelector, createFeatureSelector } from '@ngrx/store'
 
-import { AppState, State } from './ethstats.state'
+import { AppState, EthstatsNode, NodesState, State } from './ethstats.state'
 import * as ethstatsActions from './ethstats.actions'
+import { BlockStats } from "../../../../../../celostats-server/src/server/interfaces/BlockStats"
 
 export const initialState: State = {
   nodes: {},
@@ -11,14 +12,14 @@ export const initialState: State = {
 
 const ethstatsReducer = createReducer(
   initialState,
-  on(ethstatsActions.updateNodes, (state, {nodes}) => {
-    const nodesState = {...state.nodes}
+  on(ethstatsActions.updateNodes, (state: State, {nodes}) => {
+    const nodesState: NodesState = {...state.nodes}
+    console.log(nodes)
     nodes
-      .forEach(node => {
-        nodesState[node.id] = {
-          ...nodesState[node.id],
+      .forEach((node: EthstatsNode) => {
+        nodesState[node.id.toString()] = {
           ...node,
-          updates: (nodesState[node.id]?.updates || 0) + 1,
+          updates: (nodesState[node.id.toString()]?.updates || 0) + 1
         }
       })
     return {
@@ -26,13 +27,39 @@ const ethstatsReducer = createReducer(
       nodes: nodesState,
     }
   }),
-  on(ethstatsActions.setLastBlock, (state, {block}) => ({
+  on(ethstatsActions.updateBlocks, (state: State, {blocks}) => {
+    const nodesState: NodesState = {...state.nodes}
+    console.log(blocks)
+    blocks
+      .forEach((block: BlockStats) => {
+        if (nodesState[block.id.toString()]) {
+          nodesState[block.id.toString()].block = block.block;
+          nodesState[block.id.toString()].updates = 1
+        }
+      })
+    return {
+      ...state,
+      nodes: nodesState,
+    }
+  }),
+  on(ethstatsActions.updatePending, (state: State, {pending}) => {
+    const nodesState: NodesState = {...state.nodes}
+    if (nodesState[pending.id.toString()]) {
+      nodesState[pending.id.toString()].pending = pending.pending;
+      nodesState[pending.id.toString()].updates = 1
+    }
+    return {
+      ...state,
+      nodes: nodesState,
+    }
+  }),
+  on(ethstatsActions.setLastBlock, (state: State, {block}) => ({
     ...state,
     lastBlock: state.lastBlock?.number > block.number
       ? state.lastBlock
       : block,
   })),
-  on(ethstatsActions.updateCharts, (state, {charts}) => ({
+  on(ethstatsActions.updateCharts, (state: State, {charts}) => ({
     ...state,
     charts: {
       ...charts,

@@ -2,7 +2,18 @@ import { Injectable } from '@angular/core'
 import { Store, select, Action } from '@ngrx/store'
 import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects'
 import { interval } from 'rxjs'
-import { mergeMap, filter, first, pairwise, startWith, tap, map, combineLatest, distinctUntilChanged, throttle } from 'rxjs/operators'
+import {
+  mergeMap,
+  filter,
+  first,
+  pairwise,
+  startWith,
+  tap,
+  map,
+  combineLatest,
+  distinctUntilChanged,
+  throttle
+} from 'rxjs/operators'
 
 import { actions as ethstatsActions } from 'src/app/shared/store/ethstats'
 import * as fromEthstats from 'src/app/shared/store/ethstats'
@@ -61,8 +72,8 @@ export class NodesDataEffects {
         const time = Date.now()
         return nodes
           .filter(({id}) => !!id)
-          .map(node => ({
-            id: node.id,
+          .map((node) => ({
+            id: node.id.toString(),
             columns: columns
               .map(column => {
                 const context = {block, node, time}
@@ -78,7 +89,7 @@ export class NodesDataEffects {
               }),
           }))
       }),
-      map(rows => nodesDataActions.updateRawData({rows})),
+      map((rows) => nodesDataActions.updateRawData({rows})),
     ))
 
   cleanRowsData$ = createEffect(() => this.actions$.pipe(
@@ -109,5 +120,6 @@ export class NodesDataEffects {
     map(ids => nodesDataActions.setCleanDataId({ids})),
   ))
 
-  constructor(private actions$: Actions, private store: Store<fromEthstats.AppState & fromNodesSorting.AppState & AppState>) {}
+  constructor(private actions$: Actions, private store: Store<fromEthstats.AppState & fromNodesSorting.AppState & AppState>) {
+  }
 }

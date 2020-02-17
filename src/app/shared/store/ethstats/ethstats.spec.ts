@@ -1,10 +1,6 @@
-import { TestBed, inject } from '@angular/core/testing'
-import { provideMockActions } from '@ngrx/effects/testing'
-import { Observable } from 'rxjs'
-
 import { reduceActions } from '../testing-utils'
 
-import { EthstatsNode, EthstatsBlock, EthstatsCharts } from './ethstats.state'
+import { EthstatsNode, EthstatsBlock } from './ethstats.state'
 import * as fromEthstats from './ethstats.reducers'
 import * as ethstatesActions from './ethstats.actions'
 

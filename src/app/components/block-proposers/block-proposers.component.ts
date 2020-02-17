@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core'
 import { ReplaySubject } from 'rxjs'
+import { Miner } from "../../../../../celostats-server/src/server/interfaces/Miner"
 
-import { EthstatsMinedBlock } from 'src/app/shared/store/ethstats'
 
 @Component({
   selector: 'component-block-proposers',
@@ -10,9 +10,9 @@ import { EthstatsMinedBlock } from 'src/app/shared/store/ethstats'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlockProposersComponent implements OnChanges {
-  @Input() data: EthstatsMinedBlock[]
+  @Input() data: Miner[]
 
-  data$ = new ReplaySubject<(EthstatsMinedBlock & {blocks: boolean[]})[]>()
+  data$ = new ReplaySubject<(Miner & {blocks: boolean[]})[]>()
 
   ngOnChanges(changes: SimpleChanges) {
     // Note: only allows positive values
@@ -20,7 +20,7 @@ export class BlockProposersComponent implements OnChanges {
       if (JSON.stringify(changes.data.currentValue) === JSON.stringify(changes.data.previousValue)) {
         return
       }
-      const data: EthstatsMinedBlock[] = changes.data.currentValue
+      const data: Miner[] = changes.data.currentValue
       const cleanData = data
         .map((mined, i, list) => ({
           ...mined,
@@ -34,7 +34,7 @@ export class BlockProposersComponent implements OnChanges {
     }
   }
 
-  trackRow(i: number, block: EthstatsMinedBlock): string {
+  trackRow(i: number, block: Miner): string {
     return String(block.number)
   }
 

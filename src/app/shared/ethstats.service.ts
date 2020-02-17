@@ -4,23 +4,18 @@ import { mergeMap, share } from 'rxjs/operators'
 import * as io from 'socket.io-client'
 
 import { environment } from 'src/environments/environment'
+import { Pending } from "../../../../celostats-server/src/server/interfaces/Pending"
+import { NodeSummary } from "../../../../celostats-server/src/server/interfaces/NodeSummary"
+import { BlockStats } from "../../../../celostats-server/src/server/interfaces/BlockStats"
+import { ChartData } from "../../../../celostats-server/src/server/interfaces/ChartData"
+import { BlockSummary } from "../../../../celostats-server/src/server/interfaces/BlockSummary"
+import { StatsResponse } from "../../../../celostats-server/src/server/interfaces/StatsResponse"
 
-import { EthstatsNode, EthstatsCharts } from './store/ethstats'
 
-// todo: Sebastian: i tried a long time removing this and i failed. Please make it more obvious
-export interface EthstatsServiceDataNode {
-  action: 'init' | 'add' | 'block' | 'pending' | 'stats'
-  data: Partial<EthstatsNode>
+export type EthstatsServiceData = {
+  action: string,
+  data: Pending | NodeSummary | BlockStats | ChartData | BlockSummary | StatsResponse
 }
-
-// todo: Sebastian: i tried a long time removing this and i failed. Please make it more obvious
-export interface EthstatsServiceDataCharts {
-  action: 'charts'
-  data: EthstatsCharts
-}
-
-// todo: Sebastian: i tried a long time removing this and i failed. Please make it more obvious
-export type EthstatsServiceData = EthstatsServiceDataNode | EthstatsServiceDataCharts
 
 @Injectable({
   providedIn: 'root'
@@ -57,12 +52,13 @@ export class EthstatsService {
       )
   }
 
-  // todo: Sebastian: i tried a long time removing this and i failed. Please make it more obvious
-  data<type extends 'node' | 'charts'>(): Observable<type extends 'node' ? EthstatsServiceDataNode : EthstatsServiceDataCharts> {
+  data<T>(): Observable<{
+    action: string,
+    data: T
+  }> {
     return this.data$ as any
   }
 
-  // todo: Sebastian: i tried a long time removing this and i failed. Please make it more obvious
   private serializeData(message: any): Observable<EthstatsServiceData> {
     const {action, data} = message
     if (action === 'init') {
