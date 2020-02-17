@@ -57,7 +57,7 @@ export const columns: Column[] = [
     name: 'Validator group',
     icon: 'group',
     type: 'address',
-    accessor: node => node.validatorData?.affiliation,
+    accessor: node => node.validatorData?.affiliation?.toString(),
     show: value => value || '',
     link: value => value && `${environment.blockscoutUrl}/address/${value}/transactions`,
   },
