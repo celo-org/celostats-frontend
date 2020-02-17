@@ -7,15 +7,19 @@ import { environment } from 'src/environments/environment'
 
 import { EthstatsNode, EthstatsCharts } from './store/ethstats'
 
+// todo: Sebastian: i tried a long time removing this and i failed. Please make it more obvious
 export interface EthstatsServiceDataNode {
   action: 'init' | 'add' | 'block' | 'pending' | 'stats'
   data: Partial<EthstatsNode>
 }
+
+// todo: Sebastian: i tried a long time removing this and i failed. Please make it more obvious
 export interface EthstatsServiceDataCharts {
   action: 'charts'
   data: EthstatsCharts
 }
 
+// todo: Sebastian: i tried a long time removing this and i failed. Please make it more obvious
 export type EthstatsServiceData = EthstatsServiceDataNode | EthstatsServiceDataCharts
 
 @Injectable({
@@ -32,9 +36,15 @@ export class EthstatsService {
       transports: ['websocket'],
     })
     this.data$ = new Observable<any>(observer => {
-      this.socket.on('b', data => observer.next(data))
+      this.socket.on('block', data => observer.next({action: 'block', data}))
+      this.socket.on('lastBlock', data => observer.next({action: 'lastBlock', data}))
+      this.socket.on('pending', data => observer.next({action: 'pending', data}))
+      this.socket.on('latency', data => observer.next({action: 'latency', data}))
+      this.socket.on('add', data => observer.next({action: 'add', data}))
+      this.socket.on('stats', data => observer.next({action: 'stats', data}))
       this.socket.on('charts', data => observer.next({action: 'charts', data}))
-      this.socket.on('init', data => observer.next(['init', data]))
+      this.socket.on('init', data => observer.next({action: 'init', data}))
+      this.socket.on('inactive', data => observer.next({action: 'inactive', data}))
 
       this.socket.on('error', e => observer.error(e))
       this.socket.on('connect', () => this.socket.emit('ready'))
@@ -47,20 +57,17 @@ export class EthstatsService {
       )
   }
 
+  // todo: Sebastian: i tried a long time removing this and i failed. Please make it more obvious
   data<type extends 'node' | 'charts'>(): Observable<type extends 'node' ? EthstatsServiceDataNode : EthstatsServiceDataCharts> {
     return this.data$ as any
   }
 
+  // todo: Sebastian: i tried a long time removing this and i failed. Please make it more obvious
   private serializeData(message: any): Observable<EthstatsServiceData> {
-    if (message.action && message.data) {
-      return of(message)
+    const {action, data} = message
+    if (action === 'init') {
+      return of(...data.map((node) => ({action, data: node})))
     }
-    if (message instanceof Array) {
-      const [action, content] = message
-      switch (action) {
-        case 'init': return of(...content.map(data => ({action, data})))
-      }
-    }
-    return EMPTY
+    return of(message)
   }
 }
