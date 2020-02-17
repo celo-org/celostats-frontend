@@ -9,17 +9,19 @@ export interface Context {
   time: number
 }
 
+type columnValues = string | number | boolean | number[]
+
 export interface Column {
   name: string
   icon: string
   default?: sortingDirection
   first?: sortingDirection
-  type?: 'icon' | 'address'
+  type?: 'icon' | 'address' | 'chart'
   variants?: ('xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'address' | 'sticky' | 'pre')[],
-  accessor: (node: EthstatsNode, context: Context) => string | number | boolean
-  link?: (value: string | number | boolean, context: Context) => string
-  show?: (value: string | number | boolean, context: Context) => string | number | boolean
-  color?: (value: string | number | boolean, context: Context) => color
+  accessor: (node: EthstatsNode, context: Context) => columnValues
+  link?: (value: columnValues, context: Context) => string
+  show?: (value: columnValues, context: Context) => columnValues
+  color?: (value: columnValues, context: Context) => color
 }
 
 export interface Sorting {
