@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
+import { Component, OnInit, OnDestroy, Input, HostBinding, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
 import { Store, select } from '@ngrx/store'
 import { Observable, Subscription } from 'rxjs'
-import { pluck, map, share, pairwise, filter, startWith, scan, tap } from 'rxjs/operators'
+import { pluck, map, share, shareReplay, pairwise, filter, startWith, scan, tap, first } from 'rxjs/operators'
 
-import { AppState, getNodesDataDataOf } from 'src/app/shared/store'
+import { AppState, getNodesDataDataOf, isSettingsPinnedNode } from 'src/app/shared/store'
 import { DataRow } from 'src/app/shared/store/nodes-data'
 import { Column } from 'src/app/shared/store/nodes-sorting'
+import { actions as settingsActions } from 'src/app/shared/store/settings'
 
 @Component({
   selector: 'app-dashboard-nodes-row',
@@ -15,11 +16,19 @@ import { Column } from 'src/app/shared/store/nodes-sorting'
 })
 export class DashboardNodesRowComponent implements OnInit, OnDestroy {
   @Input() rowId: string
+  @HostBinding('class.table__row--pinned') pinned: boolean
 
   columns$: Observable<DataRow['columns'] & {classNames: string}[]>
+  pinned$: Observable<boolean>
   private row$: Observable<DataRow>
   private changeDetectionsSubscription: Subscription
   private readonly detachAfter = 6
+
+  get isAttached() {
+    // Internal data to know if the change detector is attached
+    // tslint:disable-next-line no-bitwise
+    return !!((this.cdr as any)._lView[2] & 128)
+  }
 
   constructor(private store: Store<AppState>, private cdr: ChangeDetectorRef) { }
 
@@ -48,6 +57,11 @@ export class DashboardNodesRowComponent implements OnInit, OnDestroy {
           }))
       )
     )
+    this.pinned$ = this.store.pipe(
+      select(isSettingsPinnedNode, {rowId: this.rowId}),
+      shareReplay(),
+      tap(pinned => this.pinned = pinned),
+    )
 
     this.checkChanges()
   }
@@ -69,15 +83,11 @@ export class DashboardNodesRowComponent implements OnInit, OnDestroy {
       scan((updates, [a, b]) => a !== b ? 0 : updates + 1, 0),
     )
       .subscribe(updates => {
-        // Internal data to know if the change detector is attached
-        // tslint:disable-next-line no-bitwise
-        const isAttached = !!((this.cdr as any)._lView[2] & 128)
-
-        if (!isAttached && !updates) {
+        if (!this.isAttached && !updates) {
           this.cdr.detectChanges()
           this.cdr.reattach()
         }
-        if (isAttached && updates >= this.detachAfter) {
+        if (this.isAttached && updates >= this.detachAfter) {
           this.cdr.detach()
         }
       })
@@ -87,6 +97,20 @@ export class DashboardNodesRowComponent implements OnInit, OnDestroy {
     if (url) {
       window.open(url, '_blank')
     }
+  }
+
+  pinNode() {
+    this.store
+      .pipe(
+        select(isSettingsPinnedNode, {rowId: this.rowId}),
+        first(),
+      )
+      .subscribe(pinned => {
+        this.store.dispatch(settingsActions.pinNode({node: this.rowId, pin: !pinned}))
+        if (!this.isAttached) {
+          this.cdr.detectChanges()
+        }
+      })
   }
 
   trackColumn(index: number): string {
