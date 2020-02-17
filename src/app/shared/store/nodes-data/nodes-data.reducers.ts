@@ -36,4 +36,4 @@ export const select = (state: AppState) => state.nodesData
 export const getRawData = (state: State) => state.rawData
 export const getRawDataList = (state: State) => Object.values(state.rawData)
 export const getCleanData = (state: State) => state.cleanDataIds
-export const getDataOf = (state: State, {rowId}: {rowId: string}) => state.rawData[rowId]
+export const getDataOf = (state: State, {rowId}: {rowId: string}) => state?.rawData[rowId]
