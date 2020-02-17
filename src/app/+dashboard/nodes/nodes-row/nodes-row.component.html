@@ -1,4 +1,4 @@
-<ng-host [class.table__row--pinned]="pinned$ | async"></ng-host>
+<span hidden [attr.data-pinned]="pinned$ | async"></span>
 <ng-container *ngIf="columns$ | async as columns">
   <td
     class="table__cell table__cell--xsmall table__cell--type-icon table__cell-pin"
