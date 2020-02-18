@@ -55,7 +55,7 @@ export class EthstatsService {
 
       events.forEach((event: Events) => this.socket.on(event, (data) => observer.next({event, data})))
 
-      this.socket.on(Events.Connection, () => this.socket.emit(Events.Ready))
+      this.socket.on('connect', () => this.socket.emit(Events.Ready))
 
       this.socket.on(Events.ClientPing, (data: ClientPing) => this.socket.emit(
         Events.ClientPong,
