@@ -44,13 +44,13 @@ describe('Ethstats Store reducers', () => {
 
   it('should update a node', () => {
     const states = reduceActions(reducer, [
-      ethstatesActions.updateNodes({nodes: [{id: '0x0', propagationAvg: 10}] as unknown as EthstatsNode[]}),
-      ethstatesActions.updateNodes({nodes: [{id: '0x0', propagationAvg: 20}] as unknown as EthstatsNode[]}),
+      ethstatesActions.updateNodes({nodes: [{id: '0x0', stats: {propagationAvg: 10}}] as unknown as EthstatsNode[]}),
+      ethstatesActions.updateNodes({nodes: [{id: '0x0', stats: {propagationAvg: 20}}] as unknown as EthstatsNode[]}),
     ], true)
 
     const nodePropagationAvg = states
       .map(fromEthstats.getNodesList)
-      .map(nodes => nodes[0]?.propagationAvg)
+      .map(nodes => nodes[0]?.stats?.propagationAvg)
 
     expect(nodePropagationAvg).toEqual([undefined, 10, 20])
   })

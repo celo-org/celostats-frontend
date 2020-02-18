@@ -7,8 +7,6 @@ export interface EthstatsCharts extends ChartData {
 }
 
 export interface EthstatsNode extends NodeSummary {
-  propagationAvg: number
-  pending?: number
   block?: BlockSummary
   updates: number
 }
