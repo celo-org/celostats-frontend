@@ -1,10 +1,12 @@
-import { EthstatsNode, EthstatsBlock, EthstatsCharts, EthstatsMinedBlock } from 'src/app/shared/store/ethstats'
+import { EthstatsNode, EthstatsCharts } from 'src/app/shared/store/ethstats'
 import { color, colorRange, formatNumber } from 'src/app/shared'
 import { infoType } from 'src/app/components/info'
 import { chartData, chartSizeType } from 'src/app/components/chart'
+import { BlockSummary } from '@celo/celostats-server/src/server/interfaces/BlockSummary'
+import { Miner } from '@celo/celostats-server/src/server/interfaces/Miner'
 
 export interface Context {
-  block: EthstatsBlock
+  block: BlockSummary
   nodes: EthstatsNode[]
   charts: EthstatsCharts
   time: number
@@ -23,7 +25,7 @@ interface InfoBlockSingle extends InfoBlockBase<'small' | 'big', string | number
 interface InfoBlockChart extends InfoBlockBase<'chart', any[], chartData> {
   sizeType: chartSizeType
 }
-interface InfoBlockBlockProposers extends InfoBlockBase<'block-proposers', EthstatsMinedBlock[]> {}
+interface InfoBlockBlockProposers extends InfoBlockBase<'block-proposers', Miner[]> {}
 export type InfoBlock = InfoBlockSingle | InfoBlockChart | InfoBlockBlockProposers
 
 export const blocks: InfoBlock[][] = [

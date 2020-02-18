@@ -9,6 +9,7 @@
     "src/polyfills.ts"
   ],
   "include": [
-    "src/**/*.d.ts"
+    "src/**/*.d.ts",
+    "./node_modules/@celo/celostats-server/src/server/server/Events.ts"
   ]
 }

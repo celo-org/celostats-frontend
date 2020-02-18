@@ -15,10 +15,10 @@ const ethstatsReducer = createReducer(
     const nodesState = {...state.nodes}
     nodes
       .forEach(node => {
-        nodesState[node.id] = {
-          ...nodesState[node.id],
+        nodesState[node.id.toString()] = {
+          ...nodesState[node.id.toString()],
           ...node,
-          updates: (nodesState[node.id]?.updates || 0) + 1,
+          updates: (nodesState[node.id.toString()]?.updates || 0) + 1,
         }
       })
     return {
