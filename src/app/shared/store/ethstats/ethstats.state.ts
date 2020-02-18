@@ -1,6 +1,6 @@
-import { ChartData } from "../../../../../../celostats-server/src/server/interfaces/ChartData"
-import { NodeSummary } from "../../../../../../celostats-server/src/server/interfaces/NodeSummary"
-import { BlockSummary } from "../../../../../../celostats-server/src/server/interfaces/BlockSummary"
+import { ChartData } from "@celo/celostats-server/src/server/interfaces/ChartData"
+import { NodeSummary } from "@celo/celostats-server/src/server/interfaces/NodeSummary"
+import { BlockSummary } from "@celo/celostats-server/src/server/interfaces/BlockSummary"
 
 export interface EthstatsCharts extends ChartData {
   updates: number

@@ -4,12 +4,12 @@ import { mergeMap, share } from 'rxjs/operators'
 import * as io from 'socket.io-client'
 
 import { environment } from 'src/environments/environment'
-import { Pending } from "../../../../celostats-server/src/server/interfaces/Pending"
-import { NodeSummary } from "../../../../celostats-server/src/server/interfaces/NodeSummary"
-import { BlockStats } from "../../../../celostats-server/src/server/interfaces/BlockStats"
-import { ChartData } from "../../../../celostats-server/src/server/interfaces/ChartData"
-import { BlockSummary } from "../../../../celostats-server/src/server/interfaces/BlockSummary"
-import { StatsResponse } from "../../../../celostats-server/src/server/interfaces/StatsResponse"
+import { Pending } from "@celo/celostats-server/src/server/interfaces/Pending"
+import { NodeSummary } from "@celo/celostats-server/src/server/interfaces/NodeSummary"
+import { BlockStats } from "@celo/celostats-server/src/server/interfaces/BlockStats"
+import { ChartData } from "@celo/celostats-server/src/server/interfaces/ChartData"
+import { BlockSummary } from "@celo/celostats-server/src/server/interfaces/BlockSummary"
+import { StatsResponse } from "@celo/celostats-server/src/server/interfaces/StatsResponse"
 
 
 export type EthstatsServiceData = {

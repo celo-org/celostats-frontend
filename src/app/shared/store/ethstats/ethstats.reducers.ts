@@ -2,7 +2,7 @@ import { Action, createReducer, on, createSelector, createFeatureSelector } from
 
 import { AppState, EthstatsNode, NodesState, State } from './ethstats.state'
 import * as ethstatsActions from './ethstats.actions'
-import { BlockStats } from "../../../../../../celostats-server/src/server/interfaces/BlockStats"
+import { BlockStats } from "@celo/celostats-server/src/server/interfaces/BlockStats"
 
 export const initialState: State = {
   nodes: {},

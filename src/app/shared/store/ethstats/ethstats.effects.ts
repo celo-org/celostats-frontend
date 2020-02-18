@@ -6,9 +6,9 @@ import { mergeMap, map, bufferTime, filter, distinct } from 'rxjs/operators'
 import { EthstatsService } from 'src/app/shared/ethstats.service'
 import * as ethstatsActions from './ethstats.actions'
 import { EthstatsBlock, EthstatsCharts, EthstatsNode } from "./ethstats.state"
-import { BlockStats } from "../../../../../../celostats-server/src/server/interfaces/BlockStats"
-import { StatsResponse } from "../../../../../../celostats-server/src/server/interfaces/StatsResponse"
-import { Pending } from "../../../../../../celostats-server/src/server/interfaces/Pending"
+import { BlockStats } from "@celo/celostats-server/src/server/interfaces/BlockStats"
+import { StatsResponse } from "@celo/celostats-server/src/server/interfaces/StatsResponse"
+import { Pending } from "@celo/celostats-server/src/server/interfaces/Pending"
 
 @Injectable()
 export class EthstatsEffects {
