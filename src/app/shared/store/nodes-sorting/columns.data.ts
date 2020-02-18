@@ -133,6 +133,12 @@ export const columns: Column[] = [
     color: (value, {node}) => value === null ? 'no' : colorRange(+value, [10, 100, 1000, 10000, 100000]),
   },
   {
+    name: 'Propagation history',
+    icon: 'wifi_tethering',
+    type: 'chart',
+    accessor: node => node.history || [],
+  },
+  {
     name: 'Uptime',
     icon: 'offline_bolt',
     variants: ['small'],

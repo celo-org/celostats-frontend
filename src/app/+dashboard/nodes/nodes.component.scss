@@ -82,6 +82,18 @@ $table-pinned-background-color: gc(s1);
       &-address {
         text-overflow: initial;
       }
+      &-chart {
+        width: 120px + 20px;
+        padding: 0 10px;
+        position: relative;
+
+        component-micro-chart {
+          position: absolute;
+          top: 0;
+          left: 50%;
+          margin-left: -50%;
+        }
+      }
     }
 
     &-link {
@@ -217,6 +229,11 @@ $table-pinned-background-color: gc(s1);
       &:hover {
         background: none;
       }
+    }
+    &--head-type-chart {
+      width: 120px + 20px;
+      pointer-events: none;
+      cursor: default;
     }
   }
 }
