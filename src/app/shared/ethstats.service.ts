@@ -5,26 +5,35 @@ import * as io from 'socket.io-client'
 
 import { environment } from 'src/environments/environment'
 
-import { EthstatsCharts, EthstatsNode } from './store/ethstats'
 import { Events } from '@celo/celostats-server/src/server/server/Events'
+import { BlockSummary } from '@celo/celostats-server/src/server/interfaces/BlockSummary'
+import { Pending } from '@celo/celostats-server/src/server/interfaces/Pending'
+import { NodeSummary } from '@celo/celostats-server/src/server/interfaces/NodeSummary'
+import { ChartData } from '@celo/celostats-server/src/server/interfaces/ChartData'
+import { Latency } from '@celo/celostats-server/src/server/interfaces/Latency'
 
-export interface EthstatsServiceDataNode {
-  action: Events.Init | Events.Add | Events.Block | Events.Pending | Events.Stats
-  data: Partial<EthstatsNode>
+export interface Event<e extends Events, D> {
+  event: e
+  data: D
 }
 
-export interface EthstatsServiceDataCharts {
-  action: Events.Charts
-  data: EthstatsCharts
-}
-
-export type EthstatsServiceData = EthstatsServiceDataNode | EthstatsServiceDataCharts
+export type EthstatsEvent =
+  Event<Events.Block, BlockSummary> |
+  Event<Events.Pending, Pending> |
+  Event<Events.Add, NodeSummary> |
+  // todo make this a real interface
+  Event<Events.LastBlock, {
+    highestBlock: number
+  }> |
+  Event<Events.Latency, Latency> |
+  Event<Events.Init, NodeSummary[]> |
+  Event<Events.Charts, ChartData>
 
 @Injectable({
   providedIn: 'root'
 })
 export class EthstatsService {
-  private data$: Observable<EthstatsServiceData>
+  private data$: Observable<EthstatsEvent>
   private socket: SocketIOClient.Socket
 
   constructor() {
@@ -41,10 +50,10 @@ export class EthstatsService {
         Events.Charts, Events.Stats, Events.LastBlock
       ]
 
-      events.forEach((action) => this.socket.on(action, data => observer.next({action, data})))
+      events.forEach((event: Events) => this.socket.on(event, (data) => observer.next({event, data})))
 
-      this.socket.on(Events[Events.Error], e => observer.error(e))
-      this.socket.on(Events[Events.Connection], () => this.socket.emit('ready'))
+      this.socket.on(Events.Error, e => observer.error(e))
+      this.socket.on(Events.Connection, () => this.socket.emit('ready'))
 
       // setTimeout(() => this.socket.close(), 2000)
     })
@@ -54,14 +63,14 @@ export class EthstatsService {
       )
   }
 
-  data<type extends 'node' | 'charts'>(): Observable<type extends 'node' ? EthstatsServiceDataNode : EthstatsServiceDataCharts> {
+  data<T>(): Observable<EthstatsEvent> {
     return this.data$ as any
   }
 
-  private serializeData(message: any): Observable<EthstatsServiceData> {
-    const {action, data} = message
-    if (action === 'init') {
-      return of(...data.map((node) => ({action, data: node})))
+  private serializeData(message: EthstatsEvent): Observable<EthstatsEvent> {
+    const {event, data} = message
+    if (event === Events.Init) {
+      return of(...data.map((node: NodeSummary) => ({event, data: node})))
     }
     return of(message)
   }
