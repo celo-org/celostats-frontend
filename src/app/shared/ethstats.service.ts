@@ -12,7 +12,7 @@ import { ChartData } from '@celo/celostats-server/src/server/interfaces/ChartDat
 import { Latency } from '@celo/celostats-server/src/server/interfaces/Latency'
 import { BlockStats } from "@celo/celostats-server/src/server/interfaces/BlockStats"
 
-export interface Event<E extends Events | string, D> {
+export interface Event<E extends Events, D> {
   event: E
   data: D
 }
@@ -67,7 +67,7 @@ export class EthstatsService {
 
   private serializeData(message: EthstatsEvent): Observable<EthstatsEvent> {
     if (message.event === Events.Init) {
-      return of(...message.data.map(node => ({event: Events.Add, data: node}) as Event<Events.Add, NodeSummary>))
+      return of(...message.data.map(node => ({event: Events.Add, data: node}) as any))
     }
     return of(message)
   }
