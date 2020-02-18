@@ -11,6 +11,11 @@ import { NodeSummary } from '@celo/celostats-server/src/server/interfaces/NodeSu
 import { ChartData } from '@celo/celostats-server/src/server/interfaces/ChartData'
 import { Latency } from '@celo/celostats-server/src/server/interfaces/Latency'
 import { BlockStats } from "@celo/celostats-server/src/server/interfaces/BlockStats"
+import { NodeDetails } from "@celo/celostats-server/src/server/interfaces/NodeDetails"
+import { StatsResponse } from "@celo/celostats-server/src/server/interfaces/StatsResponse"
+import { ClientPing } from "@celo/celostats-server/src/server/interfaces/ClientPing"
+import { ClientPong } from "@celo/celostats-server/src/server/interfaces/ClientPong"
+import { LastBlock } from "@celo/celostats-server/src/server/interfaces/LastBlock"
 
 export interface Event<E extends Events, D> {
   event: E
@@ -20,12 +25,10 @@ export interface Event<E extends Events, D> {
 export type EthstatsEvent =
   Event<Events.Block, BlockStats> |
   Event<Events.Pending, Pending> |
-  Event<Events.Add, NodeSummary> |
-  // todo make this a real interface
-  Event<Events.LastBlock, {
-    highestBlock: number
-  }> |
+  Event<Events.Add, NodeDetails> |
+  Event<Events.LastBlock, LastBlock> |
   Event<Events.Latency, Latency> |
+  Event<Events.Stats, StatsResponse> |
   Event<Events.Init, NodeSummary[]> |
   Event<Events.Charts, ChartData>
 
@@ -52,8 +55,16 @@ export class EthstatsService {
 
       events.forEach((event: Events) => this.socket.on(event, (data) => observer.next({event, data})))
 
-      this.socket.on(Events.Error, e => observer.error(e))
-      this.socket.on(Events.Connection, () => this.socket.emit('ready'))
+      this.socket.on(Events.Connection, () => this.socket.emit(Events.Ready))
+
+      this.socket.on(Events.ClientPing, (data: ClientPing) => this.socket.emit(
+        Events.ClientPong,
+        <ClientPong>{
+          serverTime: data.serverTime,
+          clientTime: Date.now()
+        }))
+
+      this.socket.on(Events.Error, (e) => observer.error(e))
     })
       .pipe(
         mergeMap(_ => this.serializeData(_)),
@@ -61,7 +72,7 @@ export class EthstatsService {
       )
   }
 
-  data<T extends Events, D>(): Observable<EthstatsEvent> {
+  data<E extends Events, D>(): Observable<EthstatsEvent> {
     return this.data$ as any
   }
 
