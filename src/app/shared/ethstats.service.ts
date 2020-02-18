@@ -6,11 +6,11 @@ import * as io from 'socket.io-client'
 import { environment } from 'src/environments/environment'
 
 import { Events } from '@celo/celostats-server/src/server/server/Events'
-import { BlockSummary } from '@celo/celostats-server/src/server/interfaces/BlockSummary'
 import { Pending } from '@celo/celostats-server/src/server/interfaces/Pending'
 import { NodeSummary } from '@celo/celostats-server/src/server/interfaces/NodeSummary'
 import { ChartData } from '@celo/celostats-server/src/server/interfaces/ChartData'
 import { Latency } from '@celo/celostats-server/src/server/interfaces/Latency'
+import { BlockStats } from "@celo/celostats-server/src/server/interfaces/BlockStats"
 
 export interface Event<E extends Events | string, D> {
   event: E
@@ -18,7 +18,7 @@ export interface Event<E extends Events | string, D> {
 }
 
 export type EthstatsEvent =
-  Event<Events.Block, BlockSummary> |
+  Event<Events.Block, BlockStats> |
   Event<Events.Pending, Pending> |
   Event<Events.Add, NodeSummary> |
   // todo make this a real interface
@@ -61,7 +61,7 @@ export class EthstatsService {
       )
   }
 
-  data<T>(): Observable<EthstatsEvent> {
+  data<T extends Events, D>(): Observable<EthstatsEvent> {
     return this.data$ as any
   }
 
