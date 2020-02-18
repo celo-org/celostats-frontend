@@ -12,7 +12,7 @@ export interface EthstatsBlock extends BlockSummary {
 
 export interface EthstatsNode extends NodeSummary {
   pending?: number
-  block?: BlockSummary
+  block?: EthstatsBlock
   updates: number
 }
 
