@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core'
 import { ReplaySubject } from 'rxjs'
-import { Miner } from "@celo/celostats-server/src/server/interfaces/Miner"
+import { Miner } from '@celo/celostats-server/src/server/interfaces/Miner'
 
 @Component({
   selector: 'component-block-proposers',

@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core'
-import { Observable, of, EMPTY } from 'rxjs'
+import { Observable, of } from 'rxjs'
 import { mergeMap, share } from 'rxjs/operators'
 import * as io from 'socket.io-client'
 
 import { environment } from 'src/environments/environment'
 
-import { EthstatsNode, EthstatsCharts } from './store/ethstats'
+import { EthstatsCharts, EthstatsNode } from './store/ethstats'
+import { Events } from '@celo/celostats-server/src/server/server/Events'
 
 // todo: Sebastian: i tried a long time removing this and i failed. Please make it more obvious
 export interface EthstatsServiceDataNode {
-  action: 'init' | 'add' | 'block' | 'pending' | 'stats'
+  action: Events.Init | Events.Add | Events.Block | Events.Pending | Events.Stats
   data: Partial<EthstatsNode>
 }
 
 // todo: Sebastian: i tried a long time removing this and i failed. Please make it more obvious
 export interface EthstatsServiceDataCharts {
-  action: 'charts'
+  action: Events.Charts
   data: EthstatsCharts
 }
 
@@ -36,18 +37,17 @@ export class EthstatsService {
       transports: ['websocket'],
     })
     this.data$ = new Observable<any>(observer => {
-      this.socket.on('block', data => observer.next({action: 'block', data}))
-      this.socket.on('lastBlock', data => observer.next({action: 'lastBlock', data}))
-      this.socket.on('pending', data => observer.next({action: 'pending', data}))
-      this.socket.on('latency', data => observer.next({action: 'latency', data}))
-      this.socket.on('add', data => observer.next({action: 'add', data}))
-      this.socket.on('stats', data => observer.next({action: 'stats', data}))
-      this.socket.on('charts', data => observer.next({action: 'charts', data}))
-      this.socket.on('init', data => observer.next({action: 'init', data}))
-      this.socket.on('inactive', data => observer.next({action: 'inactive', data}))
 
-      this.socket.on('error', e => observer.error(e))
-      this.socket.on('connect', () => this.socket.emit('ready'))
+      const events: Events[] = [
+        Events.Init, Events.Block, Events.Latency,
+        Events.Pending, Events.Add, Events.Inactive,
+        Events.Charts, Events.Stats, Events.LastBlock
+      ]
+
+      events.forEach((action) => this.socket.on(action, data => observer.next({action, data})))
+
+      this.socket.on(Events[Events.Error], e => observer.error(e))
+      this.socket.on(Events[Events.Connection], () => this.socket.emit('ready'))
 
       // setTimeout(() => this.socket.close(), 2000)
     })

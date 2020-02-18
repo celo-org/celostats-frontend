@@ -2,8 +2,8 @@ import { EthstatsNode, EthstatsCharts } from 'src/app/shared/store/ethstats'
 import { color, colorRange, formatNumber } from 'src/app/shared'
 import { infoType } from 'src/app/components/info'
 import { chartData, chartSizeType } from 'src/app/components/chart'
-import { BlockSummary } from "@celo/celostats-server/src/server/interfaces/BlockSummary"
-import { Miner } from "@celo/celostats-server/src/server/interfaces/Miner"
+import { BlockSummary } from '@celo/celostats-server/src/server/interfaces/BlockSummary'
+import { Miner } from '@celo/celostats-server/src/server/interfaces/Miner'
 
 export interface Context {
   block: BlockSummary
