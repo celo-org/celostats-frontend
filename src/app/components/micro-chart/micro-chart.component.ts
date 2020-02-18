@@ -20,6 +20,7 @@ enum BarColor {
 })
 export class MicroChartComponent implements OnInit, OnChanges, OnDestroy {
   @Input() data: number[]
+  @Input() show: (n :number) => string = _ => String(_)
   @ViewChild('canvas', {static: true}) canvas: ElementRef
 
   private onData$ = new Subject()
@@ -84,13 +85,14 @@ export class MicroChartComponent implements OnInit, OnChanges, OnDestroy {
       .map(_ => ({
         value: Math.max(_ / max, 0),
         color: this.getColor(_),
+        label: this.show(_),
       }))
 
     if (this.cleanData.length < this.barNum) {
       this.cleanData = [
         ...this.cleanData,
         ...new Array(this.barNum - this.cleanData.length)
-          .fill({value: 0, color: BarColor.no}),
+          .fill({value: 0, color: BarColor.no, label: 'n/a'}),
       ] as any[]
     }
   }

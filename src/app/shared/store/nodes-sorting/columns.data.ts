@@ -137,6 +137,7 @@ export const columns: Column[] = [
     icon: 'wifi_tethering',
     type: 'chart',
     accessor: node => node.history || [],
+    show: value => `${value} ms`,
   },
   {
     name: 'Uptime',

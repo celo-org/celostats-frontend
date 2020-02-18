@@ -28,7 +28,7 @@
         <span class="table__cell-address-start">{{column.value.substr(2, 34)}}</span>
         <span class="table__cell-address-end">{{column.value.substr(36, 42)}}</span>
       </span><!--
-   --><component-micro-chart *ngSwitchCase="'chart'" [data]="column.value"></component-micro-chart><!--
+   --><component-micro-chart *ngSwitchCase="'chart'" [data]="column.value" [show]="column?.show"></component-micro-chart><!--
    --><ng-container *ngSwitchDefault>{{column.value}}</ng-container>
     </span>
   </td>
