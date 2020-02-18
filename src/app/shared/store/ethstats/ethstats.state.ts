@@ -6,13 +6,10 @@ export interface EthstatsCharts extends ChartData {
   updates: number
 }
 
-export interface EthstatsBlock extends BlockSummary {
-  updates: number
-}
-
 export interface EthstatsNode extends NodeSummary {
+  propagationAvg: number
   pending?: number
-  block?: EthstatsBlock
+  block?: BlockSummary
   updates: number
 }
 
@@ -22,7 +19,7 @@ export interface NodesState {
 
 export interface State {
   nodes: NodesState
-  lastBlock: EthstatsBlock
+  lastBlock: BlockSummary
   charts: EthstatsCharts
 }
 
