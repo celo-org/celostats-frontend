@@ -3,12 +3,12 @@ import { NodeSummary } from '@celo/celostats-server/src/server/interfaces/NodeSu
 import { BlockSummary } from '@celo/celostats-server/src/server/interfaces/BlockSummary'
 
 export interface EthstatsCharts extends ChartData {
-  updates: number
+  updates?: number
 }
 
 export interface EthstatsNode extends NodeSummary {
   block?: BlockSummary
-  updates: number
+  updates?: number
 }
 
 export interface NodesState {

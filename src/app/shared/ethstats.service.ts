@@ -12,8 +12,8 @@ import { NodeSummary } from '@celo/celostats-server/src/server/interfaces/NodeSu
 import { ChartData } from '@celo/celostats-server/src/server/interfaces/ChartData'
 import { Latency } from '@celo/celostats-server/src/server/interfaces/Latency'
 
-export interface Event<e extends Events, D> {
-  event: e
+export interface Event<E extends Events | string, D> {
+  event: E
   data: D
 }
 
@@ -54,8 +54,6 @@ export class EthstatsService {
 
       this.socket.on(Events.Error, e => observer.error(e))
       this.socket.on(Events.Connection, () => this.socket.emit('ready'))
-
-      // setTimeout(() => this.socket.close(), 2000)
     })
       .pipe(
         mergeMap(_ => this.serializeData(_)),
@@ -68,9 +66,8 @@ export class EthstatsService {
   }
 
   private serializeData(message: EthstatsEvent): Observable<EthstatsEvent> {
-    const {event, data} = message
-    if (event === Events.Init) {
-      return of(...data.map((node: NodeSummary) => ({event, data: node})))
+    if (message.event === Events.Init) {
+      return of(...message.data.map(node => ({event: Events.Add, data: node}) as Event<Events.Add, NodeSummary>))
     }
     return of(message)
   }
