@@ -5,10 +5,12 @@ import { bufferTime, distinct, filter, map, mergeMap } from 'rxjs/operators'
 
 import { EthstatsService } from 'src/app/shared/ethstats.service'
 import * as ethstatsActions from './ethstats.actions'
-import { Events } from '@celo/celostats-server/src/server/server/Events'
-import { ChartData } from '@celo/celostats-server/src/server/interfaces/ChartData'
 import { EthstatsNode } from './ethstats.state'
-import { BlockStats } from '@celo/celostats-server/src/server/interfaces/BlockStats'
+import { Events } from '@celo/celostats-server/src/server/server/Events'
+import {
+  ChartData,
+  BlockStats
+} from '@celo/celostats-server/src/server/interfaces'
 
 @Injectable()
 export class EthstatsEffects {

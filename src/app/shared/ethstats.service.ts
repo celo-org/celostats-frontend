@@ -6,16 +6,18 @@ import * as io from 'socket.io-client'
 import { environment } from 'src/environments/environment'
 
 import { Events } from '@celo/celostats-server/src/server/server/Events'
-import { Pending } from '@celo/celostats-server/src/server/interfaces/Pending'
-import { NodeSummary } from '@celo/celostats-server/src/server/interfaces/NodeSummary'
-import { ChartData } from '@celo/celostats-server/src/server/interfaces/ChartData'
-import { Latency } from '@celo/celostats-server/src/server/interfaces/Latency'
-import { BlockStats } from '@celo/celostats-server/src/server/interfaces/BlockStats'
-import { NodeDetails } from '@celo/celostats-server/src/server/interfaces/NodeDetails'
-import { StatsResponse } from '@celo/celostats-server/src/server/interfaces/StatsResponse'
-import { ClientPing } from '@celo/celostats-server/src/server/interfaces/ClientPing'
-import { ClientPong } from '@celo/celostats-server/src/server/interfaces/ClientPong'
-import { LastBlock } from '@celo/celostats-server/src/server/interfaces/LastBlock'
+import {
+  BlockStats,
+  ChartData,
+  ClientPing,
+  ClientPong,
+  LastBlock,
+  Latency,
+  NodeDetails,
+  NodeSummary,
+  Pending,
+  StatsResponse
+} from '@celo/celostats-server/src/server/interfaces'
 
 export interface Event<E extends Events, D> {
   event: E

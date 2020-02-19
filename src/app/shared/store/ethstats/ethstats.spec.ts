@@ -3,7 +3,7 @@ import { reduceActions } from '../testing-utils'
 import { EthstatsNode } from './ethstats.state'
 import * as fromEthstats from './ethstats.reducers'
 import * as ethstatesActions from './ethstats.actions'
-import { BlockSummary } from '@celo/celostats-server/src/server/interfaces/BlockSummary'
+import { BlockSummary } from '@celo/celostats-server/src/server/interfaces'
 
 const reducer = fromEthstats.reducer
 
