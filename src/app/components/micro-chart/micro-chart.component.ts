@@ -1,4 +1,15 @@
-import { Component, Input, ViewChild, OnInit, OnChanges, OnDestroy, SimpleChanges, ChangeDetectionStrategy, ElementRef, ChangeDetectorRef } from '@angular/core'
+import {
+  Component,
+  Input,
+  ViewChild,
+  OnInit,
+  OnChanges,
+  OnDestroy,
+  SimpleChanges,
+  ChangeDetectionStrategy,
+  ElementRef,
+  ChangeDetectorRef,
+} from '@angular/core'
 import { Subject, Subscription, animationFrameScheduler, interval, fromEvent } from 'rxjs'
 import { debounceTime, shareReplay, throttle, map, tap, combineLatest, mergeMap, takeUntil, startWith, endWith, distinctUntilChanged } from 'rxjs/operators'
 

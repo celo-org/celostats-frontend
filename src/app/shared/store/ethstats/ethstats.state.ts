@@ -10,6 +10,7 @@ export interface EthstatsCharts extends ChartData {
 
 export interface EthstatsNode extends NodeSummary {
   block?: BlockSummary
+  history?: number[]
   updates?: number
 }
 
