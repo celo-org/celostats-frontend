@@ -5,26 +5,40 @@ import * as io from 'socket.io-client'
 
 import { environment } from 'src/environments/environment'
 
-import { EthstatsCharts, EthstatsNode } from './store/ethstats'
 import { Events } from '@celo/celostats-server/src/server/server/Events'
+import {
+  BlockStats,
+  ChartData,
+  ClientPing,
+  ClientPong,
+  LastBlock,
+  Latency,
+  NodeDetails,
+  NodeSummary,
+  Pending,
+  StatsResponse
+} from '@celo/celostats-server/src/server/interfaces'
 
-export interface EthstatsServiceDataNode {
-  action: Events.Init | Events.Add | Events.Block | Events.Pending | Events.Stats
-  data: Partial<EthstatsNode>
+export interface Event<E extends Events, D> {
+  event: E
+  data: D
 }
 
-export interface EthstatsServiceDataCharts {
-  action: Events.Charts
-  data: EthstatsCharts
-}
-
-export type EthstatsServiceData = EthstatsServiceDataNode | EthstatsServiceDataCharts
+export type EthstatsEvent =
+  Event<Events.Block, BlockStats> |
+  Event<Events.Pending, Pending> |
+  Event<Events.Add, NodeDetails> |
+  Event<Events.LastBlock, LastBlock> |
+  Event<Events.Latency, Latency> |
+  Event<Events.Stats, StatsResponse> |
+  Event<Events.Init, NodeSummary[]> |
+  Event<Events.Charts, ChartData>
 
 @Injectable({
   providedIn: 'root'
 })
 export class EthstatsService {
-  private data$: Observable<EthstatsServiceData>
+  private data$: Observable<EthstatsEvent>
   private socket: SocketIOClient.Socket
 
   constructor() {
@@ -41,12 +55,18 @@ export class EthstatsService {
         Events.Charts, Events.Stats, Events.LastBlock
       ]
 
-      events.forEach((action) => this.socket.on(action, data => observer.next({action, data})))
+      events.forEach((event: Events) => this.socket.on(event, (data) => observer.next({event, data})))
 
-      this.socket.on(Events[Events.Error], e => observer.error(e))
-      this.socket.on(Events[Events.Connection], () => this.socket.emit('ready'))
+      this.socket.on('connect', () => this.socket.emit(Events.Ready))
 
-      // setTimeout(() => this.socket.close(), 2000)
+      this.socket.on(Events.ClientPing, (data: ClientPing) => this.socket.emit(
+        Events.ClientPong, {
+          serverTime: data.serverTime,
+          clientTime: Date.now()
+        } as ClientPong
+      ))
+
+      this.socket.on(Events.Error, (e) => observer.error(e))
     })
       .pipe(
         mergeMap(_ => this.serializeData(_)),
@@ -54,14 +74,13 @@ export class EthstatsService {
       )
   }
 
-  data<type extends 'node' | 'charts'>(): Observable<type extends 'node' ? EthstatsServiceDataNode : EthstatsServiceDataCharts> {
+  data<E extends Events, D>(): Observable<EthstatsEvent> {
     return this.data$ as any
   }
 
-  private serializeData(message: any): Observable<EthstatsServiceData> {
-    const {action, data} = message
-    if (action === 'init') {
-      return of(...data.map((node) => ({action, data: node})))
+  private serializeData(message: EthstatsEvent): Observable<EthstatsEvent> {
+    if (message.event === Events.Init) {
+      return of(...message.data.map(node => ({event: Events.Add, data: node}) as any))
     }
     return of(message)
   }

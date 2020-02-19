@@ -5,7 +5,12 @@ import { bufferTime, distinct, filter, map, mergeMap } from 'rxjs/operators'
 
 import { EthstatsService } from 'src/app/shared/ethstats.service'
 import * as ethstatsActions from './ethstats.actions'
+import { EthstatsNode } from './ethstats.state'
 import { Events } from '@celo/celostats-server/src/server/server/Events'
+import {
+  ChartData,
+  BlockStats
+} from '@celo/celostats-server/src/server/interfaces'
 
 @Injectable()
 export class EthstatsEffects {
@@ -17,17 +22,20 @@ export class EthstatsEffects {
     } = {}) => this.actions$.pipe(
     ofType(ROOT_EFFECTS_INIT),
     mergeMap(() =>
-      this.ethstatsService.data<'node'>().pipe(
+      this.ethstatsService.data<Events, Partial<EthstatsNode>>().pipe(
         bufferTime(bufferWindow, scheduler),
         filter(({length}) => !!length),
         map((buffer) => ethstatsActions.updateNodes({
           nodes: buffer
-            .filter(({action, data}) =>
+            .filter(({event, data}) =>
               data &&
-              [Events.Init, Events.Add, Events.Block, Events.Pending, Events.Stats, Events.Inactive]
-                .includes(action)
+              [
+                Events.Add, Events.Block, Events.Latency,
+                Events.Pending, Events.Stats, Events.Inactive
+              ]
+                .includes(event)
             )
-            .map(({data}) => data)
+            .map(({data}) => data as Partial<EthstatsNode>)
         })),
         filter(({nodes: {length}}) => !!length),
       ),
@@ -38,10 +46,11 @@ export class EthstatsEffects {
   listenNewBlocks$ = createEffect(() => this.actions$.pipe(
     ofType(ROOT_EFFECTS_INIT),
     mergeMap(() =>
-      this.ethstatsService.data<'node'>().pipe(
-        filter(({action}) => action === Events.Block),
-        distinct(({data}) => data.block.number),
-        map(({data: {block}}) => ethstatsActions.setLastBlock({block})),
+      this.ethstatsService.data<Events.Block, BlockStats>().pipe(
+        filter(({event}) => event === Events.Block),
+        map(({data}) => data as BlockStats),
+        distinct((data) => data.block.number),
+        map(({block}) => ethstatsActions.setLastBlock({block})),
       ),
     ),
   ))
@@ -49,9 +58,10 @@ export class EthstatsEffects {
   listenChartsUpdates$ = createEffect(() => this.actions$.pipe(
     ofType(ROOT_EFFECTS_INIT),
     mergeMap(() =>
-      this.ethstatsService.data<'charts'>().pipe(
-        filter(({action}) => action === Events.Charts),
-        map(({data: charts}) => ethstatsActions.updateCharts({charts}))
+      this.ethstatsService.data<Events.Charts, ChartData>().pipe(
+        filter(({event}) => event === Events.Charts),
+        map(({data}) => data as ChartData),
+        map((data) => ethstatsActions.updateCharts({charts: data}))
       ),
     ),
   ))

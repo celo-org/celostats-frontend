@@ -34,9 +34,9 @@ describe('EthstatsEffects', () => {
 
     spyOn(ethstatsService, 'data').and.returnValue(
       cold('-t-aat-b', {
-        t: {action: 'test', data: {}},
-        a: {action: 'block', data: {block: {number: 1, test: 'block'}}},
-        b: {action: 'block', data: {block: {number: 2, test: 'block'}}},
+        t: {event: 'test', data: {}},
+        a: {event: 'block', data: {block: {number: 1, test: 'block'}}},
+        b: {event: 'block', data: {block: {number: 2, test: 'block'}}},
       }),
     )
 
@@ -57,11 +57,11 @@ describe('EthstatsEffects', () => {
 
     spyOn(ethstatsService, 'data').and.returnValue(
       cold(ethstatsDataMarbles, {
-        a: {action: 'add', data: {id: '0xa'}},
-        b: {action: 'block', data: {id: '0xb'}},
-        c: {action: 'pending', data: {id: '0xc'}},
-        d: {action: 'stats', data: {id: '0xd'}},
-        x: {action: 'test', data: {}},
+        a: {event: 'add', data: {id: '0xa'}},
+        b: {event: 'block', data: {id: '0xb'}},
+        c: {event: 'pending', data: {id: '0xc'}},
+        d: {event: 'stats', data: {id: '0xd'}},
+        x: {event: 'test', data: {}},
       }),
     )
 
@@ -83,9 +83,9 @@ describe('EthstatsEffects', () => {
 
     spyOn(ethstatsService, 'data').and.returnValue(
       cold('-t-at-b', {
-        t: {action: 'test', data: {}},
-        a: {action: 'charts', data: {test: 'charts', n: 1}},
-        b: {action: 'charts', data: {test: 'charts', n: 2}},
+        t: {event: 'test', data: {}},
+        a: {event: 'charts', data: {test: 'charts', n: 1}},
+        b: {event: 'charts', data: {test: 'charts', n: 2}},
       }),
     )
 
