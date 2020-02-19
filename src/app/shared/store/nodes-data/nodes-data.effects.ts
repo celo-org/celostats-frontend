@@ -83,7 +83,8 @@ export class NodesDataEffects {
                 return {
                   raw: value,
                   type: column.type,
-                  value: column.show(value, context),
+                  show: column.type === 'chart' ? column.show : undefined,
+                  value: column.type === 'chart' ? value : column.show(value, context),
                   style: column.color(value, context),
                   link: column.link(value, context),
                   variants: column.variants,

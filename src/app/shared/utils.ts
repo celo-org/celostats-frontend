@@ -18,11 +18,17 @@ export function formatNumber(n: number, decimals: number = 2) {
 }
 
 
-export function timeAgo(time: number) {
+export function timeAgo(time: number, useMs: boolean = false, msLimit: number = 1000) {
   if (time === null || time === undefined) {
     return null
   }
   time = +time
+  if (useMs) {
+    if (time < msLimit) {
+      return `${Math.floor(time)} ms`
+    }
+    time /= 1000
+  }
   if (time < 60) {
     return `${Math.floor(time)} s`
   }

@@ -1,0 +1,9 @@
+@import '../../styles/index';
+
+@mixin micro-chart() {
+
+}
+
+.micro-chart {
+  @include micro-chart;
+}
