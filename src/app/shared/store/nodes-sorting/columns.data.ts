@@ -62,6 +62,11 @@ export const columns: Column[] = [
     link: value => value && `${environment.blockscoutUrl}/address/${value}/transactions`,
   },
   {
+    name: 'Validator group name',
+    icon: 'group',
+    accessor: node => node.validatorData?.validatorGroupName,
+  },
+  {
     name: 'Validator',
     icon: 'done_all',
     first: -1,
