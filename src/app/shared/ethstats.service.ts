@@ -5,8 +5,8 @@ import * as io from 'socket.io-client'
 
 import { environment } from 'src/environments/environment'
 
-import { Events } from '@celo/celostats-server/src/server/server/Events'
 import {
+  Events,
   BlockStats,
   ChartData,
   ClientPing,
@@ -17,7 +17,7 @@ import {
   NodeSummary,
   Pending,
   StatsResponse
-} from '@celo/celostats-server/src/server/interfaces'
+} from '@celo/celostats-server'
 
 export interface Event<E extends Events, D> {
   event: E

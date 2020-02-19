@@ -22,7 +22,7 @@
     "@angular/platform-browser": "^9.0.1",
     "@angular/platform-browser-dynamic": "^9.0.1",
     "@angular/router": "^9.0.1",
-    "@celo/celostats-server": "https://github.com/celo-org/celostats-server.git#e7eb74afccd3a776a6ccb5535a1fbf037eaae386",
+    "@celo/celostats-server": "https://github.com/celo-org/celostats-server.git#249eeadba0f8eca82447b071d051ad868512fb3f",
     "@ngrx/effects": "^8.6.0",
     "@ngrx/store": "^8.6.0",
     "@ngrx/store-devtools": "^8.6.0",
