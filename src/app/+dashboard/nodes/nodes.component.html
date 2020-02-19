@@ -17,7 +17,7 @@
         matRipple
         matRippleColor="rgba(255, 255, 255, 0.2)"
         *ngFor="let column of columns$ | async; trackBy: trackColumn"
-        [class]="'table__cell ' + variants(column.variants)"
+        [class]="'table__cell ' + variants(column)"
         (click)="changeOrderBy(column)"
         [matTooltip]="column.name">
 

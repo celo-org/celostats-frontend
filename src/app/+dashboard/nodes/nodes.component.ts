@@ -53,10 +53,13 @@ export class DashboardNodesComponent implements OnInit {
     this.store.dispatch(nodesSortingActions.orderBy({column}))
   }
 
-  variants(variants: Column['variants']) {
-    return (variants || [])
-      .map(variant => ` table__cell--${variant} `)
-      .join() as any
+  variants({variants, type}: Column) {
+    return [
+      ...(variants || [])
+        .map(variant => ` table__cell--${variant} `),
+      ...(type ? [` table__cell--head-type-${type} `] : []),
+    ]
+      .join()
   }
 
   trackColumn(index: number): string {

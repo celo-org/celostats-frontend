@@ -4,6 +4,7 @@ import { Column } from 'src/app/shared/store/nodes-sorting'
 export interface DataValue {
   raw: ReturnType<Column['accessor']>
   value: ReturnType<Column['show']>
+  show?: Column['show']
   type?: Column['type']
   style?: ReturnType<Column['color']>
   link?: ReturnType<Column['link']>

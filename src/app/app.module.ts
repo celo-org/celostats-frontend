@@ -22,6 +22,7 @@ import { DASHBOARD_COMPONENTS } from './+dashboard'
 import { BlockProposersModule } from './components/block-proposers'
 import { ChartModule } from './components/chart'
 import { InfoModule } from './components/info'
+import { MicroChartModule } from './components/micro-chart'
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { InfoModule } from './components/info'
     BlockProposersModule,
     ChartModule,
     InfoModule,
+    MicroChartModule,
   ],
   providers: [
     ...PROVIDERS,
