@@ -130,6 +130,8 @@ $table-pinned-background-color: gc(s1);
       width: $size;
       font-size: $size;
       text-align: center;
+      position: relative;
+      top: 1px;
     }
 
     &-icon--pinned.mat-icon {

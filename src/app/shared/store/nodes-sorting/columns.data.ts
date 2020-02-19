@@ -129,7 +129,7 @@ export const columns: Column[] = [
     icon: 'wifi_tethering',
     variants: ['medium'],
     accessor: node => node.block?.propagation,
-    show: (value, {node}) => value ? `${value} ms` : null,
+    show: (value, {node}) => value ? timeAgo(value as any, true, 10000) : null,
     color: (value, {node}) => value === null ? 'no' : colorRange(+value, [10, 100, 1000, 10000, 100000]),
   },
   {
@@ -137,7 +137,7 @@ export const columns: Column[] = [
     icon: 'wifi_tethering',
     type: 'chart',
     accessor: node => node.history || [],
-    show: value => `${value} ms`,
+    show: value => timeAgo(value as any, true, 5000),
   },
   {
     name: 'Uptime',
