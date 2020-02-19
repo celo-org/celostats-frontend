@@ -5,7 +5,7 @@ import { chartData, chartSizeType } from 'src/app/components/chart'
 import {
   BlockSummary,
   Miner
-} from '@celo/celostats-server/src/server/interfaces'
+} from '@celo/celostats-server'
 
 export interface Context {
   block: BlockSummary
