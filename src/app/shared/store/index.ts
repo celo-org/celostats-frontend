@@ -41,6 +41,7 @@ export const getRawDataNodes = createSelector(RawData.select, RawData.getNodes)
 export const getRawDataNodesList = createSelector(RawData.select, RawData.getNodesList)
 export const getRawDataLastBlock = createSelector(RawData.select, RawData.getLastBlock)
 export const getRawDataCharts = createSelector(RawData.select, RawData.getChars)
+export const getRawDataValidatorGroups = createSelector(RawData.select, RawData.getValidatorsGroups)
 
 // Nodes (sorting)
 export const getNodesSortingColumns = createSelector(NodesSorting.select, NodesSorting.getColumns)
