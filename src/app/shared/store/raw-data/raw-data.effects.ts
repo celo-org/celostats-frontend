@@ -4,6 +4,7 @@ import { asyncScheduler } from 'rxjs'
 import { bufferTime, distinct, filter, map, mergeMap } from 'rxjs/operators'
 
 import { EthstatsService } from 'src/app/shared/ethstats.service'
+import { AllGroupNamesQueryService } from 'src/app/shared/graphql'
 import * as rawDataActions from './raw-data.actions'
 import { Node } from './raw-data.state'
 import {
@@ -66,6 +67,21 @@ export class RawDataEffects {
     ),
   ))
 
-  constructor(private actions$: Actions, private ethstatsService: EthstatsService) {
-  }
+  getValidatorGroupsData$ = createEffect(() => this.actions$.pipe(
+    ofType(ROOT_EFFECTS_INIT),
+    mergeMap(() =>
+      this.allGroupNamesQuery
+        .watch(undefined, {pollInterval: 60 * 1000})
+        .valueChanges,
+    ),
+    filter(({loading}) => !loading),
+    map(({data}) => data.groups),
+    map(groups => rawDataActions.updateValidatorGroups({groups})),
+  ))
+
+  constructor(
+    private actions$: Actions,
+    private ethstatsService: EthstatsService,
+    private allGroupNamesQuery: AllGroupNamesQueryService,
+  ) { }
 }
