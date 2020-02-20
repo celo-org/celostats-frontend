@@ -7,6 +7,7 @@ export const environment = {
   ethstatsService: 'wss://baklava-ethstats.celo-testnet.org',
   // ethstatsService: 'ws://localhost:3000',
   blockscoutUrl: 'https://baklava-blockscout.celo-testnet.org',
+  graphqlBlockscoutUrl: 'https://baklava-blockscout.celo-testnet.org/graphiql',
 }
 
 /*
