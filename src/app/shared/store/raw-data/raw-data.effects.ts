@@ -4,8 +4,8 @@ import { asyncScheduler } from 'rxjs'
 import { bufferTime, distinct, filter, map, mergeMap } from 'rxjs/operators'
 
 import { EthstatsService } from 'src/app/shared/ethstats.service'
-import * as ethstatsActions from './ethstats.actions'
-import { EthstatsNode } from './ethstats.state'
+import * as rawDataActions from './raw-data.actions'
+import { Node } from './raw-data.state'
 import {
   Events,
   ChartData,
@@ -13,7 +13,7 @@ import {
 } from '@celo/celostats-server'
 
 @Injectable()
-export class EthstatsEffects {
+export class RawDataEffects {
 
   listenNewNodes$ = createEffect(() => (
     {
@@ -22,10 +22,10 @@ export class EthstatsEffects {
     } = {}) => this.actions$.pipe(
     ofType(ROOT_EFFECTS_INIT),
     mergeMap(() =>
-      this.ethstatsService.data<Events, Partial<EthstatsNode>>().pipe(
+      this.ethstatsService.data<Events, Partial<Node>>().pipe(
         bufferTime(bufferWindow, scheduler),
         filter(({length}) => !!length),
-        map((buffer) => ethstatsActions.updateNodes({
+        map((buffer) => rawDataActions.updateNodes({
           nodes: buffer
             .filter(({event, data}) =>
               data &&
@@ -35,7 +35,7 @@ export class EthstatsEffects {
               ]
                 .includes(event)
             )
-            .map(({data}) => data as Partial<EthstatsNode>)
+            .map(({data}) => data as Partial<Node>)
         })),
         filter(({nodes: {length}}) => !!length),
       ),
@@ -50,7 +50,7 @@ export class EthstatsEffects {
         filter(({event}) => event === Events.Block),
         map(({data}) => data as BlockStats),
         distinct((data) => data.block.number),
-        map(({block}) => ethstatsActions.setLastBlock({block})),
+        map(({block}) => rawDataActions.setLastBlock({block})),
       ),
     ),
   ))
@@ -61,7 +61,7 @@ export class EthstatsEffects {
       this.ethstatsService.data<Events.Charts, ChartData>().pipe(
         filter(({event}) => event === Events.Charts),
         map(({data}) => data as ChartData),
-        map((data) => ethstatsActions.updateCharts({charts: data}))
+        map((data) => rawDataActions.updateCharts({charts: data}))
       ),
     ),
   ))

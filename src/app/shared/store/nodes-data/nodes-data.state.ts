@@ -1,4 +1,3 @@
-import { EthstatsNode } from 'src/app/shared/store/ethstats'
 import { Column } from 'src/app/shared/store/nodes-sorting'
 
 export interface DataValue {

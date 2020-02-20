@@ -4,7 +4,6 @@ import { Observable, BehaviorSubject, interval, of, merge, animationFrameSchedul
 import { share, map, first, filter, delay, mergeMap, distinctUntilChanged, throttle, skip } from 'rxjs/operators'
 
 import { AppState, getNodesDataCleanData, getNodesSortingColumns, getNodesSortingSorting } from 'src/app/shared/store'
-import { EthstatsNode } from 'src/app/shared/store/ethstats'
 import { Column, Sorting, actions as nodesSortingActions } from 'src/app/shared/store/nodes-sorting'
 import { color } from 'src/app/shared'
 

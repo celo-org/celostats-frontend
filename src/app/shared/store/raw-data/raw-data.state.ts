@@ -4,26 +4,26 @@ import {
   BlockSummary
 } from '@celo/celostats-server'
 
-export interface EthstatsCharts extends ChartData {
+export interface RawDataCharts extends ChartData {
   updates?: number
 }
 
-export interface EthstatsNode extends NodeSummary {
+export interface Node extends NodeSummary {
   block?: BlockSummary
   history?: number[]
   updates?: number
 }
 
 export interface NodesState {
-  [id: string]: EthstatsNode
+  [id: string]: Node
 }
 
 export interface State {
   nodes: NodesState
   lastBlock: BlockSummary
-  charts: EthstatsCharts
+  charts: RawDataCharts
 }
 
 export interface AppState {
-  ethstats: State
+  rawData: State
 }

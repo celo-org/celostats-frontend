@@ -9,20 +9,20 @@ import { Effect } from '@ngrx/effects'
 
 import { environment } from 'src/environments/environment'
 
-import * as Ethstats from './ethstats'
+import * as RawData from './raw-data'
 import * as NodesSorting from './nodes-sorting'
 import * as NodesData from './nodes-data'
 import * as Settings from './settings'
 
 export const effects: any[] = [
-  Ethstats.Effects,
+  RawData.Effects,
   NodesSorting.Effects,
   NodesData.Effects,
   Settings.Effects,
 ]
 
 export type AppState =
-  Ethstats.AppState &
+  RawData.AppState &
   NodesSorting.AppState &
   NodesData.AppState &
   Settings.AppState
@@ -30,17 +30,17 @@ export type AppState =
 export const metaReducers: MetaReducer<AppState>[] = !environment.production ? [] : []
 
 export const reducers: ActionReducerMap<AppState> = {
-  ethstats: Ethstats.reducer,
+  rawData: RawData.reducer,
   nodesSorting: NodesSorting.reducer,
   nodesData: NodesData.reducer,
   settings: Settings.reducer,
 }
 
-// Ethstats Selectors
-export const getEthstatsNodes = createSelector(Ethstats.select, Ethstats.getNodes)
-export const getEthstatsNodesList = createSelector(Ethstats.select, Ethstats.getNodesList)
-export const getEthstatsLastBlock = createSelector(Ethstats.select, Ethstats.getLastBlock)
-export const getEthstatsCharts = createSelector(Ethstats.select, Ethstats.getChars)
+// RawData Selectors
+export const getRawDataNodes = createSelector(RawData.select, RawData.getNodes)
+export const getRawDataNodesList = createSelector(RawData.select, RawData.getNodesList)
+export const getRawDataLastBlock = createSelector(RawData.select, RawData.getLastBlock)
+export const getRawDataCharts = createSelector(RawData.select, RawData.getChars)
 
 // Nodes (sorting)
 export const getNodesSortingColumns = createSelector(NodesSorting.select, NodesSorting.getColumns)

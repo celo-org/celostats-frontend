@@ -1,7 +1,7 @@
 import { Action, createReducer, on, createSelector, createFeatureSelector } from '@ngrx/store'
 
-import { AppState, State } from './ethstats.state'
-import * as ethstatsActions from './ethstats.actions'
+import { AppState, State } from './raw-data.state'
+import * as rawDataActions from './raw-data.actions'
 
 export const initialState: State = {
   nodes: {},
@@ -9,9 +9,9 @@ export const initialState: State = {
   charts: null,
 }
 
-const ethstatsReducer = createReducer(
+const rawDataReducer = createReducer(
   initialState,
-  on(ethstatsActions.updateNodes, (state, {nodes}) => {
+  on(rawDataActions.updateNodes, (state, {nodes}) => {
     const nodesState = {...state.nodes}
     nodes
       .forEach(node => {
@@ -26,13 +26,13 @@ const ethstatsReducer = createReducer(
       nodes: nodesState,
     }
   }),
-  on(ethstatsActions.setLastBlock, (state, {block}) => ({
+  on(rawDataActions.setLastBlock, (state, {block}) => ({
     ...state,
     lastBlock: state.lastBlock?.number > block.number
       ? state.lastBlock
       : block,
   })),
-  on(ethstatsActions.updateCharts, (state, {charts}) => ({
+  on(rawDataActions.updateCharts, (state, {charts}) => ({
     ...state,
     charts: {
       ...charts,
@@ -42,10 +42,10 @@ const ethstatsReducer = createReducer(
 )
 
 export function reducer(state: State | undefined, action: Action) {
-  return ethstatsReducer(state, action)
+  return rawDataReducer(state, action)
 }
 
-export const select = (state: AppState) => state.ethstats
+export const select = (state: AppState) => state.rawData
 
 export const getNodes = (state: State) => state.nodes
 export const getNodesList = (state: State) => Object.values(state.nodes)

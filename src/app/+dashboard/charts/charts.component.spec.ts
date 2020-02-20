@@ -10,7 +10,7 @@ describe('DahsboardChartsComponent', () => {
   let component: DahsboardChartsComponent
   let fixture: ComponentFixture<DahsboardChartsComponent>
   const initialState = {
-    ethstats: {nodes: [], lastBlock: {}, charts: {}},
+    rawData: {nodes: [], lastBlock: {}, charts: {}},
     nodesData: {rawData: {}},
     nodesSorting: {columns: []},
   }

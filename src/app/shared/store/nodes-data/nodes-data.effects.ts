@@ -15,8 +15,8 @@ import {
   throttle
 } from 'rxjs/operators'
 
-import { actions as ethstatsActions } from 'src/app/shared/store/ethstats'
-import * as fromEthstats from 'src/app/shared/store/ethstats'
+import { actions as rawDataActions } from 'src/app/shared/store/raw-data'
+import * as fromRawData from 'src/app/shared/store/raw-data'
 import { actions as settingsActions } from 'src/app/shared/store/settings'
 import * as fromSettings from 'src/app/shared/store/settings'
 import { actions as nodesSortingActions } from 'src/app/shared/store/nodes-sorting'
@@ -30,15 +30,15 @@ export class NodesDataEffects {
 
   generateNodeRowFromUpdates$ = createEffect(() => this.actions$
     .pipe(
-      ofType(ethstatsActions.updateNodes),
+      ofType(rawDataActions.updateNodes),
       mergeMap(() =>
         this.store.pipe(
-          select(fromEthstats.select),
-          select(fromEthstats.getNodes),
+          select(fromRawData.select),
+          select(fromRawData.getNodes),
           first(),
         )
       ),
-      startWith({} as fromEthstats.State['nodes']),
+      startWith({} as fromRawData.State['nodes']),
       combineLatest(interval(1000)),
       // Stop refreshing data if the app is in background
       filter(() => document.hidden === undefined ? true : !document.hidden),
@@ -64,8 +64,8 @@ export class NodesDataEffects {
           select(fromNodesSorting.getColumns),
         ),
         this.store.pipe(
-          select(fromEthstats.select),
-          select(fromEthstats.getLastBlock),
+          select(fromRawData.select),
+          select(fromRawData.getLastBlock),
           map(block => block?.number),
           distinctUntilChanged(),
         ),
@@ -141,6 +141,6 @@ export class NodesDataEffects {
 
   constructor(
     private actions$: Actions,
-    private store: Store<fromEthstats.AppState & fromNodesSorting.AppState & fromSettings.AppState & AppState>,
+    private store: Store<fromRawData.AppState & fromNodesSorting.AppState & fromSettings.AppState & AppState>,
   ) {}
 }

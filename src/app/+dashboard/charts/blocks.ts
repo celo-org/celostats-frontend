@@ -1,4 +1,4 @@
-import { EthstatsNode, EthstatsCharts } from 'src/app/shared/store/ethstats'
+import { Node, RawDataCharts } from 'src/app/shared/store/raw-data'
 import { color, colorRange, formatNumber } from 'src/app/shared'
 import { infoType } from 'src/app/components/info'
 import { chartData, chartSizeType } from 'src/app/components/chart'
@@ -9,8 +9,8 @@ import {
 
 export interface Context {
   block: BlockSummary
-  nodes: EthstatsNode[]
-  charts: EthstatsCharts
+  nodes: Node[]
+  charts: RawDataCharts
   time: number
 }
 
