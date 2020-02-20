@@ -7,7 +7,7 @@ describe('NodesRowComponent', () => {
   let component: DashboardNodesRowComponent
   let fixture: ComponentFixture<DashboardNodesRowComponent>
   const initialState = {
-    ethstats: {nodes: [], lastBlock: {}, charts: {}},
+    rawData: {nodes: [], lastBlock: {}, charts: {}},
     nodesData: {rawData: {}},
     nodesSorting: {columns: []},
   }

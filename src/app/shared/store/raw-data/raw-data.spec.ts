@@ -1,13 +1,13 @@
 import { reduceActions } from '../testing-utils'
 
-import { EthstatsNode } from './ethstats.state'
-import * as fromEthstats from './ethstats.reducers'
-import * as ethstatesActions from './ethstats.actions'
+import { Node } from './raw-data.state'
+import * as fromRawData from './raw-data.reducers'
+import * as ethstatesActions from './raw-data.actions'
 import { BlockSummary } from '@celo/celostats-server'
 
-const reducer = fromEthstats.reducer
+const reducer = fromRawData.reducer
 
-describe('Ethstats Store reducers', () => {
+describe('RawData Store reducers', () => {
   it('should be auto-initialized', () => {
     const finalState = reduceActions(reducer)
     expect(finalState).not.toBeUndefined()
@@ -15,28 +15,28 @@ describe('Ethstats Store reducers', () => {
 
   it('should add nodes', () => {
     const finalState = reduceActions(reducer, [
-      ethstatesActions.updateNodes({nodes: [{id: '0x0'}] as unknown as EthstatsNode[]}),
+      ethstatesActions.updateNodes({nodes: [{id: '0x0'}] as unknown as Node[]}),
     ])
-    expect(fromEthstats.getNodes(finalState)).toEqual({'0x0': {id: '0x0', updates: 1} as unknown as EthstatsNode})
+    expect(fromRawData.getNodes(finalState)).toEqual({'0x0': {id: '0x0', updates: 1} as unknown as Node})
   })
 
   it('should add multiples nodes and not repeat them', () => {
     const states = reduceActions(reducer, [
-      ethstatesActions.updateNodes({nodes: [{id: '0x0'}] as unknown as EthstatsNode[]}),
-      ethstatesActions.updateNodes({nodes: [{id: '0x0'}, {id: '0x1'}] as unknown as EthstatsNode[]}),
-      ethstatesActions.updateNodes({nodes: [{id: '0x1'}, {id: '0x2'}] as unknown as EthstatsNode[]}),
+      ethstatesActions.updateNodes({nodes: [{id: '0x0'}] as unknown as Node[]}),
+      ethstatesActions.updateNodes({nodes: [{id: '0x0'}, {id: '0x1'}] as unknown as Node[]}),
+      ethstatesActions.updateNodes({nodes: [{id: '0x1'}, {id: '0x2'}] as unknown as Node[]}),
     ], true)
 
     const finalState = states[states.length - 1]
 
     const nodesLength = states
-      .map(fromEthstats.getNodesList)
+      .map(fromRawData.getNodesList)
       .map(({length}) => length)
 
-    expect(fromEthstats.getNodes(finalState)).toEqual({
-      '0x0': {id: '0x0', updates: 2} as unknown as EthstatsNode,
-      '0x1': {id: '0x1', updates: 2} as unknown as EthstatsNode,
-      '0x2': {id: '0x2', updates: 1} as unknown as EthstatsNode,
+    expect(fromRawData.getNodes(finalState)).toEqual({
+      '0x0': {id: '0x0', updates: 2} as unknown as Node,
+      '0x1': {id: '0x1', updates: 2} as unknown as Node,
+      '0x2': {id: '0x2', updates: 1} as unknown as Node,
     })
 
     expect(nodesLength).toEqual([0, 1, 2, 3])
@@ -44,12 +44,12 @@ describe('Ethstats Store reducers', () => {
 
   it('should update a node', () => {
     const states = reduceActions(reducer, [
-      ethstatesActions.updateNodes({nodes: [{id: '0x0', stats: {propagationAvg: 10}}] as unknown as EthstatsNode[]}),
-      ethstatesActions.updateNodes({nodes: [{id: '0x0', stats: {propagationAvg: 20}}] as unknown as EthstatsNode[]}),
+      ethstatesActions.updateNodes({nodes: [{id: '0x0', stats: {propagationAvg: 10}}] as unknown as Node[]}),
+      ethstatesActions.updateNodes({nodes: [{id: '0x0', stats: {propagationAvg: 20}}] as unknown as Node[]}),
     ], true)
 
     const nodePropagationAvg = states
-      .map(fromEthstats.getNodesList)
+      .map(fromRawData.getNodesList)
       .map(nodes => nodes[0]?.stats?.propagationAvg)
 
     expect(nodePropagationAvg).toEqual([undefined, 10, 20])
@@ -62,7 +62,7 @@ describe('Ethstats Store reducers', () => {
       ethstatesActions.setLastBlock({block: {number: 1} as BlockSummary}),
     ])
 
-    expect(fromEthstats.getLastBlock(finalState)).toEqual({number: 2} as BlockSummary)
+    expect(fromRawData.getLastBlock(finalState)).toEqual({number: 2} as BlockSummary)
   })
 
   it('should set last charts data', () => {
@@ -72,6 +72,6 @@ describe('Ethstats Store reducers', () => {
       ethstatesActions.updateCharts({charts: {test: 3} as any}),
     ])
 
-    expect(fromEthstats.getChars(finalState)).toEqual({test: 3, updates: 3} as any)
+    expect(fromRawData.getChars(finalState)).toEqual({test: 3, updates: 3} as any)
   })
 })

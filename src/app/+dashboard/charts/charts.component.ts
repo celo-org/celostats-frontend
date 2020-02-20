@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store'
 import { Observable, BehaviorSubject, interval } from 'rxjs'
 import { share, combineLatest, map, first, throttleTime, filter, distinctUntilChanged, delay, scan, startWith, skip } from 'rxjs/operators'
 
-import { AppState, getEthstatsNodesList, getEthstatsLastBlock, getEthstatsCharts } from 'src/app/shared/store'
+import { AppState, getRawDataNodesList, getRawDataLastBlock, getRawDataCharts } from 'src/app/shared/store'
 
 import { blocks, InfoBlock, Context } from './blocks'
 
@@ -37,9 +37,9 @@ export class DahsboardChartsComponent implements OnInit {
     this.context$ = interval(1000)
       .pipe(
         combineLatest(
-          this.store.select(getEthstatsNodesList),
-          this.store.select(getEthstatsLastBlock),
-          this.store.select(getEthstatsCharts),
+          this.store.select(getRawDataNodesList),
+          this.store.select(getRawDataLastBlock),
+          this.store.select(getRawDataCharts),
           (_, nodes, block, charts) => ({nodes, block, charts}),
         ),
         filter(({nodes, block, charts}) => !!nodes && !!block && !!charts),

@@ -5,23 +5,23 @@ import { Observable, of } from 'rxjs'
 import { hot, cold, time, getTestScheduler } from 'jasmine-marbles'
 
 import { EthstatsService } from 'src/app/shared/ethstats.service'
-import { EthstatsEffects } from './ethstats.effects'
-import * as ethstatesActions from './ethstats.actions'
+import { RawDataEffects } from './raw-data.effects'
+import * as ethstatesActions from './raw-data.actions'
 
-describe('EthstatsEffects', () => {
+describe('RawDataEffects', () => {
   let actions$: Observable<any>
-  let effects: EthstatsEffects
+  let effects: RawDataEffects
   let ethstatsService: EthstatsService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        EthstatsEffects,
+        RawDataEffects,
         provideMockActions(() => actions$)
       ]
     })
 
-    effects = TestBed.inject(EthstatsEffects)
+    effects = TestBed.inject(RawDataEffects)
     ethstatsService = TestBed.inject(EthstatsService)
   })
 

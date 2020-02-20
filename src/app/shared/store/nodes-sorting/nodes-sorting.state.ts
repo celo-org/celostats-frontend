@@ -1,11 +1,11 @@
-import { EthstatsNode } from 'src/app/shared/store/ethstats'
+import { Node } from 'src/app/shared/store/raw-data'
 import { color } from 'src/app/shared'
 
 export type sortingDirection = -1 | 1
 
 export interface Context {
   block: number
-  node: EthstatsNode
+  node: Node
   time: number
 }
 
@@ -18,7 +18,7 @@ export interface Column {
   first?: sortingDirection
   type?: 'icon' | 'address' | 'chart'
   variants?: ('xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'address' | 'sticky' | 'pre')[],
-  accessor: (node: EthstatsNode, context: Context) => columnValues
+  accessor: (node: Node, context: Context) => columnValues
   link?: (value: columnValues, context: Context) => string
   show?: (value: columnValues, context: Context) => columnValues
   color?: (value: columnValues, context: Context) => color

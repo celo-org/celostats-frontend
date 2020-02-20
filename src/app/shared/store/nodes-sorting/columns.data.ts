@@ -1,5 +1,5 @@
 import { environment } from 'src/environments/environment'
-import { EthstatsNode } from 'src/app/shared/store/ethstats'
+import { Node } from 'src/app/shared/store/raw-data'
 import { color, colorRange, formatNumber, timeAgo } from 'src/app/shared'
 import { Column } from './nodes-sorting.state'
 
@@ -10,7 +10,7 @@ export enum StakingState {
   'Full Node',
 }
 
-function evaluateStakingState(node: EthstatsNode) {
+function evaluateStakingState(node: Node) {
   switch (true) {
     case node.validatorData?.elected || node.stats?.elected:
       return StakingState.Elected
