@@ -86,7 +86,7 @@ export class NodesDataEffects {
                 const value = column.accessor(node, context)
                 return {
                   raw: value,
-                  type: column.type,
+                  type: column.type instanceof Function ? column.type(node, context) : column.type,
                   show: column.type === 'chart' ? column.show : undefined,
                   value: column.type === 'chart' ? value : column.show(value, context),
                   style: column.color(value, context),

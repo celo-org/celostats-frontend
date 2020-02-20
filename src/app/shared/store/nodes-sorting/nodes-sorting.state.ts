@@ -11,13 +11,14 @@ export interface Context {
 }
 
 type columnValues = string | number | boolean | number[]
+type columnType = 'icon' | 'address' | 'chart'
 
 export interface Column {
   name: string
   icon: string
   default?: sortingDirection
   first?: sortingDirection
-  type?: 'icon' | 'address' | 'chart'
+  type?: columnType | ((node: Node, context: Context) => columnType)
   variants?: ('xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'address' | 'sticky' | 'pre')[],
   accessor: (node: Node, context: Context) => columnValues
   link?: (value: columnValues, context: Context) => string
