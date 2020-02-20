@@ -7,6 +7,7 @@ export const initialState: State = {
   nodes: {},
   lastBlock: null,
   charts: null,
+  validatorsGroups: {},
 }
 
 const rawDataReducer = createReducer(
@@ -39,6 +40,14 @@ const rawDataReducer = createReducer(
       updates: +(state?.charts?.updates ?? 0) + 1,
     },
   })),
+  on(rawDataActions.updateValidatorGroups, (state, {groups}) => ({
+    ...state,
+    validatorsGroups: groups
+      .reduce((acc, group) => ({
+        ...acc,
+        [group.address]: group,
+      }), {})
+  })),
 )
 
 export function reducer(state: State | undefined, action: Action) {
@@ -51,3 +60,4 @@ export const getNodes = (state: State) => state.nodes
 export const getNodesList = (state: State) => Object.values(state.nodes)
 export const getLastBlock = (state: State) => state.lastBlock
 export const getChars = (state: State) => state.charts
+export const getValidatorsGroups = (state: State) => state.validatorsGroups
