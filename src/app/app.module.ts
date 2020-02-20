@@ -1,5 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
+import { HttpClientModule } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
@@ -14,6 +15,7 @@ import { environment } from '../environments/environment'
 
 import { AppComponent } from './app.component'
 
+import { GraphQLModule } from './graphql.module'
 import { PROVIDERS } from './shared'
 import { reducers, metaReducers, effects } from './shared/store'
 
@@ -31,6 +33,7 @@ import { MicroChartModule } from './components/micro-chart'
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
       runtimeChecks: {
@@ -41,6 +44,8 @@ import { MicroChartModule } from './components/micro-chart'
     // ...(!environment.production ? [StoreDevtoolsModule.instrument({maxAge: 5})] : []),
     EffectsModule.forRoot(effects),
     BrowserAnimationsModule,
+
+    GraphQLModule,
 
     DragScrollModule,
 
