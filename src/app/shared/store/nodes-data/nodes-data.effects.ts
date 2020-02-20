@@ -69,8 +69,12 @@ export class NodesDataEffects {
           map(block => block?.number),
           distinctUntilChanged(),
         ),
+        this.store.pipe(
+          select(fromRawData.select),
+          select(fromRawData.getValidatorsGroups),
+        ),
       ),
-      map(([nodes, columns, block]) => {
+      map(([nodes, columns, block, validatorsGroups]) => {
         const time = Date.now()
         return nodes
           .filter(({id}) => !!id)
@@ -78,7 +82,7 @@ export class NodesDataEffects {
             id: node.id.toString(),
             columns: columns
               .map(column => {
-                const context = {block, node, time}
+                const context = {block, node, time, validatorsGroups}
                 const value = column.accessor(node, context)
                 return {
                   raw: value,
