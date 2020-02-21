@@ -8,7 +8,8 @@
     "test": "ng test --no-watch --code-coverage",
     "test:watch": "ng test --code-coverage",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "set:variables": "scripts/set-env-variables.js ./dist"
   },
   "private": true,
   "dependencies": {
