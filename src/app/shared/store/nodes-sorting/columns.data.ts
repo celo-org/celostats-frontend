@@ -65,7 +65,7 @@ export const columns: Column[] = [
       }
     },
     show: value => value || '',
-    link: value => value && `${environment.blockscoutUrl}/address/${value}/transactions`,
+    link: (value, {node}) => value && `${environment.blockscoutUrl}/address/${node.validatorData?.affiliation?.toString()}/transactions`,
   },
   {
     name: 'Validator',
