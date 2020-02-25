@@ -23,7 +23,7 @@ interface InfoBlockBase<T extends infoType, V, R = V> {
   needsUpdate?: (newValue: V, oldValue: V) => boolean
   color: (value: V, context: Context) => color
 }
-interface InfoBlockSingle extends InfoBlockBase<'small' | 'big', string | number> {}
+interface InfoBlockSingle extends InfoBlockBase<'small' | 'medium' | 'big', string | number> {}
 interface InfoBlockChart extends InfoBlockBase<'chart', any[], chartData> {
   sizeType: chartSizeType
 }
@@ -40,22 +40,6 @@ export const blocks: InfoBlock[][] = [
       color: () => 'info',
     },
     {
-      type: 'small',
-      title: 'Last block',
-      icon: 'hourglass_empty',
-      accessor: ({block, time}) => Math.round((time - +block?.received) / 1000),
-      show: value => `${value}s ago`,
-      color: value => colorRange(+value, [4, 10, 30, 60, 120, 300]),
-    },
-    {
-      type: 'small',
-      title: 'Avg Block time',
-      icon: 'timer',
-      accessor: ({charts}) => +charts?.avgBlocktime,
-      show: value => `${(+value).toFixed(2)}s`,
-      color: value => colorRange(+value, [, 10, 30, 60, 600]),
-    },
-    {
       type: 'chart',
       title: 'Block time',
       icon: 'av_timer',
@@ -70,22 +54,6 @@ export const blocks: InfoBlock[][] = [
       needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
       color: () => 'ok',
       sizeType: 'relative',
-    },
-  ],
-  [
-    {
-      type: 'big',
-      title: 'Blocks until epoch',
-      icon: 'archive',
-      accessor: ({block}) => block.blockRemain,
-      color: (value, {block}) => colorRange((block?.epochSize - +value) / block?.epochSize, [0, 0.5, 0.8]),
-    },
-    {
-      type: 'small',
-      title: 'Epoch size',
-      icon: 'archive',
-      accessor: ({block}) => block.epochSize,
-      color: () => 'warn1',
     },
     {
       type: 'chart',
@@ -105,7 +73,32 @@ export const blocks: InfoBlock[][] = [
   ],
   [
     {
-      type: 'small',
+      type: 'big',
+      title: 'Blocks until epoch/\nEpoch size',
+      icon: 'archive',
+      accessor: ({block}) => `${block.blockRemain}/${block.epochSize}`,
+      color: (value, {block}) => colorRange((block?.epochSize - +value) / block?.epochSize, [0, 0.5, 0.8]),
+    },
+    {
+      type: 'medium',
+      title: 'Last block',
+      icon: 'hourglass_empty',
+      accessor: ({block, time}) => Math.round((time - +block?.received) / 1000),
+      show: value => `${value}s ago`,
+      color: value => colorRange(+value, [4, 10, 30, 60, 120, 300]),
+    },
+    {
+      type: 'medium',
+      title: 'Avg Block time',
+      icon: 'timer',
+      accessor: ({charts}) => +charts?.avgBlocktime,
+      show: value => `${(+value).toFixed(2)}s`,
+      color: value => colorRange(+value, [, 10, 30, 60, 600]),
+    },
+  ],
+  [
+    {
+      type: 'big',
       title: 'Active nodes',
       icon: 'remove_from_queue',
       accessor: ({nodes}) => nodes.filter(node => node.stats?.active).length,
@@ -148,19 +141,10 @@ export const blocks: InfoBlock[][] = [
   [
     {
       type: 'big',
-      title: 'Elected validators',
+      title: 'Elected/Registered \nvalidators',
       icon: 'check_circle_outside',
-      accessor: ({block}) => block.validators?.elected ?? 0,
-      needsUpdate: (newValue, oldValue) => newValue !== 0 || !oldValue,
+      accessor: ({block}) => `${block.validators?.elected ?? 0}/${block.validators?.registered ?? 0}`,
       color: value => value ? 'ok' : 'no',
-    },
-    {
-      type: 'small',
-      title: 'Registered validators',
-      icon: 'check',
-      accessor: ({block}) => block.validators?.registered ?? 0,
-      needsUpdate: (newValue, oldValue) => newValue !== 0 || !oldValue,
-      color: (value, {block}) => value === block.validators?.elected ? 'warn1' : 'warn2',
     },
     {
       type: 'block-proposers',
