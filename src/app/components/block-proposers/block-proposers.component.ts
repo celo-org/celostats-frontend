@@ -14,7 +14,6 @@ export class BlockProposersComponent implements OnChanges {
   data$ = new ReplaySubject<(Miner & {blocks: boolean[]})[]>()
 
   ngOnChanges(changes: SimpleChanges) {
-    // Note: only allows positive values
     if (changes.data) {
       if (JSON.stringify(changes.data.currentValue) === JSON.stringify(changes.data.previousValue)) {
         return
@@ -25,10 +24,10 @@ export class BlockProposersComponent implements OnChanges {
           ...mined,
           miner: mined.miner.replace('0x', ''),
           blocks: list
-            .slice(0, 20)
+            .slice(0, 36)
             .map(({miner}) => miner === mined.miner),
         }))
-        .slice(0, 8)
+        .slice(0, 12)
       this.data$.next(cleanData)
     }
   }

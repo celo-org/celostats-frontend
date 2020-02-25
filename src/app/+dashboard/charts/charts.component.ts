@@ -61,7 +61,7 @@ export class DahsboardChartsComponent implements OnInit {
                     ...block,
                     $raw,
                     $value: block.show($raw, context),
-                    $color: block.color($raw, context),
+                    // $color: block.color($raw, context),
                   }
                 }
                 return block

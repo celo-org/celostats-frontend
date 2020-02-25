@@ -1,6 +1,6 @@
 <div [class]="'info info--' + type + ' info--style-' + color">
   <div class="info__content">
-    <mat-icon fontSet="material-icons-outlined" class="info__icon">{{icon}}</mat-icon>
+    <!-- <mat-icon fontSet="material-icons-outlined" class="info__icon">{{icon}}</mat-icon> -->
     <div class="info__text">
       <div class="info__title">{{title}}</div>
       <div *ngIf="type !== 'chart' && type !== 'block-proposers'" class="info__value">{{value}}</div>
