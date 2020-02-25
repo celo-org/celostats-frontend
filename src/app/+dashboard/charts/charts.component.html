@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper" [class.wrapper--show]="enter$ | async">
   <div
     class="block"
     *ngFor="let card of blocks$ | async; trackBy: trackIndex">

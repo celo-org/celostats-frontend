@@ -4,24 +4,39 @@
   display: flex;
   justify-content: center;
   padding: 20px;
-}
 
-.block {
-  $width: 7px * 40; // Chart size
+  .block {
+    $width: 7px * 40; // Chart size
 
-  flex: 1;
-  max-width: $width;
-  min-width: $width;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin: 20px;
+    flex: 1;
+    max-width: $width;
+    min-width: $width;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 20px;
+  }
 
   component-info {
+    transition: all 1.2s ease-out;
+    transform-origin: 50% 0%;
+    transform: perspective(600px) rotateX(-75deg) translateY(200px);
+    transform-style: preserve-3d;
+    opacity: 0;
     margin-bottom: 20px;
 
     &:last-of-type {
       margin-bottom: 0;
     }
+
+    @for $i from 0 through 10 {
+      &:nth-child(#{$i}) {
+        transition-delay: 400ms * $i
+      }
+    }
+  }
+  &--show component-info {
+    transform: perspective(600px) rotateX(0deg) translateY(0px);
+    opacity: 1;
   }
 }
