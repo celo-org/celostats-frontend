@@ -76,7 +76,7 @@ export class DahsboardChartsComponent implements OnInit {
       skip(1),
       first(),
       delay(10),
-      map(() => true)
+      map(() => true),
     )
   }
 

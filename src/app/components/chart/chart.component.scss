@@ -20,7 +20,7 @@
     min-height: 3px;
     margin: 0 (($total-size - $size) / 2);
     display: inline-block;
-    background: gc(b-grey, 0.6);
+    background: gc(b-g2);
 
     &:hover {
       mix-blend-mode: initial;
