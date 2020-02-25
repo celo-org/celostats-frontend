@@ -1,24 +1,21 @@
 @import '../../styles/index';
 
-$table-border-radius: 3px;
 $table-pinned-background-color: gc(s1);
+$table-odd-backgound: #353B41;
 
 :host {
   display: block;
   width: 100%;
   max-width: 1520px;
   margin: auto;
+  padding-top: 40px;
+  padding-bottom: 20px;
 }
 
 ::ng-deep .table {
   @include get-font(monospace, light);
 
   width: 100%;
-  box-shadow:
-    0 0 0 1px gc(g10),
-    0 0 15px gc(g12, 0.4);
-  border-radius: 3px;
-  margin-bottom: 20px;
   transition:
     transform 2s cubic-bezier(0, 0, 0.1, 1),
     opacity 1.5s ease-in-out;
@@ -37,15 +34,10 @@ $table-pinned-background-color: gc(s1);
     white-space: nowrap;
     padding: 4px 10px;
     font-size: 10px;
-    border-top: 1px solid mix(gc(g0), gc(g11), 9%);
     box-sizing: border-box;
     overflow: hidden;
+    background: gc(bg);
     text-overflow: ellipsis;
-    background: gc(g11);
-
-    &:last-child {
-      border-radius: 0 0 $table-border-radius $table-border-radius;
-    }
 
     &--info  { color: gc(s0); }
     &--ok    { color: gc(s1); }
@@ -89,7 +81,7 @@ $table-pinned-background-color: gc(s1);
 
         component-micro-chart {
           position: absolute;
-          top: 0;
+          top: 1px;
           left: 50%;
           margin-left: -50%;
         }
@@ -159,20 +151,11 @@ $table-pinned-background-color: gc(s1);
     }
   }
   &__row:nth-child(odd) &__cell {
-    background: mix(gc(g0), gc(g11), 3%);
+    background: $table-odd-backgound;
   }
 
-  &__row--pinned &__cell {
-    background: mix($table-pinned-background-color, gc(g11), 4%);
-    border-top: 1px solid mix($table-pinned-background-color, gc(g11), 16%);
-  }
-  &__row--pinned:nth-child(odd) &__cell {
-    background: mix($table-pinned-background-color, gc(g11), 8%);
-  }
-
-  &__row--pinned:first-child &__cell,
   &__row--pinned + :not(#{&}__row--pinned) &__cell {
-    border-top: 1px solid mix($table-pinned-background-color, gc(g11), 24%);
+    border-top: 1px solid gc(b-g2);
   }
 
   &__head {
@@ -206,19 +189,13 @@ $table-pinned-background-color: gc(s1);
     padding-top: 12px;
     padding-bottom: 10px;
     position: sticky;
-    background: gc(g11);
     top: 0;
     z-index: 3;
-
-    &:first-child {
-      border-radius: $table-border-radius 0 0 0;
-    }
-    &:last-child {
-      border-radius: 0 $table-border-radius 0 0;
-    }
+    border: solid gc(b-g2);
+    border-width: 1px 0;
 
     &:hover {
-      background: gc(g10);
+      background: gc(g0, 0.1);
     }
 
     &--sticky {
