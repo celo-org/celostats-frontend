@@ -41,7 +41,7 @@ export const blocks: InfoBlock[][] = [
     },
     {
       type: 'chart',
-      title: 'Block time',
+      title: 'Block Time',
       icon: 'av_timer',
       accessor: ({charts}) => (charts?.blocktime ?? []),
       show: (data, {charts, block: {number: block}}) => data
@@ -57,7 +57,7 @@ export const blocks: InfoBlock[][] = [
     },
     {
       type: 'chart',
-      title: 'Propagation time',
+      title: 'Propagation Time',
       icon: 'wifi_tethering',
       accessor: ({charts}) => (charts?.propagation?.histogram ?? []),
       show: data => data
@@ -74,14 +74,14 @@ export const blocks: InfoBlock[][] = [
   [
     {
       type: 'big',
-      title: 'Blocks until epoch/\nEpoch size',
+      title: 'Blocks Until Epoch/\nEpoch Size',
       icon: 'archive',
       accessor: ({block}) => `${block.blockRemain}/${block.epochSize}`,
       color: (value, {block}) => colorRange((block?.epochSize - +value) / block?.epochSize, [0, 0.5, 0.8]),
     },
     {
       type: 'medium',
-      title: 'Last block',
+      title: 'Last Block',
       icon: 'hourglass_empty',
       accessor: ({block, time}) => Math.round((time - +block?.received) / 1000),
       show: value => `${value}s ago`,
@@ -89,7 +89,7 @@ export const blocks: InfoBlock[][] = [
     },
     {
       type: 'medium',
-      title: 'Avg Block time',
+      title: 'Avg Block Time',
       icon: 'timer',
       accessor: ({charts}) => +charts?.avgBlocktime,
       show: value => `${(+value).toFixed(2)}s`,
@@ -99,7 +99,7 @@ export const blocks: InfoBlock[][] = [
   [
     {
       type: 'big',
-      title: 'Active nodes',
+      title: 'Active Nodes',
       icon: 'remove_from_queue',
       accessor: ({nodes}) => nodes.filter(node => node.stats?.active).length,
       show: (value, {nodes}) => `${value}/${nodes.length}`,
@@ -107,7 +107,7 @@ export const blocks: InfoBlock[][] = [
     },
     {
       type: 'small',
-      title: 'Gas price',
+      title: 'Gas Price',
       icon: 'money',
       accessor: ({nodes}) => nodes[0]?.stats?.gasPrice / 10 ** 9,
       needsUpdate: (newValue, oldValue) => newValue !== 0 || !oldValue,
@@ -124,7 +124,7 @@ export const blocks: InfoBlock[][] = [
     },
     {
       type: 'chart',
-      title: 'Gas spending',
+      title: 'Gas Spending',
       icon: 'attach_money',
       accessor: ({charts, block: {number: block}}) => (charts?.gasSpending ?? [])
         .map((value, i, {length}) => ({
@@ -141,14 +141,14 @@ export const blocks: InfoBlock[][] = [
   [
     {
       type: 'big',
-      title: 'Elected/Registered \nvalidators',
+      title: 'Elected/Registered \nValidators',
       icon: 'check_circle_outside',
       accessor: ({block}) => `${block.validators?.elected ?? 0}/${block.validators?.registered ?? 0}`,
       color: value => value ? 'ok' : 'no',
     },
     {
       type: 'block-proposers',
-      title: 'Recent block proposers',
+      title: 'Recent Block Proposers',
       icon: 'done_all',
       accessor: ({charts}) => (charts?.miners ?? []),
       needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),

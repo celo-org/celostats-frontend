@@ -18,7 +18,7 @@
   &__value {
     @include get-font(heading);
 
-    color: gc(b-grey, 0.6);
+    color: gc(b-g2);
   }
 
   &--big &__title,
