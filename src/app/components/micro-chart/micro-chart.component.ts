@@ -34,9 +34,6 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
   return this
 }
 
-
-
-
 enum BarColor {
   info = '#3c9bf4',
   ok = '#42d689',
@@ -62,7 +59,7 @@ export class MicroChartComponent implements OnInit, OnChanges, OnDestroy {
   private cleanData: {value: number, color: string, label: string}[]
   private ctx: CanvasRenderingContext2D
   private noColor: boolean
-  private readonly height = 18
+  private readonly height = 16
   private readonly width = 120
   private readonly barMinHeight = 2
   private readonly barSize = 2
