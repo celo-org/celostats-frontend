@@ -1,135 +1,37 @@
 @import '../../styles/index';
 
-$gradient-steps: 7;
-
-@mixin gradient() {
-  $darken: 5%;
-  $grid-color: gc(g12, 0.03);
-
-  background:
-    linear-gradient($grid-color 1px, transparent 1px),
-    linear-gradient(90deg, $grid-color 1px, transparent 1px),
-    linear-gradient(
-      60deg,
-      darken(darken(gc(s0), 20%), $darken) #{100% / $gradient-steps * 0},
-      darken(gc(s0), $darken) #{100% / $gradient-steps * 1},
-      darken(gc(s1), $darken) #{100% / $gradient-steps * 2},
-      darken(gc(s2), $darken) #{100% / $gradient-steps * 3},
-      darken(gc(s3), $darken) #{100% / $gradient-steps * 4},
-      darken(gc(s4), $darken) #{100% / $gradient-steps * 5},
-      darken(gc(s5), $darken) #{100% / $gradient-steps * 6},
-      darken(darken(gc(s5), 20%), $darken) #{100% / $gradient-steps * 7},
-    );
-}
-@mixin gradient-position($n) {
-  $grid-size: 3px;
-
-  background-position:
-    -1px -1px,
-    -1px -1px,
-    #{100% / $gradient-steps * (1 + $n)} 50%;
-  background-size:
-    $grid-size $grid-size,
-    $grid-size $grid-size,
-    100% * $gradient-steps * 1.2;
+:host {
+  display: block;
 }
 
 @mixin info() {
-  @include gradient;
-  @include transition(slow);
-
-  padding: 15px;
-  box-shadow:
-    inset 0 10px 10px -10px gc(g0, 0.4),
-    inset 0 -1px gc(g12, 0.1);
-  overflow: hidden;
-  color: gc(g0);
-  filter: saturate(1);
-  text-shadow:
-    0 2px 8px gc(g12, 0.1),
-    0 1px 2px gc(g12, 0.4);
-  height: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
 
   &__title {
     @include get-font(text, bold);
 
-    text-transform: uppercase;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 1px;
+    font-size: 16px;
+    line-height: 18px;
+    white-space: pre-line;
+    height: 28px;
   }
 
   &__value {
-    @include get-font(text, normal);
+    @include get-font(heading);
 
-    font-size: 14px;
-  }
-
-  &--style {
-    &-info  { @include gradient-position(0); }
-    &-ok    { @include gradient-position(1); }
-    &-warn1 { @include gradient-position(2); }
-    &-warn2 { @include gradient-position(3); }
-    &-warn3 { @include gradient-position(4); }
-    &-warn4 { @include gradient-position(5); }
-    &-no    {
-      @include gradient-position(3);
-      filter: saturate(0);
-    }
+    color: gc(b-grey, 0.6);
   }
 
-  &__content {
-    display: flex;
-    align-items: center;
-    height: 100%;
-  }
-  &--big &__icon {
-    font-size: 80px;
-    line-height: 80px;
-    height: 80px;
-    width: 80px;
-    text-align: center;
-  }
-  &--big &__text {
-    padding-left: 20px;
-    text-shadow:
-      0 0 30px gc(g12, 0.4),
-      0 2px 8px gc(g12, 0.1),
-      0 1px 2px gc(g12, 0.4);
-  }
-  &--big &__value {
-    @include get-font(condensed, light);
-
-    font-size: 50px;
-    line-height: 55px;
-    letter-spacing: -2px;
+  &--big &__title,
+  &--chart &__title {
+    height: 48px;
   }
 
-  &--small,
-  &--chart,
-  &--block-proposers {
-    padding: 8px 15px;
-  }
-  &--small &__text,
-  &--chart &__text,
-  &--block-proposers &__text {
-    line-height: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 10px;
-    flex: 1;
-  }
+  &--big    &__value { font-size: 44px; }
+  &--medium &__value { font-size: 36px; }
+  &--small  &__value { font-size: 20px; }
 
-  &__chart {
-    padding: 12px 0 2px;
-    margin: 0 -7px;
-  }
-  &__data {
-    padding: 8px 0 2px;
+  &--big {
+    padding-bottom: 10px;
   }
 }
 

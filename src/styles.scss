@@ -23,8 +23,8 @@ body {
   @include get-font();
 
   margin: 0;
-  background: gc(g11);
-  color: gc(g4);
+  background: gc(bg);
+  color: gc(g0);
   min-width: 1400px;
 }
 

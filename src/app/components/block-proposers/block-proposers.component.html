@@ -1,8 +1,7 @@
 <div class="block-proposers">
   <div
-    *ngFor="let row of data$ | async; let first = first; trackBy: trackRow"
-    class="block-proposers__row"
-    [class.block-proposers__row--first]="first">
+    *ngFor="let row of data$ | async; trackBy: trackRow"
+    class="block-proposers__row">
 
     <div class="block-proposers__number">{{row.number}}</div>
     <div class="block-proposers__content">{{row.miner}}</div>

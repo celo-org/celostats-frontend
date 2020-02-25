@@ -3,7 +3,7 @@ import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core
 import { color } from 'src/app/shared'
 import { chartSizeType } from '../chart'
 
-export type infoType = 'big' | 'small' | 'chart' | 'block-proposers'
+export type infoType = 'big' | 'medium' | 'small' | 'chart' | 'block-proposers'
 
 @Component({
   selector: 'component-info',

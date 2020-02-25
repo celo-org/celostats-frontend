@@ -1,26 +1,25 @@
 @import '../../styles/index';
 
+$block-proposers---color: gc(b-grey, 0.6) !default;
+
 @mixin block-proposers() {
   @include get-font(monospace);
 
-  font-size: 12px;
+  font-size: 10px;
 
   &__row {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 1px;
-    opacity: 0.75;
+    margin-bottom: 6px;
+    color: $block-proposers---color;
 
-    &--first {
-      opacity: 1;
+    &:last-of-type {
+      margin-bottom: 0;
     }
   }
 
-  &__number {
-    @include get-font(monospace, bold);
-  }
   &__content {
     padding-left: 8px;
     padding-right: 4px;
@@ -28,28 +27,31 @@
     text-overflow: ellipsis;
     overflow: hidden;
     flex: 1;
+    padding-top: 1px;
   }
 
   &__blocks {
     margin-top: -1px;
   }
   &__block {
-    $size: 6px;
+    $size: 3px;
 
     display: inline-block;
     box-sizing: border-box;
-    margin-left: 2px;
+    margin-right: 1px;
     width: $size;
     height: $size;
-    border-radius: 1px;
-    border: 1px solid gc(g0);
-    box-shadow:
-      inset 0 0 2px gc(g12, 0.2),
-      0 0 2px gc(g12, 0.3),
-      0 2px 2px -2px gc(g12, 0.5);
+    border: 1px solid $block-proposers---color;
 
     &--active {
-      background: gc(g0, 0.7)
+      background: $block-proposers---color;
+    }
+
+    &:nth-child(3n) {
+      margin-right: 2px;
+    }
+    &:last-of-type {
+      margin-right: 0;
     }
   }
 }
