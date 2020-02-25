@@ -1,18 +1,19 @@
 
-$typo---regular: (
-  name: (Roboto, "Helvetica Neue", sans-serif),
+$typo---jost: (
+  name: (Jost, futura-pt, futura, sans-serif),
   variants: (
-    light: 300,
     regular: 400,
     normal: 400,
-    bold: 700,
+    bold: 500,
   )
 ) !default;
 
-$typo---condensed: (
-  name: ("Roboto Condensed", "Helvetica Neue", sans-serif),
+$typo---garamond: (
+  name: ("EB Garamond", eb-garamond, Garamond, serif),
   variants: (
-    light: 300,
+    light: 400,
+    regular: 400,
+    bold: 700,
   )
 ) !default;
 
@@ -27,9 +28,8 @@ $typo---monospace: (
 ) !default;
 
 $typos: (
-  default: $typo---regular,
-  condensed: $typo---condensed,
+  default: $typo---jost,
   monospace: $typo---monospace,
-  text: $typo---regular,
-  heading: $typo---regular,
+  text: $typo---jost,
+  heading: $typo---garamond,
 ) !default;
