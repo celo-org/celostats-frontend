@@ -125,7 +125,8 @@ export class NodesDataEffects {
               return 0
             }
             if (a === null || b === null) {
-              return direction * ((a === null) ? -1 : 1)
+              // return direction * ((a === null) ? -1 : 1)
+              return ((a === null) ? 1 : -1)
             }
 
             a = typeof a !== 'string' ? a : a.toLowerCase()
