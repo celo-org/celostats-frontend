@@ -17,14 +17,10 @@
     @include transition(slow);
 
     width: $size;
-    min-height: $size;
+    min-height: 3px;
     margin: 0 (($total-size - $size) / 2);
     display: inline-block;
     background: gc(b-grey, 0.6);
-    box-shadow:
-      0 0 2px gc(g12, 0.25),
-      0 -2px 3px -1.5px gc(g12, 0.5),
-      0 2px 3px -1.5px gc(g12, 0.5);
 
     &:hover {
       mix-blend-mode: initial;
