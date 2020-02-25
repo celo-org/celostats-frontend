@@ -34,12 +34,15 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
   return this
 }
 
+
+
+
 enum BarColor {
-  info = '#73ddff',
-  ok = '#35d07f',
-  warn1 = '#edfa5a',
+  info = '#3c9bf4',
+  ok = '#42d689',
+  warn1 = '#fbcc5c',
   warn2 = '#ffa174',
-  warn3 = '#ff7088',
+  warn3 = '#fb7c6d',
   no = '#cccccc',
 }
 
