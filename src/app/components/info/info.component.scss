@@ -21,6 +21,10 @@
     color: gc(b-g3);
   }
 
+  &__icon {
+    margin-bottom: 14px;
+  }
+
   &--big &__title,
   &--chart &__title {
     height: 48px;
