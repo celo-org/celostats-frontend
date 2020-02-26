@@ -1,0 +1,21 @@
+@import '../../styles/index';
+
+:host {
+  display: block;
+}
+
+@mixin info-icon() {
+  width: 150px;
+  height: 80px;
+  position: relative;
+
+  &__icon {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+.info-icon {
+  @include info-icon;
+}
