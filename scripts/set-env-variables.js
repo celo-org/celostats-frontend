@@ -4,8 +4,6 @@
 const fs = require('fs');
 const path = require('path');
 
-const ENV_VARIABLES = ['ETHSTATS_SERVICE', 'BLOCKSCOUT_URL', 'GRAPHQL_BLOCKSCOUT_URL'];
-
 function promiseify(fn) {
   return function() {
     const args = [].slice.call(arguments, 0);
@@ -37,14 +35,10 @@ function inlineResources(globs) {
     return Promise.all(files.map(filePath => {
       return readFile(filePath, 'utf-8')
         .then(content => {
-          ENV_VARIABLES
-            .forEach(variable => {
-              const value = process.env[variable]
-              if (value) {
-                content = content.replace(`%%DOCKER_ENV%%${variable}%%`, value)
-              }
-            })
-          return content
+          return content.replace(
+            /['"]%%DOCKER_ENV%%([A-Z_]*)%%['"]/g,
+            (_, envVar) => JSON.stringify(process.env[envVar]) || null,
+          )
         })
         .then(content => writeFile(filePath, content))
         .catch(err => {
