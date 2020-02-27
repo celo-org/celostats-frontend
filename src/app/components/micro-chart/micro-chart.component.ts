@@ -40,6 +40,7 @@ enum BarColor {
   warn1 = '#fbcc5c',
   warn2 = '#ffa174',
   warn3 = '#fb7c6d',
+  warn4 = '#f7a8ff',
   no = '#cccccc',
 }
 
@@ -147,7 +148,7 @@ export class MicroChartComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   getColor(n: number) {
-    const color = colorRange(n, [1, 100, 500, 2000])
+    const color = colorRange(n, [50, 500, 4000, 20000, 60000])
     return BarColor[color]
   }
 

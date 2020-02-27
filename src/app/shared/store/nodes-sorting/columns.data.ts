@@ -136,7 +136,7 @@ export const columns: Column[] = [
     variants: ['medium'],
     accessor: node => node.block?.propagation,
     show: (value, {node}) => value ? timeAgo(value as any, true, 10000) : null,
-    color: (value, {node}) => value === null ? 'no' : colorRange(+value, [10, 100, 1000, 10000, 100000]),
+    color: (value, {node}) => value === null ? 'no' : colorRange(+value, [50, 500, 4000, 20000, 60000]),
   },
   {
     name: 'Propagation history',
