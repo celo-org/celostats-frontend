@@ -14,7 +14,7 @@
   }
 
   &__bar {
-    @include transition(slow);
+    @include transition(fast);
 
     width: $size;
     min-height: 3px;
@@ -23,7 +23,7 @@
     background: gc(b-g2);
 
     &:hover {
-      mix-blend-mode: initial;
+      background: gc(b-g3);
     }
 
     &:before {
