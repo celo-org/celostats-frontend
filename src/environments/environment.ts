@@ -8,6 +8,10 @@ export const environment = {
   // ethstatsService: 'ws://localhost:3000',
   blockscoutUrl: 'https://baklava-blockscout.celo-testnet.org',
   graphqlBlockscoutUrl: 'https://baklava-blockscout.celo-testnet.org/graphiql',
+  submenu: {
+    blockscout: 'https://baklava-blockscout.celo-testnet.org/',
+    explorer: 'https://celo.org/validators/explore',
+  },
 }
 
 /*
