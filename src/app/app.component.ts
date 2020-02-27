@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment'
 export class AppComponent implements OnInit {
   submenu = environment.submenu
   canBeInstalled = false
+  isInstalled = false
 
   private installablePrompt: any
 
@@ -19,6 +20,9 @@ export class AppComponent implements OnInit {
 
       this.canBeInstalled = true
       this.installablePrompt = prompt
+    })
+    window.addEventListener('appinstalled', () => {
+      this.isInstalled = true
     })
   }
 
