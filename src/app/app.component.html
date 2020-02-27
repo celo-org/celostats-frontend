@@ -1,8 +1,16 @@
-<div class="submenu">
-  <img class="submenu__image" src="assets/celo-tools.svg">
-  <a  class="submenu__link" [href]="submenu.explorer" target="_blank">Explorer</a>
-  <a  class="submenu__link submenu__link--active" href="#" target="_blank">Celo Stats</a>
-  <a  class="submenu__link" [href]="submenu.blockscout" target="_blank">Blockscout</a>
+<div class="submenu-wrapper">
+  <div class="submenu">
+    <img class="submenu__image" src="assets/celo-tools.svg">
+    <a  class="submenu__link" [href]="submenu.explorer" target="_blank">Explorer</a>
+    <a  class="submenu__link submenu__link--active" href="#" target="_blank">Celo Stats</a>
+    <a  class="submenu__link" [href]="submenu.blockscout" target="_blank">Blockscout</a>
+  </div>
+  <div class="submenu submenu--secondary" *ngIf="canBeInstalled">
+    <span class="install" (click)="install()">
+      <mat-icon class="install__icon" fontSet="material-icons-outlined">add_circle_outline</mat-icon><!--
+   -->Install App
+    </span>
+  </div>
 </div>
 
 <app-dashboard-charts></app-dashboard-charts>

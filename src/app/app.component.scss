@@ -6,11 +6,16 @@
 }
 
 .submenu {
-  max-width: 1240px;
-  margin: auto;
   display: flex;
-  padding: 20px;
   align-items: center;
+  position: sticky;
+  max-width: calc(100vw - 30px);
+  left: 20px;
+
+  &--secondary {
+    left: initial;
+    right: 20px;
+  }
 
   &__image {
     margin-right: 6px;
@@ -47,5 +52,39 @@
         transform: translateX(-50%) scaleX(0.79) skewX(-20deg);
       }
     }
+  }
+
+  &-wrapper {
+    max-width: 1240px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    padding: 20px;
+  }
+}
+
+.install {
+  @include transition(fast);
+
+  opacity: 1;
+  color: gc(g0);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+
+  &__icon {
+    $size: 20px;
+    color: gc(b-g3);
+    font-size: $size;
+    line-height: $size - 1px;
+    width: $size;
+    height: $size;
+    margin-right: 6px;
   }
 }

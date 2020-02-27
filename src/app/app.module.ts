@@ -37,7 +37,7 @@ import { MicroChartModule } from './components/micro-chart'
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
-      registrationStrategy: 'registerWithDelay:10000',
+      registrationStrategy: 'registerWithDelay:1000',
     }),
     StoreModule.forRoot(reducers, {
       metaReducers,
