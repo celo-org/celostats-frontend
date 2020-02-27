@@ -23,7 +23,7 @@
     "@angular/platform-browser": "^9.0.2",
     "@angular/platform-browser-dynamic": "^9.0.2",
     "@angular/router": "^9.0.2",
-    "@celo/celostats-server": "https://github.com/celo-org/celostats-server.git#249eeadba0f8eca82447b071d051ad868512fb3f",
+    "@celo/celostats-server": "https://github.com/celo-org/celostats-server.git#69f8593b656ab99c69b49485203d2139c34c0a7b",
     "@ngrx/effects": "^8.6.0",
     "@ngrx/store": "^8.6.0",
     "@ngrx/store-devtools": "^8.6.0",
@@ -40,6 +40,13 @@
     "socket.io-client": "^2.3.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
+  },
+  "resolutions": {
+    "@celo/celostats-server/@celo/contractkit/web3": "^1.2.6",
+    "@celo/celostats-server/@celo/contractkit/web3-core-helpers": "^1.2.6",
+    "@celo/celostats-server/@celo/contractkit/web3-eth-abi": "^1.2.6",
+    "@celo/celostats-server/@celo/contractkit/web3-utils": "^1.2.6",
+    "@celo/celostats-server/@celo/utils/web3-utils": "^1.2.6"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.900.3",
