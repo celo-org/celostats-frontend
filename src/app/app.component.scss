@@ -1,0 +1,51 @@
+@import './styles/index';
+
+:host {
+  display: block;
+  padding-top: 40px;
+}
+
+.submenu {
+  max-width: 1240px;
+  margin: auto;
+  display: flex;
+  padding: 20px;
+  align-items: center;
+
+  &__image {
+    margin-right: 6px;
+  }
+
+  &__link {
+    @include transition(fast);
+
+    margin-left: 20px;
+    position: relative;
+    color: gc(g0);
+    text-decoration: none;
+    opacity: 1;
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    &--active {
+      pointer-events: none;
+
+      &:before {
+        $size: 8px;
+
+        content: '';
+        position: absolute;
+        bottom: -8px + -$size;
+        left: 50%;
+        display: block;
+        background: gc(b2);
+        width: $size;
+        height: $size;
+        border-radius: 50%;
+        transform: translateX(-50%) scaleX(0.79) skewX(-20deg);
+      }
+    }
+  }
+}
