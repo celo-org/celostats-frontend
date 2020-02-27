@@ -5,3 +5,7 @@ export const DOCKER_ENV = {
   submenuExplorer: '%%DOCKER_ENV%%SUBMENU_EXPLORER%%',
   submenuBlockscout: '%%DOCKER_ENV%%SUBMENU_BLOCKSCOUT%%',
 }
+
+Object.entries(DOCKER_ENV)
+  .filter(([variable, value]) => value.match(/%%DOCKER_ENV%%/))
+  .forEach(([variable]) => delete DOCKER_ENV[variable])
