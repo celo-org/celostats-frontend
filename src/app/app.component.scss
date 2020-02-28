@@ -2,7 +2,46 @@
 
 :host {
   display: block;
-  padding-top: 40px;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+
+  &__link {
+    @include get-font(text, bold);
+    @include transition(fast);
+
+    margin-left: 50px;
+    color: gc(g0);
+    display: inline-flex;
+    align-items: center;
+    opacity: 1;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    &-icon {
+      margin-left: 8px;
+
+      path {
+        fill: gc(g0);
+      }
+    }
+  }
+
+  &-wrapper {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    padding-left: 20px;
+    width: calc(100vw - 40px);
+    position: sticky;
+    left: 0;
+    box-sizing: border-box;
+  }
 }
 
 .submenu {
@@ -23,6 +62,7 @@
 
   &__link {
     @include transition(fast);
+    @include get-font(text, bold);
 
     margin-left: 20px;
     position: relative;
@@ -56,7 +96,7 @@
   }
 
   &-wrapper {
-    max-width: 1240px;
+    max-width: 1280px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -114,4 +154,8 @@
     height: $size;
     margin-right: 6px;
   }
+}
+
+.logo {
+  height: 40px;
 }
