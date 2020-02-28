@@ -12,6 +12,10 @@ export const environment = {
     blockscout: 'https://baklava-blockscout.celo-testnet.org/',
     explorer: 'https://celo.org/validators/explore',
   },
+  menu: {
+    github: 'https://github.com/celo-org',
+    blog: 'https://medium.com/CeloHQ',
+  },
 }
 
 /*

@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment'
 })
 export class AppComponent implements OnInit {
   submenu = environment.submenu
+  menu = environment.menu
   canBeInstalled = false
   isInstalled = false
 
