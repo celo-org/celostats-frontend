@@ -36,7 +36,6 @@
     "graphql": "^14.5.0",
     "graphql-tag": "^2.10.0",
     "hammerjs": "^2.0.8",
-    "ngx-drag-scroll": "^8.0.0-beta.2",
     "rxjs": "~6.5.4",
     "socket.io-client": "^2.3.0",
     "tslib": "^1.10.0",

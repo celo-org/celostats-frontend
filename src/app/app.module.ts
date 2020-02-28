@@ -10,7 +10,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { MatRippleModule } from '@angular/material/core'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
-import { DragScrollModule } from 'ngx-drag-scroll'
 
 import { environment } from '../environments/environment'
 
@@ -51,8 +50,6 @@ import { MicroChartModule } from './components/micro-chart'
     BrowserAnimationsModule,
 
     GraphQLModule,
-
-    DragScrollModule,
 
     MatIconModule,
     MatRippleModule,
