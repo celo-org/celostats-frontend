@@ -9,4 +9,8 @@ export const environment = {
     blockscout: DOCKER_ENV.submenuBlockscout || 'https://baklava-blockscout.celo-testnet.org/',
     explorer: DOCKER_ENV.submenuExplorer || 'https://celo.org/validators/explore',
   },
+  menu: {
+    github: DOCKER_ENV.menuGithub || 'https://github.com/celo-org',
+    blog: DOCKER_ENV.menuBlog || 'https://medium.com/CeloHQ',
+  },
 }
