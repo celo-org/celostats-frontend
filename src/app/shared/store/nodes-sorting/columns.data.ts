@@ -135,7 +135,7 @@ export const columns: Column[] = [
     icon: 'wifi_tethering',
     variants: ['medium'],
     accessor: node => node.block?.propagation,
-    show: (value, {node}) => value ? timeAgo(value as any, true, 10000) : null,
+    show: (value, {node}) => timeAgo(value as any, true, 10000) || null,
     color: (value, {node}) => value === null ? 'no' : colorRange(+value, [50, 500, 4000, 20000, 60000]),
   },
   {
