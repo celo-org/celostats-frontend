@@ -1,7 +1,7 @@
 @import '../../styles/index';
 
-$block-proposers---color: gc(b-g2) !default;
-$block-proposers--active---color: gc(b-g3) !default;
+$block-proposers---color: gc(b-g3) !default;
+$block-proposers--active---color: gc(b-g1) !default;
 
 @mixin block-proposers() {
   @include get-font(monospace);
