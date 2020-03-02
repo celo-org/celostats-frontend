@@ -12,6 +12,7 @@ export interface Context {
 
 type columnValues = string | number | boolean | number[]
 type columnType = 'icon' | 'address' | 'chart'
+type columnVariants = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'address' | 'sticky' | 'pre' | 'right'
 
 export interface Column {
   name: string
@@ -19,7 +20,7 @@ export interface Column {
   default?: sortingDirection
   first?: sortingDirection
   type?: columnType | ((node: Node, context: Context) => columnType)
-  variants?: ('xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'address' | 'sticky' | 'pre')[],
+  variants?: columnVariants[],
   accessor: (node: Node, context: Context) => columnValues
   link?: (value: columnValues, context: Context) => string
   show?: (value: columnValues, context: Context) => columnValues

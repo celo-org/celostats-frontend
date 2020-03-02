@@ -64,6 +64,10 @@ $table-odd-backgound: #353B41;
       white-space: pre;
     }
 
+    &--right {
+      text-align: right;
+    }
+
     &--type {
       &-icon {
         padding-top: 0;
@@ -82,8 +86,7 @@ $table-odd-backgound: #353B41;
         component-micro-chart {
           position: absolute;
           top: 1px;
-          left: 50%;
-          margin-left: -50%;
+          left: 10px;
         }
       }
     }

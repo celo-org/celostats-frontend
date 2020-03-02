@@ -79,14 +79,14 @@ export const columns: Column[] = [
   {
     name: 'Pending transactions',
     icon: 'hourglass_empty',
-    variants: ['xsmall'],
+    variants: ['xsmall', 'right'],
     accessor: node => node.stats?.pending,
     color: value => value === 0 ? 'info' : !value ? 'no' : 'ok',
   },
   {
     name: 'Transactions in last block',
     icon: 'compare_arrows',
-    variants: ['xsmall'],
+    variants: ['xsmall', 'right'],
     accessor: node => !node.stats?.active ? null : node.stats?.block?.transactions || 0,
   },
   {
@@ -101,7 +101,7 @@ export const columns: Column[] = [
   {
     name: 'Block Time',
     icon: 'timer',
-    variants: ['medium'],
+    variants: ['medium', 'right'],
     // tslint:disable-next-line:no-bitwise
     accessor: (node, {time}) => !node.block?.received ? null : ~~((time - +node.block?.received) / 1000),
     show: value => timeAgo(value as number),
@@ -110,7 +110,7 @@ export const columns: Column[] = [
   {
     name: 'Peers',
     icon: 'people',
-    variants: ['xsmall'],
+    variants: ['xsmall', 'right'],
     accessor: node => node.stats?.peers,
     color: value => value === 0 ? 'warn3' : value ? 'ok' : 'no',
   },
@@ -125,7 +125,7 @@ export const columns: Column[] = [
   {
     name: 'Latency',
     icon: 'timer',
-    variants: ['medium'],
+    variants: ['medium', 'right'],
     accessor: node => node.stats?.latency,
     show: value => value === 0 ? `0 ms` : value ? `+${value} ms` : null,
     color: value => value === null ? 'no' : colorRange(+value, [0, 10, 100, 1000, 10000]),
@@ -133,7 +133,7 @@ export const columns: Column[] = [
   {
     name: 'Propagation time',
     icon: 'wifi_tethering',
-    variants: ['medium'],
+    variants: ['medium', 'right'],
     accessor: node => node.block?.propagation,
     show: (value, {node}) => timeAgo(value as any, true, 10000) || null,
     color: (value, {node}) => value === null ? 'no' : colorRange(+value, [50, 500, 4000, 20000, 60000]),
@@ -148,7 +148,7 @@ export const columns: Column[] = [
   {
     name: 'Uptime',
     icon: 'offline_bolt',
-    variants: ['small'],
+    variants: ['small', 'right'],
     accessor: node => node.stats?.uptime,
     show: value => value !== null ? `${value} %` : null,
     color: value => value === null ? 'no' : colorRange(100 - +value, [, 0.1, 1, 5, 10, 20]),
