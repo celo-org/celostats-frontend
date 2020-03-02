@@ -65,5 +65,23 @@ describe('Util', () => {
       expect(timeAgo(60 * 59 + 60)).toBe('1 h')
       expect(timeAgo(60 * 60 * 100)).toBe('100 h')
     })
+
+    it('should return the elapsed time in the correct measure using ms', () => {
+      expect(timeAgo((0) * 1000, true)).toBe('0 ms')
+      expect(timeAgo((59.9) * 1000, true)).toBe('59 s')
+      expect(timeAgo((60) * 1000, true)).toBe('1 m')
+      expect(timeAgo((70) * 1000, true)).toBe('1 m')
+      expect(timeAgo((60 * 12 + 20) * 1000, true)).toBe('12 m')
+      expect(timeAgo((60 * 59 + 59) * 1000, true)).toBe('59 m')
+      expect(timeAgo((60 * 59 + 60) * 1000, true)).toBe('1 h')
+      expect(timeAgo((60 * 60 * 100) * 1000, true)).toBe('100 h')
+    })
+
+    it('should return the elapsed time in the correct measure using ms', () => {
+      expect(timeAgo(0, true)).toBe('0 ms')
+      expect(timeAgo(200, true)).toBe('200 ms')
+      expect(timeAgo(1002, true, 2000)).toBe('1002 ms')
+      expect(timeAgo(1002, true, 1000)).toBe('1 s')
+    })
   })
 })

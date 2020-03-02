@@ -132,19 +132,25 @@ export class MicroChartComponent implements OnInit, OnChanges, OnDestroy {
 
     this.cleanData = data
       .slice(0, 40)
-      .map(_ => ({
-        value: Math.max(_ / max, 0),
-        color: this.getColor(_),
-        label: this?.show(_) || String(_),
-      }))
+      .map(_ =>
+          _ === -1
+           ? undefined
+           : {
+              value: Math.max(_ / max, 0),
+              color: this.getColor(_),
+              label: this?.show(_) || String(_),
+            }
+      )
 
     if (this.cleanData.length < this.barNum) {
       this.cleanData = [
         ...this.cleanData,
         ...new Array(this.barNum - this.cleanData.length)
-          .fill({value: 0, color: BarColor.no, label: 'n/a'}),
+          .fill(undefined),
       ] as any[]
     }
+    this.cleanData = this.cleanData
+      .map(_ => !!_ ? _ : {value: 0, color: BarColor.no, label: 'n/a'})
   }
 
   getColor(n: number) {
