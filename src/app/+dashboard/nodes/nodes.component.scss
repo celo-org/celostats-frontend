@@ -196,7 +196,7 @@ $table-odd-backgound: #353B41;
       inset 0 -2px 0 -1px gc(b-g2);
 
     &:hover {
-      background: gc(g0, 0.1);
+      background: mix(gc(g0), gc(bg), 10%);
     }
 
     &--sticky {
