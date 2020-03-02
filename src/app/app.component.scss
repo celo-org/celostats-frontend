@@ -1,12 +1,23 @@
 @import './styles/index';
 
+$right-padding: 20px;
+
 :host {
   display: block;
 }
 
 .menu {
+  $padding: 20px;
+
   display: flex;
   align-items: center;
+  position: sticky;
+  left: $padding;
+
+  &--right {
+    left: initial;
+    right: $padding + $right-padding;
+  }
 
   &__link {
     @include get-font(text, bold);
@@ -37,8 +48,6 @@
     display: flex;
     justify-content: space-between;
     height: 80px;
-    padding-left: 20px;
-    width: calc(100vw - 40px);
     position: sticky;
     left: 0;
     box-sizing: border-box;
@@ -46,15 +55,17 @@
 }
 
 .submenu {
+  $padding: 20px;
+
   display: flex;
   align-items: center;
   position: sticky;
-  left: 20px;
+  left: $padding;
   box-sizing: border-box;
 
   &--secondary {
     left: initial;
-    right: 20px;
+    right: $padding + $right-padding;
   }
 
   &__image {
@@ -97,7 +108,7 @@
   }
 
   &-wrapper {
-    max-width: 1280px;
+    max-width: 1240px;
     width: 100%;
     display: flex;
     justify-content: space-between;
