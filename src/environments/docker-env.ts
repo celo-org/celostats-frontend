@@ -9,5 +9,5 @@ export const DOCKER_ENV = {
 }
 
 Object.entries(DOCKER_ENV)
-  .filter(([variable, value]) => value.match(/%%DOCKER_ENV%%/))
+  .filter(([variable, value]) => value && value.match(/%%DOCKER_ENV%%/))
   .forEach(([variable]) => delete DOCKER_ENV[variable])
