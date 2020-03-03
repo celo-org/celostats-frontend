@@ -22,7 +22,7 @@
     <a class="submenu__link" [href]="submenu.blockscout" target="_blank" rel="noopener">Blockscout</a>
   </div>
   <div class="submenu submenu--secondary" *ngIf="(hasUpdates) || (canBeInstalled && !isInstalled)">
-    <span class="install" (click)="update()" *ngIf="hasUpdates">
+    <span class="install install--flickering" (click)="update()" *ngIf="hasUpdates">
       <mat-icon class="install__icon" fontSet="material-icons-outlined">system_update_alt</mat-icon><!--
    -->Update App
     </span>
