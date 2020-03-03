@@ -16,6 +16,7 @@ $app-theme: mat-dark-theme($app-primary, $app-accent, $app-warn);
 
 @include mat-icon-theme($app-theme);
 @include mat-tooltip-theme($app-theme);
+@include mat-snack-bar-theme($app-theme);
 
 
 html, body { height: 100%; }
@@ -31,6 +32,30 @@ body {
 .mat-tooltip  {
   white-space: pre-line !important;
   line-height: 1.4em;
+}
+
+.mat-snack-bar-container {
+  background: mix(gc(g0), gc(bg), 10%);
+  color: gc(g0);
+
+  .mat-button {
+    @include get-font(text, bold);
+
+    color: gc(g0);
+    background: gc(g12, 0.3);
+  }
+  .mat-simple-snackbar {
+    @include get-font();
+  }
+
+  $filter: saturate(200%) contrast(120%) blur(4px);
+
+  @supports (backdrop-filter: #{$filter}) {
+    backdrop-filter: $filter;
+    background: gc(g0, 0.25);
+    color: gc(g0);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
 }
 
 ng-host {

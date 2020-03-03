@@ -7,8 +7,9 @@ import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 
-import { MatRippleModule } from '@angular/material/core'
 import { MatIconModule } from '@angular/material/icon'
+import { MatRippleModule } from '@angular/material/core'
+import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatTooltipModule } from '@angular/material/tooltip'
 
 import { environment } from '../environments/environment'
@@ -53,6 +54,7 @@ import { MicroChartModule } from './components/micro-chart'
 
     MatIconModule,
     MatRippleModule,
+    MatSnackBarModule,
     MatTooltipModule,
 
     BlockProposersModule,

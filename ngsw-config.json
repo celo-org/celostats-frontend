@@ -13,9 +13,6 @@
           "/*.css",
           "/*.js"
         ]
-      },
-      "cacheConfig": {
-        "strategy": "freshness"
       }
     }, {
       "name": "assets",
