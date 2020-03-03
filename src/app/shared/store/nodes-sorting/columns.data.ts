@@ -147,11 +147,12 @@ export const columns: Column[] = [
     color: (value) => value === -1 ? 'no' : colorRange(+value, [50, 500, 4000, 20000, 60000]),
   },
   {
-    name: 'Propagation history',
-    icon: 'wifi_tethering',
+    name: 'Singing history',
+    icon: 'assignment_turned_in',
     type: 'chart',
-    accessor: node => node.signHistory || [],
-    show: value => timeAgo(value as any, true, 5000),
+    accessor: node => (node.signHistory || []).map(data => ({value: 1, data})),
+    show: (value, data) => data === null ? 'n/a' : data ? 'Signed' : 'No signed',
+    color: (value, data) => data === null ? 'no' : data ? 'ok' : 'warn3',
   },
   {
     name: 'Uptime',
