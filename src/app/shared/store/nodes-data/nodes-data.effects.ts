@@ -88,8 +88,9 @@ export class NodesDataEffects {
                   raw: value,
                   type: column.type instanceof Function ? column.type(node, context) : column.type,
                   show: column.type === 'chart' ? column.show : undefined,
-                  value: column.type === 'chart' ? value : column.show(value, context),
-                  style: column.color(value, context),
+                  color: column.type === 'chart' ? column.color : undefined,
+                  value: column.type === 'chart' ? value : column.show(value as any, context) as any,
+                  style: column.color(value as any, context),
                   link: column.link(value, context),
                   variants: column.variants,
                 }

@@ -67,7 +67,7 @@ export class DashboardNodesRowComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.changeDetectionsSubscription.unsubscribe()
+    this.changeDetectionsSubscription?.unsubscribe()
   }
 
   checkChanges() {

@@ -142,8 +142,9 @@ export const columns: Column[] = [
     name: 'Propagation history',
     icon: 'wifi_tethering',
     type: 'chart',
-    accessor: node => node.history || [],
-    show: value => timeAgo(value as any, true, 5000),
+    accessor: node => (node.history || []).map(_ => _ === -1 ? undefined : _),
+    show: (value) => timeAgo(value as any, true, 5000),
+    color: (value) => value === -1 ? 'no' : colorRange(+value, [50, 500, 4000, 20000, 60000]),
   },
   {
     name: 'Propagation history',

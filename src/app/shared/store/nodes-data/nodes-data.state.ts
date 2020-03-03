@@ -4,6 +4,7 @@ export interface DataValue {
   raw: ReturnType<Column['accessor']>
   value: ReturnType<Column['show']>
   show?: Column['show']
+  color?: Column['color']
   type?: Column['type']
   style?: ReturnType<Column['color']>
   link?: ReturnType<Column['link']>
