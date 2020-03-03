@@ -12,6 +12,7 @@ export interface RawDataCharts extends ChartData {
 export interface Node extends NodeSummary {
   block?: BlockSummary
   history?: number[]
+  signHistory?: number[]
   updates?: number
 }
 
