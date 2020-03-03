@@ -1,7 +1,7 @@
 {
   "name": "Celo Stats",
   "short_name": "Celo Stats",
-  "theme_color": "#42d689",
+  "theme_color": "#2e3338",
   "background_color": "#2e3338",
   "display": "standalone",
   "scope": "/",
