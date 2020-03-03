@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
-import { SwUpdate } from '@angular/service-worker';
+import { SwUpdate } from '@angular/service-worker'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 import { environment } from 'src/environments/environment'
 
@@ -17,7 +18,7 @@ export class AppComponent implements OnInit {
 
   private installablePrompt: any
 
-  constructor(private swUpdate: SwUpdate) { }
+  constructor(private swUpdate: SwUpdate, private matSnackBar: MatSnackBar) { }
 
   ngOnInit() {
     // Install
@@ -33,9 +34,14 @@ export class AppComponent implements OnInit {
 
     // Update
     if (this.swUpdate.isEnabled) {
-      setInterval(() => this.swUpdate.checkForUpdate(), 5 * 60 * 1000)
+      setInterval(() => this.swUpdate.checkForUpdate(), 2 * 60 * 1000)
       this.swUpdate.available.subscribe(() => {
         this.hasUpdates = true
+
+        this.matSnackBar
+          .open('Update Available!', 'Update', {duration: 10 * 1000})
+          .onAction()
+          .subscribe(() => this.update())
       })
     }
   }
