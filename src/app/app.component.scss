@@ -178,6 +178,10 @@ $submenu-max-width: 1240px;
     margin-right: 6px;
   }
 
+  &--flickering {
+    animation: flickering-animation 0.8s ease-in infinite alternate;
+  }
+
   @media (max-width: $submenu-bp) {
     margin: 0 10px;
   }
@@ -185,4 +189,9 @@ $submenu-max-width: 1240px;
 
 .logo {
   height: 40px;
+}
+
+@keyframes flickering-animation {
+  from { opacity: 1; }
+  to { opacity: 0.6; }
 }
