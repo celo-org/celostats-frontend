@@ -61,7 +61,6 @@ export const columns: Column[] = [
       const group = node.validatorData?.affiliation?.toString()
       if (group) {
         return validatorsGroups[node.validatorData?.affiliation?.toString()]?.name || group
-
       }
     },
     show: value => value || '',
@@ -117,9 +116,9 @@ export const columns: Column[] = [
   {
     name: 'Score',
     icon: 'trending_up',
-    variants: ['medium', 'pre'],
+    variants: ['medium', 'right'],
     accessor: node => node.validatorData?.score,
-    show: (value: number) => `${truncateToDecimals(value, 4).padStart(8, ' ')}%`,
+    show: (value: number) => `${truncateToDecimals(value, 4)}%`,
     color: value => colorRange(100 - +value, [0, 0.1, 1, 5, 20, 90]),
   },
   {
