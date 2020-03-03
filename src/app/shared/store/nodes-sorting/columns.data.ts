@@ -1,3 +1,5 @@
+import { SignedState } from '@celo/celostats-server'
+
 import { environment } from 'src/environments/environment'
 import { Node } from 'src/app/shared/store/raw-data'
 import { color, colorRange, formatNumber, timeAgo } from 'src/app/shared'
@@ -26,6 +28,12 @@ function truncateToDecimals(num: number, dec: number = 2) {
   const calcDec = 10 ** dec
   // tslint:disable-next-line:no-bitwise
   return (~~(num * calcDec) / calcDec).toFixed(dec)
+}
+
+const signedColors = {
+  [SignedState.Signed]: 'ok',
+  [SignedState.Unsigned]: 'warn3',
+  [SignedState.Unknown]: 'warn1',
 }
 
 export const columns: Column[] = [
@@ -149,9 +157,9 @@ export const columns: Column[] = [
     name: 'Singing history',
     icon: 'assignment_turned_in',
     type: 'chart',
-    accessor: node => (node.signHistory || []).map(data => ({value: 1, data})),
-    show: (value, data) => data === null ? 'n/a' : data ? 'Signed' : 'No signed',
-    color: (value, data) => data === null ? 'no' : data ? 'ok' : 'warn3',
+    accessor: node => [...(node.signHistory || []), ...new Array(40).fill(null)].slice(0, 40).map(data => ({value: 1, data})),
+    show: (value, data) => SignedState[data] || 'n/a',
+    color: (value, data) => signedColors[data] || 'no',
   },
   {
     name: 'Uptime',
