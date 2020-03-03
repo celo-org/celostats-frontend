@@ -146,6 +146,13 @@ export const columns: Column[] = [
     show: value => timeAgo(value as any, true, 5000),
   },
   {
+    name: 'Propagation history',
+    icon: 'wifi_tethering',
+    type: 'chart',
+    accessor: node => node.signHistory || [],
+    show: value => timeAgo(value as any, true, 5000),
+  },
+  {
     name: 'Uptime',
     icon: 'offline_bolt',
     variants: ['small', 'right'],
