@@ -1,7 +1,8 @@
 import {
   ChartData,
   NodeSummary,
-  BlockSummary
+  BlockSummary,
+  SignedState,
 } from '@celo/celostats-server'
 import { CeloValidatorGroup } from '../../graphql'
 
@@ -12,7 +13,7 @@ export interface RawDataCharts extends ChartData {
 export interface Node extends NodeSummary {
   block?: BlockSummary
   history?: number[]
-  signHistory?: number[]
+  signHistory?: SignedState[]
   updates?: number
 }
 
