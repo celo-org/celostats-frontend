@@ -217,6 +217,11 @@
   resolved "https://registry.yarnpkg.com/@angular/router/-/router-9.0.2.tgz#f33a56b16966eabdb7b24ae484d9577d47fe117f"
   integrity sha512-jDKq9K0pOgaMtocg7VCfIQX8jTyBSb+0hjOcj6kXQVCcmnxeBzGPRX2THQyFkyzG8owTBZlHIrJA3H2thDU2LQ==
 
+"@angular/service-worker@^9.0.2":
+  version "9.0.4"
+  resolved "https://registry.yarnpkg.com/@angular/service-worker/-/service-worker-9.0.4.tgz#b871bdbb4e291cb6d1c420d2941ea401c6b17869"
+  integrity sha512-eWuK4COhLlWSFutvOkYBQ9iq3ArTPEdR0nI5kB8youQIrUAM2CLcTMeA0VjHxR6mTSiFI9I/3WVYLlH1iixWNA==
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.5.5", "@babel/code-frame@^7.8.3":
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.8.3.tgz#33e25903d7481181534e12ec0a25f16b6fcf419e"
@@ -897,9 +902,9 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@celo/celostats-server@https://github.com/celo-org/celostats-server.git#69f8593b656ab99c69b49485203d2139c34c0a7b":
+"@celo/celostats-server@https://github.com/celo-org/celostats-server.git#a2c03c1236ebfe0c9e707181066f3fcbc9ad02a4":
   version "0.2.0"
-  resolved "https://github.com/celo-org/celostats-server.git#69f8593b656ab99c69b49485203d2139c34c0a7b"
+  resolved "https://github.com/celo-org/celostats-server.git#a2c03c1236ebfe0c9e707181066f3fcbc9ad02a4"
   dependencies:
     "@celo/contractkit" "^0.2.14"
     "@types/compression" "^1.0.1"
@@ -8249,13 +8254,6 @@ ngstorage@^0.3.11:
   version "0.3.11"
   resolved "https://registry.yarnpkg.com/ngstorage/-/ngstorage-0.3.11.tgz#1637c45b872d909d9cc7e18b374898d50b2e844f"
   integrity sha1-FjfEW4ctkJ2cx+GLN0iY1QsuhE8=
-
-ngx-drag-scroll@^8.0.0-beta.2:
-  version "8.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/ngx-drag-scroll/-/ngx-drag-scroll-8.0.0-beta.2.tgz#caa84f267b645e9d96d20edf9ac5e2ddf391a4f7"
-  integrity sha512-HRxcginx9HNO7Jv0MydvEkh2vmtPocu9GUqRgU5c0Q3vikDNXAcDv7KDjLK9kicmvfpXE+3rzuZeYln77/2CmA==
-  dependencies:
-    tslib "^1.9.0"
 
 nice-try@^1.0.4:
   version "1.0.5"
