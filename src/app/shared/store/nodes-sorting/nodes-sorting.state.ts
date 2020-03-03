@@ -1,5 +1,6 @@
 import { Node, State as RawDataState } from 'src/app/shared/store/raw-data'
 import { color } from 'src/app/shared'
+import { MicroChartValue } from 'src/app/components/micro-chart'
 
 export type sortingDirection = -1 | 1
 
@@ -10,11 +11,12 @@ export interface Context {
   validatorsGroups: RawDataState['validatorsGroups']
 }
 
-type columnValues = string | number | boolean | number[]
+type columnBasicValues = string | number | boolean
+type columnValues = columnBasicValues | number[] | MicroChartValue[]
 type columnType = 'icon' | 'address' | 'chart'
 type columnVariants = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'address' | 'sticky' | 'pre' | 'right'
 
-export interface Column {
+export interface ColumnBase {
   name: string
   icon: string
   default?: sortingDirection
@@ -23,9 +25,17 @@ export interface Column {
   variants?: columnVariants[],
   accessor: (node: Node, context: Context) => columnValues
   link?: (value: columnValues, context: Context) => string
-  show?: (value: columnValues, context: Context) => columnValues
-  color?: (value: columnValues, context: Context) => color
+  show?: (value: columnBasicValues, context: Context) => columnBasicValues
+  color?: (value: columnBasicValues, context: Context) => color
 }
+
+export interface ColumnChart extends ColumnBase {
+  type: 'chart'
+  show?: (value: number, data: any) => columnBasicValues
+  color?: (value: number, data: any) => color
+}
+
+export type Column = ColumnBase | ColumnChart
 
 export interface Sorting {
   direction: sortingDirection

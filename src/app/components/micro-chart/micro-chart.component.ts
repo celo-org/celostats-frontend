@@ -13,7 +13,7 @@ import {
 import { Subject, Subscription, animationFrameScheduler, interval, fromEvent } from 'rxjs'
 import { debounceTime, shareReplay, throttle, map, tap, combineLatest, mergeMap, takeUntil, startWith, endWith, distinctUntilChanged } from 'rxjs/operators'
 
-import { colorRange } from 'src/app/shared'
+import { colorRange, color as colorNames } from 'src/app/shared'
 
 // Seen on: https://stackoverflow.com/a/7838871
 declare global {
@@ -33,6 +33,12 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
   this.closePath()
   return this
 }
+///////
+
+export interface MicroChartValue {
+  value: number,
+  data: any,
+}
 
 enum BarColor {
   info = '#3c9bf4',
@@ -51,8 +57,9 @@ enum BarColor {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MicroChartComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() data: number[]
-  @Input() show: (n: number) => string
+  @Input() data: (number | MicroChartValue)[]
+  @Input() show: (value: MicroChartValue['value'], data: MicroChartValue['data']) => string
+  @Input() color: (value: MicroChartValue['value'], data: MicroChartValue['data']) => colorNames
   @ViewChild('canvas', {static: true}) canvas: ElementRef
 
   private onData$ = new Subject()
@@ -128,17 +135,20 @@ export class MicroChartComponent implements OnInit, OnChanges, OnDestroy {
 
   generateCleanData() {
     const data = [...this.data || []]
-    const max = data.reduce((acc, _) => Math.max(acc, _), 0)
+      .slice(0, 40)
+      .map((_: any) => (_?.value !== undefined && _?.value !== null ? _ : {value: _}) as MicroChartValue)
+    const max = data
+      .filter(_ => !!_)
+      .reduce((acc, {value: _}) => Math.max(acc, _ ?? 0), 0)
 
     this.cleanData = data
-      .slice(0, 40)
-      .map(_ =>
-          _ === -1
+      .map(({value, data: dataContext}) =>
+          !value
            ? undefined
            : {
-              value: Math.max(_ / max, 0),
-              color: this.getColor(_),
-              label: this?.show(_) || String(_),
+              value: Math.max(value / max, 0),
+              color: BarColor[this?.color(value, dataContext)] || BarColor.no,
+              label: this?.show(value, dataContext) || String(value),
             }
       )
 
@@ -151,11 +161,6 @@ export class MicroChartComponent implements OnInit, OnChanges, OnDestroy {
     }
     this.cleanData = this.cleanData
       .map(_ => !!_ ? _ : {value: 0, color: BarColor.no, label: 'n/a'})
-  }
-
-  getColor(n: number) {
-    const color = colorRange(n, [50, 500, 4000, 20000, 60000])
-    return BarColor[color]
   }
 
   render(hoverBar: number | boolean) {
