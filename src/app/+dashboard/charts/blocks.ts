@@ -78,18 +78,32 @@ export const blocks: InfoBlock[][] = [
       color: (value, {block}) => colorRange((block?.epochSize - +value) / block?.epochSize, [0, 0.5, 0.8]),
     },
     {
-      type: 'medium',
+      type: 'small',
       title: 'Last Block',
       accessor: ({block, time}) => Math.round((time - +block?.received) / 1000),
       show: value => `${value}s ago`,
       color: value => colorRange(+value, [4, 10, 30, 60, 120, 300]),
     },
     {
-      type: 'medium',
+      type: 'small',
       title: 'Avg Block Time',
       accessor: ({charts}) => +charts?.avgBlocktime,
       show: value => `${(+value).toFixed(2)}s`,
       color: value => colorRange(+value, [, 10, 30, 60, 600]),
+    },
+    {
+      type: 'chart',
+      title: 'Signatures',
+      accessor: ({charts, block: {number: block}}) => (charts?.signatures ?? [])
+        .map((value, i, {length}) => ({
+          value,
+          show: formatNumber(value, 0),
+          index: String(length - charts?.updates + i),
+          label: `#${block - i}`,
+        })),
+      needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
+      color: () => 'ok',
+      sizeType: 'relative',
     },
   ],
   [
