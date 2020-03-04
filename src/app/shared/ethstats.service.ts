@@ -13,7 +13,6 @@ import {
   ClientPong,
   LastBlock,
   Latency,
-  NodeDetails,
   NodeSummary,
   Pending,
   StatsResponse
@@ -27,7 +26,7 @@ export interface Event<E extends Events, D> {
 export type EthstatsEvent =
   Event<Events.Block, BlockStats> |
   Event<Events.Pending, Pending> |
-  Event<Events.Add, NodeDetails> |
+  Event<Events.Add, NodeSummary> |
   Event<Events.LastBlock, LastBlock> |
   Event<Events.Latency, Latency> |
   Event<Events.Stats, StatsResponse> |

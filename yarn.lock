@@ -902,9 +902,9 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@celo/celostats-server@https://github.com/celo-org/celostats-server.git#a2c03c1236ebfe0c9e707181066f3fcbc9ad02a4":
+"@celo/celostats-server@https://github.com/celo-org/celostats-server.git#6112b5c38eb8da152c5e460f8e567619987710a7":
   version "0.2.0"
-  resolved "https://github.com/celo-org/celostats-server.git#a2c03c1236ebfe0c9e707181066f3fcbc9ad02a4"
+  resolved "https://github.com/celo-org/celostats-server.git#6112b5c38eb8da152c5e460f8e567619987710a7"
   dependencies:
     "@celo/contractkit" "^0.2.14"
     "@types/compression" "^1.0.1"
