@@ -97,7 +97,7 @@ export const blocks: InfoBlock[][] = [
       accessor: ({charts, block: {number: block}}) => (charts?.signatures ?? [])
         .map((value, i, {length}) => ({
           value,
-          show: formatNumber(value, 0),
+          show: value || 'n/a',
           index: String(length - charts?.updates + i),
           label: `#${block - i}`,
         })),
