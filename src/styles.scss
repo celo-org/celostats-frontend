@@ -61,3 +61,8 @@ body {
 ng-host {
   display: none;
 }
+
+@keyframes loading-animation {
+  from { opacity: 0.3; }
+  to { opacity: 0.15; }
+}

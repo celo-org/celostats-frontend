@@ -1,4 +1,6 @@
 export * from './utils'
+import * as animations from './animations'
+export { animations }
 
 export * from './ethstats.service'
 
