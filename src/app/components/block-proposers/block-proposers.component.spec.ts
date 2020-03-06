@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
 import { BlockProposersModule } from './block-proposers.module'
 import { BlockProposersComponent } from './block-proposers.component'
@@ -11,6 +12,7 @@ describe('BlockProposers', () => {
     TestBed.configureTestingModule({
       imports: [
         BlockProposersModule,
+        NoopAnimationsModule,
       ],
     })
     .compileComponents()

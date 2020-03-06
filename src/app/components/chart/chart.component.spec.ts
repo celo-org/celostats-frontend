@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
 import { ChartModule } from './chart.module'
 import { ChartComponent } from './chart.component'
@@ -11,6 +12,7 @@ describe('ChartComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         ChartModule,
+        NoopAnimationsModule,
       ],
     })
     .compileComponents()

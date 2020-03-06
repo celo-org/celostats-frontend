@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
 import { InfoModule } from './info.module'
 import { InfoComponent } from './info.component'
@@ -11,6 +12,7 @@ describe('InfoComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         InfoModule,
+        NoopAnimationsModule,
       ],
     })
     .compileComponents()

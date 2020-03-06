@@ -47,7 +47,7 @@ export const blocks: InfoBlock[][] = [
         .map((value, i, {length}) => ({
           value,
           show: `${value.toFixed(3)} s`,
-          index: String((length - charts?.updates + i) - length),
+          index: String((length - charts?.updates + i) - length + 2),
           label: `#${block - i}`,
         })),
       needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
@@ -98,7 +98,7 @@ export const blocks: InfoBlock[][] = [
         .map((value, i, {length}) => ({
           value,
           show: value || 'n/a',
-          index: String((length - charts?.updates + i) - length),
+          index: String((length - charts?.updates + i) - length + 2),
           label: `#${block - i}`,
         })),
       needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
@@ -137,7 +137,7 @@ export const blocks: InfoBlock[][] = [
         .map((value, i, {length}) => ({
           value,
           show: formatNumber(value, 0),
-          index: String((length - charts?.updates + i) - length),
+          index: String((length - charts?.updates + i) - length + 2),
           label: `#${block - i}`,
         })),
       needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
