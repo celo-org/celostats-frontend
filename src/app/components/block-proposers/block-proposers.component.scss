@@ -1,5 +1,6 @@
 @import '../../styles/index';
 
+$block-proposers__row---height: 11px !default;
 $block-proposers__text---color: gc(b-g3) !default;
 $block-proposers---color: gc(b-g2) !default;
 $block-proposers--active---color: gc(b-g1) !default;
@@ -10,6 +11,7 @@ $block-proposers--active---color: gc(b-g1) !default;
   font-size: 10px;
 
   &__row {
+    height: $block-proposers__row---height;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -22,20 +24,27 @@ $block-proposers--active---color: gc(b-g1) !default;
     }
   }
 
+  &__number,
+  &__content,
+  &__blocks {
+    padding-top: 1px;
+    height: $block-proposers__row---height;
+  }
   &__content {
-    padding-left: 8px;
-    padding-right: 4px;
+    margin-left: 8px;
+    margin-right: 4px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     flex: 1;
-    padding-top: 1px;
   }
 
   &__blocks {
-    margin-top: -1px;
+    color: $block-proposers---color;
   }
   &__block {
+    // @include transition;
+
     $size: 3px;
 
     display: inline-block;
@@ -43,7 +52,9 @@ $block-proposers--active---color: gc(b-g1) !default;
     margin-right: 1px;
     width: $size;
     height: $size;
-    border: 1px solid $block-proposers---color;
+    border: 1px solid currentColor;
+    position: relative;
+    top: -2px;
 
     &--active {
       border-color: $block-proposers--active---color;
