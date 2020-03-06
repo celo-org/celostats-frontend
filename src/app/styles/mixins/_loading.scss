@@ -1,0 +1,15 @@
+@mixin loading($type: normal, $children, $time: 1s) {
+  @if ($type == light) {
+    animation: loading-animation $time ease-in-out infinite alternate;
+  }
+  @if ($type == normal) {
+    animation: loading-animation-full $time ease-in-out infinite alternate;
+  }
+  @if ($children) {
+    @for $i from 0 through $children {
+      &:nth-child(#{$i}) {
+        animation-delay: ($time / $children) * $i
+      }
+    }
+  }
+}
