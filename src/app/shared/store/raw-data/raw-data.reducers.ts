@@ -37,7 +37,7 @@ const rawDataReducer = createReducer(
     ...state,
     charts: {
       ...charts,
-      updates: +(state?.charts?.updates ?? -2) + 1,
+      updates: +(state?.charts?.updates ?? 0) + 1,
     },
   })),
   on(rawDataActions.updateValidatorGroups, (state, {groups}) => ({
