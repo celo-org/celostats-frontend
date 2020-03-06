@@ -62,7 +62,15 @@ ng-host {
   display: none;
 }
 
+// Loading animations
+.ng-trigger-loadingAnimation {
+  border-radius: 5px;
+}
 @keyframes loading-animation {
-  from { opacity: 0.3; }
+  from { opacity: 0.2; }
   to { opacity: 0.15; }
+}
+@keyframes loading-animation-full {
+  from { opacity: 1; }
+  to { opacity: 0.5; }
 }
