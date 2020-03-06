@@ -1,15 +1,21 @@
 <div class="block-proposers">
   <div
-    *ngFor="let row of data$ | async; trackBy: trackRow"
+    *ngFor="let row of data$ | async; let i = index; trackBy: trackRow"
     class="block-proposers__row">
 
-    <div class="block-proposers__number">{{row.number}}</div>
-    <div class="block-proposers__content">{{row.miner}}</div>
-    <div class="block-proposers__blocks">
-      <div
-        *ngFor="let mined of row.blocks; trackBy: trackIndex"
-        class="block-proposers__block"
-        [class.block-proposers__block--active]="mined">
+    <div class="block-proposers__number" [@loadingAnimation]="!!row.loading">
+      <span loadingAnimationText>{{row.number}}</span>
+    </div>
+    <div class="block-proposers__content" [@loadingAnimation]="!!row.loading">
+      <span loadingAnimationText>{{row.miner}}</span>
+    </div>
+    <div class="block-proposers__blocks" [@loadingAnimation]="!!row.loading">
+      <div loadingAnimationText>
+        <div
+          *ngFor="let mined of row.blocks; trackBy: trackIndex"
+          class="block-proposers__block"
+          [class.block-proposers__block--active]="mined">
+        </div>
       </div>
     </div>
   </div>

@@ -29,7 +29,6 @@ export class DahsboardChartsComponent implements OnInit {
     )
   blocks$: Observable<infoBlockExtended[][]>
   context$: Observable<Context>
-  enter$: Observable<boolean>
 
   constructor(private store: Store<AppState>) { }
 
@@ -71,12 +70,7 @@ export class DahsboardChartsComponent implements OnInit {
       ),
       startWith(this.blocks as infoBlockExtended[][]),
       share(),
-    )
-    this.enter$ = this.blocks$.pipe(
-      skip(1),
-      first(),
-      delay(10),
-      map(() => true),
+      delay(100),
     )
   }
 

@@ -44,10 +44,10 @@ export const blocks: InfoBlock[][] = [
       title: 'Block Time',
       accessor: ({charts}) => (charts?.blocktime ?? []),
       show: (data, {charts, block: {number: block}}) => data
-        .map((value, i) => ({
+        .map((value, i, {length}) => ({
           value,
           show: `${value.toFixed(3)} s`,
-          index: String(block - i),
+          index: String((length - charts?.updates + i) - length),
           label: `#${block - i}`,
         })),
       needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
@@ -72,7 +72,7 @@ export const blocks: InfoBlock[][] = [
   [
     {
       type: 'big',
-      title: 'Blocks Until Epoch/\nEpoch Size',
+      title: 'Blocks Until Epoch/Epoch Size',
       icon: 'blocks',
       accessor: ({block}) => `${block.blockRemain}/${block.epochSize}`,
       color: (value, {block}) => colorRange((block?.epochSize - +value) / block?.epochSize, [0, 0.5, 0.8]),
@@ -98,7 +98,7 @@ export const blocks: InfoBlock[][] = [
         .map((value, i, {length}) => ({
           value,
           show: value || 'n/a',
-          index: String(length - charts?.updates + i),
+          index: String((length - charts?.updates + i) - length),
           label: `#${block - i}`,
         })),
       needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
@@ -137,7 +137,7 @@ export const blocks: InfoBlock[][] = [
         .map((value, i, {length}) => ({
           value,
           show: formatNumber(value, 0),
-          index: String(length - charts?.updates + i),
+          index: String((length - charts?.updates + i) - length),
           label: `#${block - i}`,
         })),
       needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
@@ -149,7 +149,7 @@ export const blocks: InfoBlock[][] = [
     {
       type: 'big',
       icon: 'wide',
-      title: 'Elected/Registered \nValidators',
+      title: 'Elected/Registered Validators',
       accessor: ({block}) => `${block.validators?.elected ?? 0}/${block.validators?.registered ?? 0}`,
       color: value => value ? 'ok' : 'no',
     },

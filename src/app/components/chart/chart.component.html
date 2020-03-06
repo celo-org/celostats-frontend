@@ -1,9 +1,11 @@
 <div class="chart">
   <div
-    class="chart__bar"
     *ngFor="let bar of data$ | async; trackBy: trackBar"
+    class="chart__bar"
+    [class.chart__bar--loading]="bar.loading"
     [style.height.%]="bar.value"
-    [matTooltip]="bar.label + '\n' + bar.show"
+    [matTooltip]="bar.tooltip"
+    [@.disabled]="bar.loading"
     @inOutBar>
   </div>
 </div>

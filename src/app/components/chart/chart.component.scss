@@ -14,13 +14,15 @@
   }
 
   &__bar {
-    @include transition(fast);
+    @include transition(slow);
 
     width: $size;
     min-height: 3px;
     margin: 0 (($total-size - $size) / 2);
     display: inline-block;
     background: gc(b-g2);
+    vertical-align: bottom;
+    font-size: 7px;
 
     &:hover {
       background: gc(b-g3);
@@ -35,7 +37,19 @@
       width: $total-size;
       margin-left: (($total-size - $size) / -2);
     }
+
+    &--loading {
+      @include loading(normal, 40);
+
+      width: $size !important;
+      margin: 0 (($total-size - $size) / 2) !important;
+
+      &:hover {
+        background: gc(b-g2);
+      }
+    }
   }
+
 }
 
 .chart {

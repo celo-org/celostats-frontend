@@ -1,12 +1,14 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core'
 import { trigger, state, style, animate, transition } from '@angular/animations'
-import { ReplaySubject } from 'rxjs'
+import { BehaviorSubject } from 'rxjs'
 
 export interface ChartBar {
-  value: number,
-  show?: number | string,
-  index?: string,
-  label?: string,
+  value: number
+  show?: number | string
+  index?: string
+  label?: string
+  loading?: boolean
+  tooltip?: string
 }
 export type chartData = ChartBar[]
 export type chartSizeType = 'relative' | 'absolute'
@@ -36,7 +38,16 @@ const inOutBar = trigger('inOutBar', [
 export class ChartComponent implements OnInit, OnChanges {
   @Input() data: chartData
   @Input() type: chartSizeType
-  data$ = new ReplaySubject<chartData>()
+
+  maxBarNumber = 40
+  data$ = new BehaviorSubject<chartData>(
+    new Array(this.maxBarNumber)
+      .fill(undefined)
+      .map(() => ({
+        value: Math.random() * 100,
+        loading: true,
+      }))
+  )
 
   ngOnInit(): void {
   }
@@ -60,11 +71,15 @@ export class ChartComponent implements OnInit, OnChanges {
             show: bar.show ?? bar.value,
             value: (bar.value - min) / (max - min) * 100
           }))
+          .map(bar => ({
+            ...bar,
+            tooltip: `${bar.label}\n${bar.show}`,
+          }))
       this.data$.next(cleanData)
     }
   }
 
   trackBar(i: number, bar: ChartBar): string {
-    return bar.index ? `index(${bar.index})` : String(i)
+    return String(bar?.index || i)
   }
 }
