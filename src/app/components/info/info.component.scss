@@ -4,6 +4,13 @@
   display: block;
 }
 
+@mixin info-value($height, $min-width) {
+  font-size: $height;
+  height: $height;
+  min-width: $min-width;
+}
+
+
 @mixin info() {
 
   &__title {
@@ -19,20 +26,20 @@
     @include get-font(heading);
 
     color: gc(b-g1);
+    display: inline-block;
   }
 
   &__icon {
     margin-bottom: 14px;
   }
 
-  &--big &__title,
   &--chart &__title {
-    height: 48px;
+    height: 34px;
   }
 
-  &--big    &__value { font-size: 44px; }
-  &--medium &__value { font-size: 36px; }
-  &--small  &__value { font-size: 20px; }
+  &--big    &__value { @include info-value(24px, 60%); }
+  &--medium &__value { @include info-value(22px, 50%); }
+  &--small  &__value { @include info-value(20px, 30%); }
 
   &--big {
     padding-bottom: 10px;
