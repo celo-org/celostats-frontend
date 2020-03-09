@@ -6,6 +6,7 @@
 
   height: 50px;
   position: relative;
+  vertical-align: bottom;
 
   &:before {
     content: '';
@@ -21,7 +22,6 @@
     margin: 0 (($total-size - $size) / 2);
     display: inline-block;
     background: gc(b-g2);
-    vertical-align: bottom;
     font-size: 7px;
 
     &:hover {
