@@ -5,7 +5,6 @@ import { pluck, map, share, shareReplay, pairwise, filter, startWith, scan, tap,
 
 import { AppState, getNodesDataDataOf, isSettingsPinnedNode } from 'src/app/shared/store'
 import { DataRow } from 'src/app/shared/store/nodes-data'
-import { Column } from 'src/app/shared/store/nodes-sorting'
 import { actions as settingsActions } from 'src/app/shared/store/settings'
 
 @Component({
