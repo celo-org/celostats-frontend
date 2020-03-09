@@ -1,4 +1,4 @@
-import { Action, createReducer, on, createSelector, createFeatureSelector } from '@ngrx/store'
+import { Action, createReducer, on } from '@ngrx/store'
 
 import { AppState, State, sortingDirection } from './nodes-sorting.state'
 import * as nodesSortingActions from './nodes-sorting.actions'

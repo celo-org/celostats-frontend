@@ -1,11 +1,8 @@
 import {
-  ActionReducer,
   ActionReducerMap,
-  createFeatureSelector,
   createSelector,
   MetaReducer
 } from '@ngrx/store'
-import { Effect } from '@ngrx/effects'
 
 import { environment } from 'src/environments/environment'
 

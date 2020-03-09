@@ -54,6 +54,6 @@ export class AppComponent implements OnInit {
     this.canBeInstalled = false
     this.installablePrompt.prompt()
 
-    const choice = await this.installablePrompt.deferredPrompt.userChoice
+    // const choice = await this.installablePrompt.userChoice
   }
 }

@@ -1,12 +1,10 @@
-import { TestBed, inject } from '@angular/core/testing'
+import { TestBed } from '@angular/core/testing'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { rootEffectsInit } from '@ngrx/effects'
-import { Observable, of, Subject } from 'rxjs'
-import { hot, cold } from 'jasmine-marbles'
+import { Observable, Subject } from 'rxjs'
 
 import { columns } from './columns.data'
 import { NodesSortingEffects } from './nodes-sorting.effects'
-import * as nodesSortingActions from './nodes-sorting.actions'
 
 describe('NodesSortingEffects', () => {
   let actions$: Observable<any>
