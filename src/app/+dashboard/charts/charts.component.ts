@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
-import { Store, select } from '@ngrx/store'
-import { Observable, BehaviorSubject, interval } from 'rxjs'
-import { share, combineLatest, map, first, throttleTime, filter, distinctUntilChanged, delay, scan, startWith, skip } from 'rxjs/operators'
+import { Store } from '@ngrx/store'
+import { Observable, interval } from 'rxjs'
+import { share, combineLatest, map, throttleTime, filter, delay, scan, startWith } from 'rxjs/operators'
 
 import { AppState, getRawDataNodesList, getRawDataLastBlock, getRawDataCharts } from 'src/app/shared/store'
 
