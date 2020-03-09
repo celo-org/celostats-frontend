@@ -1,4 +1,4 @@
-@mixin loading($type: normal, $children, $time: 1s) {
+@mixin loading($type: normal, $children: false, $time: 1s) {
   @if ($type == light) {
     animation: loading-animation $time ease-in-out infinite alternate;
   }

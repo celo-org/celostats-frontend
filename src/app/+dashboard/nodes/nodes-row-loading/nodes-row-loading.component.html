@@ -1,0 +1,11 @@
+<ng-container *ngIf="columns$ | async as columns">
+  <td class="table__cell table__cell--xsmall table__cell--type-icon table__cell-pin">
+    <span class="loading"></span>
+  </td>
+  <td
+    *ngFor="let column of columns; trackBy: trackColumn"
+    [class]="column.classNames">
+
+    <span class="loading"></span>
+  </td>
+</ng-container>

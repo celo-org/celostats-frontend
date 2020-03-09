@@ -1,0 +1,27 @@
+@import '../../../styles/index';
+
+:host {
+  // Table row reset
+
+  display: table-row;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  display: table-row;
+  vertical-align: inherit;
+  border-color: inherit;
+}
+
+.loading {
+  @include loading(light);
+
+  background: gc(g0);
+  border-radius: 5px;
+  width: 100%;
+  height: 8px;
+  display: inline-block;
+  opacity: 0.2;
+}
