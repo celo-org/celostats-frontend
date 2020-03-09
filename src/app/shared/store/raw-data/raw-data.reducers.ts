@@ -1,4 +1,4 @@
-import { Action, createReducer, on, createSelector, createFeatureSelector } from '@ngrx/store'
+import { Action, createReducer, on } from '@ngrx/store'
 
 import { AppState, State } from './raw-data.state'
 import * as rawDataActions from './raw-data.actions'

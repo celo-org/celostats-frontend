@@ -2,7 +2,7 @@ import { SignedState } from '@celo/celostats-server'
 
 import { environment } from 'src/environments/environment'
 import { Node } from 'src/app/shared/store/raw-data'
-import { color, colorRange, formatNumber, timeAgo } from 'src/app/shared'
+import { colorRange, formatNumber, timeAgo } from 'src/app/shared'
 import { Column } from './nodes-sorting.state'
 
 export enum StakingState {

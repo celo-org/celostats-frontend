@@ -1,12 +1,9 @@
-import { TestBed, inject } from '@angular/core/testing'
+import { TestBed } from '@angular/core/testing'
 import { provideMockStore } from '@ngrx/store/testing'
 import { provideMockActions } from '@ngrx/effects/testing'
-import { rootEffectsInit } from '@ngrx/effects'
-import { Observable, of } from 'rxjs'
-import { hot, cold } from 'jasmine-marbles'
+import { Observable } from 'rxjs'
 
 import { SettingsEffects } from './settings.effects'
-import * as nodesDataActions from './settings.actions'
 
 describe('SettingsEffects', () => {
   let actions$: Observable<any>

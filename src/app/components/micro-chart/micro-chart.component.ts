@@ -11,9 +11,9 @@ import {
   ChangeDetectorRef,
 } from '@angular/core'
 import { Subject, Subscription, animationFrameScheduler, interval, fromEvent } from 'rxjs'
-import { debounceTime, shareReplay, throttle, map, tap, combineLatest, mergeMap, takeUntil, startWith, endWith, distinctUntilChanged } from 'rxjs/operators'
+import { debounceTime, throttle, map, combineLatest, mergeMap, takeUntil, startWith, endWith, distinctUntilChanged } from 'rxjs/operators'
 
-import { colorRange, color as colorNames } from 'src/app/shared'
+import { color as colorNames } from 'src/app/shared'
 
 // Seen on: https://stackoverflow.com/a/7838871
 declare global {
@@ -66,7 +66,6 @@ export class MicroChartComponent implements OnInit, OnChanges, OnDestroy {
   private onDataSubscription: Subscription
   private cleanData: {value: number, color: string, label: string}[]
   private ctx: CanvasRenderingContext2D
-  private noColor: boolean
   private readonly height = 16
   private readonly width = 120
   private readonly barMinHeight = 2
@@ -75,7 +74,7 @@ export class MicroChartComponent implements OnInit, OnChanges, OnDestroy {
   private readonly barNum = 40
   private readonly labelPadding = 2
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor(cdr: ChangeDetectorRef) {
     cdr.detach()
   }
 

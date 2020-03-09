@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ServiceWorkerModule } from '@angular/service-worker'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
-import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+// import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 
 import { MatIconModule } from '@angular/material/icon'
 import { MatRippleModule } from '@angular/material/core'

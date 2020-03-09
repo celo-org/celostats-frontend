@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core'
-import { trigger, state, style, animate, transition } from '@angular/animations'
+import { trigger, style, animate, transition } from '@angular/animations'
 import { BehaviorSubject } from 'rxjs'
 
 export interface ChartBar {
