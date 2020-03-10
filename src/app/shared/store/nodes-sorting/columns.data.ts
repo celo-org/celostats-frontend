@@ -164,9 +164,9 @@ export const columns: Column[] = [
   {
     name: 'Uptime',
     icon: 'offline_bolt',
-    variants: ['small', 'right'],
+    variants: ['xsmall', 'right'],
     accessor: node => node.stats?.uptime,
-    show: value => value !== null ? `${value} %` : null,
+    show: value => value !== null ? `${formatNumber(value, 0)}%` : null,
     color: value => value === null ? 'no' : colorRange(100 - +value, [, 0.1, 1, 5, 10, 20]),
   },
   {
