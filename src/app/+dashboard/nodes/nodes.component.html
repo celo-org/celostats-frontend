@@ -13,10 +13,8 @@
         </mat-icon>
       </td>
       <td
-        matRipple
-        matRippleColor="rgba(255, 255, 255, 0.2)"
         *ngFor="let column of columns$ | async; trackBy: trackColumn"
-        [class]="'table__cell ' + variants(column)"
+        [class]="'table__cell ' + variants(column) + (sorting.column.name === column.name ? 'table__cell--active' : '')"
         (click)="changeOrderBy(column)"
         [matTooltip]="column.name">
 

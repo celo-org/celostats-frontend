@@ -181,7 +181,8 @@ $table-odd-backgound: #353B41;
     padding-bottom: 14px;
     position: sticky;
     top: 0;
-    z-index: 3;
+    z-index: 4;
+    overflow: initial;
     box-shadow:
       inset 0 2px 0 -1px gc(b-g2),
       inset 0 -2px 0 -1px gc(b-g2);
@@ -190,8 +191,11 @@ $table-odd-backgound: #353B41;
       background: mix(gc(g0), gc(bg), 10%);
     }
 
+    &--active {
+      z-index: 5;
+    }
     &--sticky {
-      z-index: 4;
+      z-index: 6;
     }
     &--pinned {
       text-align: center;
