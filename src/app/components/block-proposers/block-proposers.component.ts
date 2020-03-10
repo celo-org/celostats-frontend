@@ -20,7 +20,7 @@ export class BlockProposersComponent implements OnChanges {
     new Array(this.maxNumberOfRows)
       .fill({
         loading: true,
-        number: '000000',
+        number: '0'.repeat(7),
         miner: '0'.repeat(40),
         blocks: new Array(this.maxNumberOfBlocks).fill(false),
       }) as any,

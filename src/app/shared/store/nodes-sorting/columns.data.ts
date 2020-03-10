@@ -102,7 +102,7 @@ export const columns: Column[] = [
     variants: ['medium'],
     accessor: node => node.block?.number,
     link: value => value && `${environment.blockscoutUrl}/blocks/${value}/transactions`,
-    show: value => value ? '# ' + formatNumber(+value, 0) : null,
+    show: value => value ? formatNumber(+value, 0) : null,
     color: (value, {block}) => value ? colorRange(block - +value, [, 0, 1, 5, 30]) : 'no',
   },
   {
