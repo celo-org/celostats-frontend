@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ChangeDetectionStrategy, ViewChildren, QueryList } from '@angular/core'
 import { Store, select } from '@ngrx/store'
 import { Observable, Subject, Subscription, interval, animationFrameScheduler } from 'rxjs'
-import { share, map, distinctUntilChanged, startWith, takeWhile, endWith, throttle, delay, tap } from 'rxjs/operators'
+import { share, map, distinctUntilChanged, startWith, takeWhile, endWith, throttle, tap } from 'rxjs/operators'
 
 import { AppState, getNodesDataCleanData, getNodesSortingColumns, getNodesSortingSorting } from 'src/app/shared/store'
 import { Column, Sorting, actions as nodesSortingActions } from 'src/app/shared/store/nodes-sorting'
