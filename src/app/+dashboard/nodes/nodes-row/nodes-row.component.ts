@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, HostBinding, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
+import { Component, OnInit, OnDestroy, Input, HostBinding, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef } from '@angular/core'
 import { Store, select } from '@ngrx/store'
 import { Observable, Subscription } from 'rxjs'
 import { pluck, map, share, shareReplay, pairwise, filter, startWith, scan, tap, first } from 'rxjs/operators'
@@ -29,7 +29,11 @@ export class DashboardNodesRowComponent implements OnInit, OnDestroy {
     return !!((this.cdr as any)._lView[2] & 128)
   }
 
-  constructor(private store: Store<AppState>, private cdr: ChangeDetectorRef) { }
+  get isRendered() {
+    return !!this.element.nativeElement.offsetHeight
+  }
+
+  constructor(private store: Store<AppState>, private cdr: ChangeDetectorRef, private element: ElementRef) { }
 
   ngOnInit(): void {
     this.row$ = this.store.pipe(

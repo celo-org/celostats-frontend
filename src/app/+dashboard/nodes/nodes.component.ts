@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ChangeDetectionStrategy, ViewChildren, QueryList } from '@angular/core'
 import { Store, select } from '@ngrx/store'
-import { Observable, Subject, Subscription } from 'rxjs'
-import { share, map, distinctUntilChanged, startWith, takeWhile, endWith } from 'rxjs/operators'
+import { Observable, Subject, Subscription, interval, animationFrameScheduler } from 'rxjs'
+import { share, map, distinctUntilChanged, startWith, takeWhile, endWith, throttle, delay, tap } from 'rxjs/operators'
 
 import { AppState, getNodesDataCleanData, getNodesSortingColumns, getNodesSortingSorting } from 'src/app/shared/store'
 import { Column, Sorting, actions as nodesSortingActions } from 'src/app/shared/store/nodes-sorting'
@@ -33,6 +33,7 @@ export class DashboardNodesComponent implements OnInit, OnDestroy, AfterViewInit
       takeWhile(n => n < this.loadingRows),
       map(n => new Array(this.loadingRows - n).fill(null)),
       endWith([]),
+      tap(null, null, () => this.stopCheckingRendered()),
     )
     this.columns$ = this.store.pipe(
       select(getNodesSortingColumns),
@@ -55,14 +56,25 @@ export class DashboardNodesComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngAfterViewInit() {
-    this.rowsChangesSubscription = this.rows.changes
-      .subscribe(() => this.loadedRows$.next(this.rows.length))
+    this.rowsChangesSubscription = interval(500)
+      .pipe(
+        throttle(() => interval(0, animationFrameScheduler)),
+      )
+      .subscribe(() => this.loadedRows$.next(this.rows.filter(row => row.isRendered).length))
 
-    setTimeout(() => this.loadedRows$.next(Infinity), 10 * 1000)
+    setTimeout(() => this.stopCheckingRendered(), 10 * 1000)
   }
 
   ngOnDestroy() {
-    this.rowsChangesSubscription?.unsubscribe()
+    this.stopCheckingRendered()
+  }
+
+  stopCheckingRendered() {
+    if (this.rowsChangesSubscription) {
+      this.rowsChangesSubscription?.unsubscribe()
+      delete this.rowsChangesSubscription
+    }
+    this.loadedRows$.next(Infinity)
   }
 
   changeOrderBy(column: Column) {
