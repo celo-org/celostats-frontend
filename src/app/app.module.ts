@@ -8,7 +8,6 @@ import { EffectsModule } from '@ngrx/effects'
 // import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 
 import { MatIconModule } from '@angular/material/icon'
-import { MatRippleModule } from '@angular/material/core'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatTooltipModule } from '@angular/material/tooltip'
 
@@ -53,7 +52,6 @@ import { MicroChartModule } from './components/micro-chart'
     GraphQLModule,
 
     MatIconModule,
-    MatRippleModule,
     MatSnackBarModule,
     MatTooltipModule,
 
