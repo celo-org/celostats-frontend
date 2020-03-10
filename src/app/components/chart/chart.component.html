@@ -5,6 +5,7 @@
     [class.chart__bar--loading]="bar.loading"
     [style.height.%]="bar.value"
     [matTooltip]="bar.tooltip"
+    [matTooltipTouchGestures]="off"
     [@.disabled]="bar.loading"
     @inOutBar>
   </div>
