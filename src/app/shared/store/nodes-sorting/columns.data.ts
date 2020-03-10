@@ -174,11 +174,13 @@ export const columns: Column[] = [
     icon: 'lock',
     variants: ['medium'],
     accessor: node => node.validatorData?.ecdsaPublicKey,
+    color: value => value === null ? 'no' as any : null,
   },
   {
     name: 'BLS Public Key',
     icon: 'lock',
     variants: ['medium'],
     accessor: node => node.validatorData?.blsPublicKey,
+    color: value => value === null ? 'no' as any : null,
   },
 ]
