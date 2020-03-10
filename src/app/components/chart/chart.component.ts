@@ -59,12 +59,18 @@ export class ChartComponent implements OnInit, OnChanges {
         return
       }
       const data = changes.data.currentValue.slice(0, 40)
-      const {min, max} = data
+      let {min, max} = data
         .map(({value}) => value)
         .reduce((acc, value) => ({
           min: Math.min(acc.min, value),
           max: Math.max(acc.max, value),
         }), {min: this.type === 'relative' ? Infinity : 0, max: 0})
+
+      if (min === max && !min) {
+        min = 0
+        max = 1
+      }
+
       const cleanData = data
           .map(bar => ({
             ...bar,
