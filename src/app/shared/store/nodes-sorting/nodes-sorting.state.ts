@@ -26,7 +26,7 @@ export interface ColumnBase {
   accessor: (node: Node, context: Context) => columnValues
   link?: (value: columnValues, context: Context) => string
   show?: (value: columnBasicValues, context: Context) => columnBasicValues
-  color?: (value: columnBasicValues, context: Context) => color
+  color?: (value: columnBasicValues, context: Context) => color | null
 }
 
 export interface ColumnChart extends ColumnBase {
