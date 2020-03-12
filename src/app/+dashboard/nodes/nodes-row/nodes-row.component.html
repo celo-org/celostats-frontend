@@ -1,13 +1,11 @@
 <span hidden [attr.data-pinned]="pinned$ | async"></span>
 <ng-container *ngIf="columns$ | async as columns">
-  <td
-    class="table__cell table__cell--xsmall table__cell--type-icon table__cell-pin"
-    (click)=pinNode()>
-
+  <td class="table__cell table__cell--xsmall table__cell--type-icon table__cell-pin">
     <mat-icon
       fontSet="material-icons-outlined"
       class="table__cell-icon table__cell-icon--pinned"
-      [class.table__cell--warn3]="pinned$ | async">
+      [class.table__cell--warn3]="pinned$ | async"
+      (click)=pinNode()>
 
       {{(pinned$ | async) ? 'favorite' : 'favorite_border'}}
     </mat-icon>
