@@ -47,6 +47,7 @@ export class DashboardNodesComponent implements OnInit, OnDestroy, AfterViewInit
       //   interval(500),
       //   interval(0, animationFrameScheduler),
       // )),
+      tap(list => list?.length && setTimeout(() => this.stopCheckingRendered(), 5 * 1000)),
       share(),
     )
     this.sorting$ = this.store.pipe(
@@ -61,8 +62,6 @@ export class DashboardNodesComponent implements OnInit, OnDestroy, AfterViewInit
         throttle(() => interval(0, animationFrameScheduler)),
       )
       .subscribe(() => this.loadedRows$.next(this.rows.filter(row => row.isRendered).length))
-
-    setTimeout(() => this.stopCheckingRendered(), 10 * 1000)
   }
 
   ngOnDestroy() {
