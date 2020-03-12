@@ -1,8 +1,7 @@
 @import './styles/index';
 
-$right-padding: 20px;
+$extra-padding: 20px;
 $submenu-bp: 660px;
-$submenu-max-width: 1240px;
 
 :host {
   display: block;
@@ -18,7 +17,7 @@ $submenu-max-width: 1240px;
 
   &--right {
     left: initial;
-    right: $padding + $right-padding;
+    right: $padding + $extra-padding;
   }
 
   &__link {
@@ -60,12 +59,12 @@ $submenu-max-width: 1240px;
   display: flex;
   align-items: center;
   position: sticky;
-  left: $padding;
+  left: $padding + $extra-padding;
   box-sizing: border-box;
 
   &--secondary {
     left: initial;
-    right: $padding + $right-padding;
+    right: $padding + $extra-padding;
   }
 
   &__image {
@@ -76,7 +75,7 @@ $submenu-max-width: 1240px;
     @include transition(fast);
     @include get-font(text, bold);
 
-    margin-left: 20px;
+    margin-right: 20px;
     position: relative;
     color: gc(g0);
     text-decoration: none;
@@ -108,20 +107,12 @@ $submenu-max-width: 1240px;
   }
 
   &-wrapper {
-    max-width: $submenu-max-width;
     width: 100%;
     display: flex;
     justify-content: space-between;
     margin: auto;
     padding: 20px;
     box-sizing: border-box;
-  }
-
-  @media (max-width: $submenu-max-width) {
-    &-wrapper {
-      max-width: initial;
-      width: initial;
-    }
   }
 
   @media (max-width: $submenu-bp) {
