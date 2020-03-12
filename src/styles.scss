@@ -56,6 +56,10 @@ body {
     color: gc(g0);
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   }
+
+  @at-root .mat-snack-bar-handset snack-bar-container#{&} {
+    margin: 24px;
+  }
 }
 
 ng-host {
