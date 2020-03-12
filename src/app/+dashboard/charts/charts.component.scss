@@ -2,11 +2,13 @@
 
 .wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   padding: 20px;
-  margin-bottom: 20px;
+  padding-top: 0;
   box-sizing: border-box;
-  min-height: 482px;
+  max-width: 1920px;
+  min-height: 340px;
+  margin: auto;
 
   .block {
     $width: 7px * 40; // Chart size

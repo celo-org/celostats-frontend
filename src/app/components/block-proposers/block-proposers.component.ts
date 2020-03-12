@@ -14,7 +14,7 @@ import { animations } from 'src/app/shared'
 export class BlockProposersComponent implements OnChanges {
   @Input() data: Miner[]
 
-  maxNumberOfRows = 12
+  maxNumberOfRows = 13
   maxNumberOfBlocks = 36
   data$ = new BehaviorSubject<(Miner & {blocks: boolean[]})[]>(
     new Array(this.maxNumberOfRows)
