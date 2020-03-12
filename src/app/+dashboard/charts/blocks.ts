@@ -15,7 +15,7 @@ export interface Context {
 }
 
 interface InfoBlockBase<T extends infoType, V, R = V> {
-  icon?: string
+  icon?: string | boolean
   title: string
   type: T
   accessor: (context: Context) => V
@@ -40,6 +40,12 @@ export const blocks: InfoBlock[][] = [
       color: () => 'info',
     },
     {
+      type: 'small',
+      title: 'Blocks Until Epoch/Epoch Size',
+      accessor: ({block}) => `${block.blockRemain}/${block.epochSize}`,
+      color: (value, {block}) => colorRange((block?.epochSize - +value) / block?.epochSize, [0, 0.5, 0.8]),
+    },
+    {
       type: 'chart',
       title: 'Block Time',
       accessor: ({charts}) => (charts?.blocktime ?? []),
@@ -53,6 +59,23 @@ export const blocks: InfoBlock[][] = [
       needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
       color: () => 'ok',
       sizeType: 'relative',
+    },
+  ],
+  [
+    {
+      type: 'big',
+      title: 'Last Block',
+      icon: true,
+      accessor: ({block, time}) => Math.round((time - +block?.received) / 1000),
+      show: value => `${value}s ago`,
+      color: value => colorRange(+value, [4, 10, 30, 60, 120, 300]),
+    },
+    {
+      type: 'small',
+      title: 'Avg Block Time',
+      accessor: ({charts}) => +charts?.avgBlocktime,
+      show: value => `${(+value).toFixed(2)}s`,
+      color: value => colorRange(+value, [, 10, 30, 60, 600]),
     },
     {
       type: 'chart',
@@ -71,53 +94,19 @@ export const blocks: InfoBlock[][] = [
   ],
   [
     {
-      type: 'big',
-      title: 'Blocks Until Epoch/Epoch Size',
+      type: 'block-proposers',
+      title: 'Recent Block Proposers',
       icon: 'blocks',
-      accessor: ({block}) => `${block.blockRemain}/${block.epochSize}`,
-      color: (value, {block}) => colorRange((block?.epochSize - +value) / block?.epochSize, [0, 0.5, 0.8]),
-    },
-    {
-      type: 'small',
-      title: 'Last Block',
-      accessor: ({block, time}) => Math.round((time - +block?.received) / 1000),
-      show: value => `${value}s ago`,
-      color: value => colorRange(+value, [4, 10, 30, 60, 120, 300]),
-    },
-    {
-      type: 'small',
-      title: 'Avg Block Time',
-      accessor: ({charts}) => +charts?.avgBlocktime,
-      show: value => `${(+value).toFixed(2)}s`,
-      color: value => colorRange(+value, [, 10, 30, 60, 600]),
-    },
-    {
-      type: 'chart',
-      title: 'Signatures',
-      accessor: ({charts, block: {number: block}}) => (charts?.signatures ?? [])
-        .map((value, i, {length}) => ({
-          value,
-          show: value || 'n/a',
-          index: String((length - charts?.updates + i) - length + 2),
-          label: `#${block - i}`,
-        })),
+      accessor: ({charts}) => (charts?.miners ?? []),
       needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
-      color: () => 'ok',
-      sizeType: 'relative',
+      color: () => 'info',
     },
   ],
   [
     {
       type: 'big',
-      title: 'Active Nodes',
-      icon: 'triangle',
-      accessor: ({nodes}) => nodes.filter(node => node.stats?.active).length,
-      show: (value, {nodes}) => `${value}/${nodes.length}`,
-      color: (value, {nodes}) => colorRange((nodes.length - +value) / nodes.length, [, 0.1, 0.2, 0.5, , ]),
-    },
-    {
-      type: 'small',
       title: 'Gas Price',
+      icon: 'triangle',
       accessor: ({nodes}) => nodes[0]?.stats?.gasPrice / 10 ** 9,
       needsUpdate: (newValue, oldValue) => newValue !== 0 || !oldValue,
       show: value => `${value} gwei`,
@@ -154,11 +143,25 @@ export const blocks: InfoBlock[][] = [
       color: value => value ? 'ok' : 'no',
     },
     {
-      type: 'block-proposers',
-      title: 'Recent Block Proposers',
-      accessor: ({charts}) => (charts?.miners ?? []),
+      type: 'small',
+      title: 'Active Nodes',
+      accessor: ({nodes}) => nodes.filter(node => node.stats?.active).length,
+      show: (value, {nodes}) => `${value}/${nodes.length}`,
+      color: (value, {nodes}) => colorRange((nodes.length - +value) / nodes.length, [, 0.1, 0.2, 0.5, , ]),
+    },
+    {
+      type: 'chart',
+      title: 'Signatures',
+      accessor: ({charts, block: {number: block}}) => (charts?.signatures ?? [])
+        .map((value, i, {length}) => ({
+          value,
+          show: value || 'n/a',
+          index: String((length - charts?.updates + i) - length + 2),
+          label: `#${block - i}`,
+        })),
       needsUpdate: (a, b) => JSON.stringify(a) !== JSON.stringify(b),
-      color: () => 'info',
+      color: () => 'ok',
+      sizeType: 'relative',
     },
   ],
 ]
