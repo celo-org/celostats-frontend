@@ -77,7 +77,7 @@ export class DashboardNodesRowComponent implements OnInit, OnDestroy {
     this.changeDetectionsSubscription = this.row$.pipe(
       map(({columns}) =>
         columns
-          .map(({value, style}) => [value, style])
+          .map(({value, style}) => [JSON.stringify(value), style])
           .flat()
           .join('|')
       ),
