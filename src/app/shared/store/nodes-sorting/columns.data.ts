@@ -32,8 +32,10 @@ function truncateToDecimals(num: number, dec: number = 2) {
 
 const signedColors = {
   [SignedState.Signed]: 'ok',
-  [SignedState.Unsigned]: 'warn3',
+  [SignedState.Unsigned]: 'warn2',
   [SignedState.Unknown]: 'warn1',
+  [SignedState.Skipped]: 'info',
+  [SignedState.Punished]: 'warn3',
 }
 
 export const columns: Column[] = [
@@ -157,7 +159,10 @@ export const columns: Column[] = [
     name: 'Singing history',
     icon: 'assignment_turned_in',
     type: 'chart',
-    accessor: node => [...(node.signHistory || []), ...new Array(40).fill(null)].slice(0, 40).map(data => ({value: 1, data})),
+    accessor: node => [...(node.signHistory || []), ...new Array(40).fill(null)].slice(0, 40).map(data => ({
+      value: 1,
+      data
+    })),
     show: (value, data) => SignedState[data] || 'n/a',
     color: (value, data) => signedColors[data] || 'no',
   },
