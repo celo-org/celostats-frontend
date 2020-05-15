@@ -49,19 +49,16 @@ export const columns: Column[] = [
     color: value => value === true ? 'ok' : value === false ? 'warn3' : 'no',
   },
   {
-    name: 'Name',
+    name: 'Validator',
     icon: 'face',
     default: -1,
     variants: ['sticky'],
-    accessor: node => node.info?.name,
+    type: (node) => node.info?.name ? undefined : 'address',
+    accessor: (node) => {
+      return node.info?.name || node.id.toString()
+    },
     show: value => value || '',
-  },
-  {
-    name: 'Address',
-    icon: 'person',
-    type: 'address',
-    accessor: node => node.id.toString(),
-    link: value => value && `${environment.blockscoutUrl}/address/${value}/transactions`,
+    link: (value, {node}) => value && `${environment.blockscoutUrl}/address/${node.id.toString()}/transactions`,
   },
   {
     name: 'Validator group',
@@ -77,7 +74,7 @@ export const columns: Column[] = [
     link: (value, {node}) => value && `${environment.blockscoutUrl}/address/${node.validatorData?.affiliation?.toString()}/transactions`,
   },
   {
-    name: 'Validator',
+    name: 'State',
     icon: 'done_all',
     first: -1,
     variants: ['large'],
