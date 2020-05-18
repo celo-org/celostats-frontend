@@ -16,8 +16,8 @@
   &__title {
     @include get-font(text, bold);
 
-    font-size: 16px;
-    line-height: 18px;
+    font-size: 12px;
+    line-height: 22px;
     white-space: pre-line;
     height: 28px;
   }
@@ -43,6 +43,7 @@
 
   &--big {
     padding-bottom: 10px;
+    line-height: 20px;
   }
 }
 
