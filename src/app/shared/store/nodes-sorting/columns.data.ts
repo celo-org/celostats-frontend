@@ -61,6 +61,19 @@ export const columns: Column[] = [
     link: (value, {node}) => value && `${environment.blockscoutUrl}/address/${node.id.toString()}/transactions`,
   },
   {
+    name: 'Version',
+    icon: 'code',
+    variants: ['xlarge'],
+    accessor: (node) => {
+      if (node.info?.node) {
+        const parts = node.info?.node.split('/')
+        if (parts.length > 0) {
+          return parts[1]
+        }
+      }
+    }
+  },
+  {
     name: 'Validator group',
     icon: 'group',
     type: (node, {validatorsGroups}) => validatorsGroups[node.validatorData?.affiliation?.toString()]?.name ? undefined : 'address',
