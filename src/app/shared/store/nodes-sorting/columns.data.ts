@@ -64,14 +64,7 @@ export const columns: Column[] = [
     name: 'Version',
     icon: 'code',
     variants: ['xlarge'],
-    accessor: (node) => {
-      if (node.info?.node) {
-        const parts = node.info?.node.split('/')
-        if (parts.length > 0) {
-          return parts[1]
-        }
-      }
-    }
+    accessor: (node) => node.info?.node?.split('/')?.[1]
   },
   {
     name: 'Validator group',
