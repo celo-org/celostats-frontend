@@ -130,5 +130,8 @@
       }
     }
   },
-  "defaultProject": "celostats-frontend"
+  "defaultProject": "celostats-frontend",
+  "cli": {
+    "analytics": "719689f5-878e-48c1-8b45-86be7abef84e"
+  }
 }
