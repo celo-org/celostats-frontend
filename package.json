@@ -24,7 +24,7 @@
     "@angular/platform-browser-dynamic": "^9.0.5",
     "@angular/router": "^9.0.5",
     "@angular/service-worker": "^9.0.5",
-    "@celo/celostats-server": "https://github.com/celo-org/celostats-server.git#4d9a1c22d8623e9f74169e082389d4e48db0b260",
+    "@celo/celostats-server": "https://github.com/celo-org/celostats-server.git#e233039c0c3b1aecb3f45d06cf169607a2cd3da2",
     "@ngrx/effects": "^8.6.0",
     "@ngrx/store": "^8.6.0",
     "@ngrx/store-devtools": "^8.6.0",
@@ -37,7 +37,7 @@
     "graphql-tag": "^2.10.0",
     "hammerjs": "^2.0.8",
     "rxjs": "~6.5.4",
-    "socket.io-client": "^2.3.0",
+    "socket.io-client": "^2.4.0",
     "tslib": "^1.11.1",
     "zone.js": "~0.10.2"
   },
