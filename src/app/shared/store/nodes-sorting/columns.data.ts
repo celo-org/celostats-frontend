@@ -187,7 +187,7 @@ export const columns: Column[] = [
   {
     name: 'BLS Public Key',
     icon: 'lock',
-    variants: ['medium', "grow"],
+    variants: ['medium', 'grow'],
     accessor: node => node.validatorData?.blsPublicKey,
     color: value => value === null ? 'no' as any : null,
   },
