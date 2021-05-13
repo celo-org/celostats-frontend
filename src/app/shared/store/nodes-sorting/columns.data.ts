@@ -83,7 +83,7 @@ export const columns: Column[] = [
     name: 'State',
     icon: 'done_all',
     first: -1,
-    variants: ['large'],
+    variants: ['medium'],
     accessor: node => evaluateStakingState(node),
     show: (value: string) => StakingState[value],
     color: value => colorRange(+value, [0, 1, 2, , , ,]),
@@ -113,7 +113,7 @@ export const columns: Column[] = [
   {
     name: 'Block Time',
     icon: 'timer',
-    variants: ['medium', 'right'],
+    variants: ['xsmall', 'right'],
     // tslint:disable-next-line:no-bitwise
     accessor: (node, {time}) => !node.block?.received ? null : ~~((time - +node.block?.received) / 1000),
     show: value => timeAgo(value as number),
@@ -187,7 +187,7 @@ export const columns: Column[] = [
   {
     name: 'BLS Public Key',
     icon: 'lock',
-    variants: ['medium'],
+    variants: ['medium', "grow"],
     accessor: node => node.validatorData?.blsPublicKey,
     color: value => value === null ? 'no' as any : null,
   },
