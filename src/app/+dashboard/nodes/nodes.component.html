@@ -14,7 +14,7 @@
       </td>
       <td
         *ngFor="let column of columns$ | async; trackBy: trackColumn"
-        [class]="'table__cell ' + variants(column) + (sorting.column.name === column.name ? 'table__cell--active' : '')"
+        [class]="'table__cell ' + variants(column, sorting)"
         (click)="changeOrderBy(column)"
         [matTooltip]="column.name">
 
