@@ -180,7 +180,7 @@ export const columns: Column[] = [
   {
     name: 'ECDSA Public Key',
     icon: 'lock',
-    variants: ['medium'],
+    variants: ['medium', 'grow'],
     accessor: node => node.validatorData?.ecdsaPublicKey,
     color: value => value === null ? 'no' as any : null,
   },
