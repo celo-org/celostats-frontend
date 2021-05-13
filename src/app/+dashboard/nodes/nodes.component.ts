@@ -80,14 +80,17 @@ export class DashboardNodesComponent implements OnInit, OnDestroy, AfterViewInit
     this.store.dispatch(nodesSortingActions.orderBy({column}))
   }
 
-  variants({variants, type}: Column) {
+  variants({variants, type, name}: Column, sorting: {column: Column}) {
+
+    const columnType = type instanceof Function ? 'address' : type
+
     return [
-      ...(variants || [])
-        .map(variant => ` table__cell--${variant} `),
-      ...(type ? [` table__cell--head-type-${type} `] : []),
-    ]
-      .join()
+      sorting.column.name === name ? 'table__cell--active' : '',
+      ...(variants || []).map(variant => ` table__cell--${variant} `),
+      ...(columnType ? [` table__cell--head-type-${columnType} `] : []),
+    ].join()
   }
+
 
   trackColumn(index: number): string {
     return String(index)
