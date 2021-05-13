@@ -14,7 +14,7 @@ export interface Context {
 type columnBasicValues = string | number | boolean
 type columnValues = columnBasicValues | number[] | MicroChartValue[]
 type columnType = 'icon' | 'address' | 'chart'
-type columnVariants = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'address' | 'sticky' | 'pre' | 'right'
+type columnVariants = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'address' | 'sticky' | 'pre' | 'right' | 'grow'
 
 export interface ColumnBase {
   name: string
