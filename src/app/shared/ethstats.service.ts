@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Observable, of } from 'rxjs'
 import { mergeMap, share } from 'rxjs/operators'
-import * as io from 'socket.io-client'
+import { io, Socket } from 'socket.io-client'
 
 import { environment } from 'src/environments/environment'
 
@@ -38,7 +38,7 @@ export type EthstatsEvent =
 })
 export class EthstatsService {
   private data$: Observable<EthstatsEvent>
-  private socket: SocketIOClient.Socket
+  private socket: Socket
 
   constructor() {
     const url = environment.ethstatsService
