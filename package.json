@@ -34,7 +34,7 @@
     "apollo-client": "^2.6.0",
     "apollo-link": "^1.2.11",
     "graphql": "^14.5.0",
-    "graphql-tag": "^2.10.0",
+    "graphql-tag": "^2.12.5",
     "hammerjs": "^2.0.8",
     "rxjs": "~6.5.4",
     "socket.io-client": "^4.1.1",
