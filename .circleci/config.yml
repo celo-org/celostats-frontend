@@ -1,5 +1,7 @@
 version: 2
 
+orbs:
+  gcp-cli: circleci/gcp-cli@2.2.0
 workflows:
   version: 2
   CI:
@@ -84,3 +86,49 @@ jobs:
           root: .
           paths:
             - dist
+
+  docker:
+    description: Build and push docker image
+    executor: google
+    steps:
+      - checkout
+      - *CHECKOUT-WORKSPACE
+      - gcp-cli/install
+      - gcp-cli/initialize
+      - run:
+          command: |
+            docker build -t gcr.io/celo-testnet/celostats-frontend:$CIRCLE_SHA1 .
+            docker push gcr.io/celo-testnet/celostats-frontend:$CIRCLE_SHA1
+
+  # Signadot Canary Deployment
+  signadot:
+    <<: *NODE
+    steps:
+      - run:
+          command: |
+              imageReplacements=()
+              imageReplacements+=('{"name": "gcr.io/celo-testnet/celostats-frontend", "newTag": "$CIRCLE_SHA1"}')
+
+              printf -v joined '%s,' "${imageReplacements[@]}"
+              echo ${joined%,}
+              payload=$(cat <<EOF
+              {
+                "cluster": "celo-networks-dev",
+                "namespace": "staging",
+                "defaultService": "staging-celostats-frontend",
+                "defaultServicePort": 80,
+                "images": [ ${joined%,} ]
+              }
+              EOF
+              )
+              RESULT=$(curl -H 'Content-Type: application/json' \
+                    -H "Authorization: ApiKey $SIGNADOT_API_KEY" \
+                    -d "${payload}" \
+              https://api.signadot.com/api/v1/repos/celo-org/celostats-frontend/pulls/$CIRCLE_PR_NUMBER/workspaces)
+              echo $RESULT
+              ERROR=$(jq -r '.error' <<< $RESULT)
+              if [ $ERROR != "null" ]; then
+                echo "error: $ERROR"
+                exit 1
+              fi
+
