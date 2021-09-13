@@ -19,6 +19,9 @@ workflows:
       - build-app:
           requires:
             - npm-install
+      - signadot:
+          requires:
+            - build-app
 
 node-defaults: &NODE
   working_directory: ~/workspace
@@ -89,7 +92,7 @@ jobs:
 
   docker:
     description: Build and push docker image
-    executor: google
+    executor: gcp-cli/google
     steps:
       - checkout
       - *CHECKOUT-WORKSPACE
@@ -131,4 +134,3 @@ jobs:
                 echo "error: $ERROR"
                 exit 1
               fi
-
