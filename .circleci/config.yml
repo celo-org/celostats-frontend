@@ -92,6 +92,7 @@ jobs:
 
   docker:
     description: Build and push docker image
+    executor: machine
     steps:
       - checkout
       - *CHECKOUT-WORKSPACE
