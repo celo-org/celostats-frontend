@@ -92,7 +92,6 @@ jobs:
 
   docker:
     description: Build and push docker image
-    executor: gcp-cli/google
     steps:
       - checkout
       - *CHECKOUT-WORKSPACE
