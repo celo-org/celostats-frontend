@@ -15,7 +15,7 @@ RUN yarn build
 RUN rm -rf ./src ./e2e ./node_modules
 
 # Server
-FROM nginx:latest
+FROM nginx:1.21.6
 EXPOSE 80
 RUN apt-get update -y \
   && apt-get install curl -y \
