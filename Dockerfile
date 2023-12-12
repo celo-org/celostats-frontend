@@ -30,7 +30,7 @@ RUN npm i -g @angular/service-worker
 COPY --from=builder /app/dist/ /var/www/app
 COPY --from=builder /app/ngsw-config.json /var/www/ngsw-config.json
 COPY scripts/ /var/www/scripts
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/http.d/default.conf
 ENTRYPOINT \
   /var/www/scripts/set-env-variables.js /var/www/app \
   && ngsw-config /var/www/app/ /var/www/ngsw-config.json / \
