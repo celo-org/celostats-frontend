@@ -1,5 +1,7 @@
 # Builder
-FROM node:13 as builder
+FROM node:20-alpine as builder
+
+RUN apk add --no-cache git
 
 ADD . /app
 WORKDIR /app
@@ -9,19 +11,21 @@ RUN yarn
 
 # build
 ENV NODE_ENV=production
+ENV NODE_OPTIONS=--openssl-legacy-provider
 RUN yarn build
 
 # clean
 RUN rm -rf ./src ./e2e ./node_modules
 
 # Server
-FROM nginx:latest
+FROM node:20-alpine
+LABEL org.opencontainers.image.authors="devops@clabs.co"
+
+RUN apk add --no-cache nginx && \
+    apk upgrade --no-cache
+
 EXPOSE 80
-RUN apt-get update -y \
-  && apt-get install curl -y \
-  && curl -sL https://deb.nodesource.com/setup_12.x | /bin/bash - \
-  && apt-get install -y nodejs \
-  && rm -rf /var/lib/apt/lists/*
+
 RUN npm i -g @angular/service-worker
 COPY --from=builder /app/dist/ /var/www/app
 COPY --from=builder /app/ngsw-config.json /var/www/ngsw-config.json
@@ -31,4 +35,4 @@ ENTRYPOINT \
   /var/www/scripts/set-env-variables.js /var/www/app \
   && ngsw-config /var/www/app/ /var/www/ngsw-config.json / \
   && nginx -g "daemon off;"; \
-  /bin/bash
+  /bin/sh
