@@ -4,7 +4,7 @@ orbs:
   browser-tools: circleci/browser-tools@1.4.6
 
 workflows:
-  version: 2s
+  version: 2
   CI:
     jobs:
       - npm-install
@@ -48,7 +48,7 @@ jobs:
           command: |
             yarn
           environment:
-            NODE_ENV: --openssl-legacy-provider
+            NODE_OPTIONS: --openssl-legacy-provider
       - save_cache:
           paths:
             - node_modules
@@ -68,7 +68,7 @@ jobs:
           command: |
             yarn test
           environment:
-            NODE_ENV: --openssl-legacy-provider
+            NODE_OPTIONS: --openssl-legacy-provider
       - store_test_results:
           path: coverage/junit
       - store_artifacts:
@@ -88,7 +88,7 @@ jobs:
           command: |
             yarn lint
           environment:
-            NODE_ENV: --openssl-legacy-provider
+            NODE_OPTIONS: --openssl-legacy-provider
   # Build
   build-app:
     <<: *NODE
@@ -99,7 +99,7 @@ jobs:
       - run: 
           command: yarn build -- --base-href "./"
           environment:
-            NODE_ENV: --openssl-legacy-provider
+            NODE_OPTIONS: --openssl-legacy-provider
       - store_artifacts:
           path: dist
       - persist_to_workspace:
