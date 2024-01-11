@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "ngcc:sync": "ngcc --async=false",
     "start": "ng serve",
     "build": "ng build --prod",
     "test": "ng test --no-watch --code-coverage",

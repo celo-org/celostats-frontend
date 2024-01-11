@@ -41,7 +41,8 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v2-dependencies-
       - run: 
-          command: yarn
+          command: |
+            yarn
           environment:
             NODE_ENV: --openssl-legacy-provider
       - save_cache:
@@ -59,7 +60,9 @@ jobs:
       - checkout
       - *CHECKOUT-WORKSPACE
       - run: 
-          command: yarn test
+          command: |
+            yarn run ngcc:sync
+            yarn test
           environment:
             NODE_ENV: --openssl-legacy-provider
       - store_test_results:
@@ -77,7 +80,9 @@ jobs:
       - checkout
       - *CHECKOUT-WORKSPACE
       - run: 
-          command: yarn lint
+          command: |
+            npx ng run --async false
+            yarn lint
           environment:
             NODE_ENV: --openssl-legacy-provider
   # Build
