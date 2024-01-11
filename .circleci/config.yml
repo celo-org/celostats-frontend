@@ -21,7 +21,7 @@ workflows:
 node-defaults: &NODE
   working_directory: ~/workspace
   docker:
-    - image: circleci/node:10.18-browsers
+    - image: cimg/node:lts-browsers
 
 checkout-workspace-defaults:
   - &CHECKOUT-WORKSPACE
