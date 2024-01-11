@@ -61,7 +61,7 @@ jobs:
   test:
     <<: *NODE
     steps:
-      - browser-tools/install-browser-toolss
+      - browser-tools/install-browser-tools
       - checkout
       - *CHECKOUT-WORKSPACE
       - run: 
