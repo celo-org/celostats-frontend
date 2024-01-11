@@ -61,7 +61,6 @@ jobs:
       - *CHECKOUT-WORKSPACE
       - run: 
           command: |
-            yarn run ngcc:sync
             yarn test
           environment:
             NODE_ENV: --openssl-legacy-provider
@@ -81,7 +80,6 @@ jobs:
       - *CHECKOUT-WORKSPACE
       - run: 
           command: |
-            npx ng run --async false
             yarn lint
           environment:
             NODE_ENV: --openssl-legacy-provider
