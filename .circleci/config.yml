@@ -77,7 +77,7 @@ jobs:
       - checkout
       - *CHECKOUT-WORKSPACE
       - run: 
-          command: yarn lints
+          command: yarn lint
           environment:
             NODE_ENV: --openssl-legacy-provider
   # Build
