@@ -4,7 +4,7 @@ orbs:
   browser-tools: circleci/browser-tools@1.4.6
 
 workflows:
-  version: 2
+  version: 2s
   CI:
     jobs:
       - npm-install
@@ -36,6 +36,7 @@ jobs:
   npm-install:
     <<: *NODE
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - *CHECKOUT-WORKSPACE
       - restore_cache:
@@ -60,6 +61,7 @@ jobs:
   test:
     <<: *NODE
     steps:
+      - browser-tools/install-browser-toolss
       - checkout
       - *CHECKOUT-WORKSPACE
       - run: 
@@ -79,6 +81,7 @@ jobs:
   lint:
     <<: *NODE
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - *CHECKOUT-WORKSPACE
       - run: 
@@ -90,6 +93,7 @@ jobs:
   build-app:
     <<: *NODE
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - *CHECKOUT-WORKSPACE
       - run: 
