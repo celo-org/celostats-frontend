@@ -1,4 +1,7 @@
-version: 2
+version: 2.1
+
+orbs:
+  browser-tools: circleci/browser-tools@1.4.6
 
 workflows:
   version: 2
@@ -21,7 +24,7 @@ workflows:
 node-defaults: &NODE
   working_directory: ~/workspace
   docker:
-    - image: circleci/node:10.18-browsers
+    - image: cimg/node:lts-browsers
 
 checkout-workspace-defaults:
   - &CHECKOUT-WORKSPACE
@@ -33,18 +36,23 @@ jobs:
   npm-install:
     <<: *NODE
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - *CHECKOUT-WORKSPACE
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
+            - v2-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-      - run: npm install
+            - v2-dependencies-
+      - run: 
+          command: |
+            yarn
+          environment:
+            NODE_OPTIONS: --openssl-legacy-provider
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: v2-dependencies-{{ checksum "package.json" }}
       - persist_to_workspace:
           root: .
           paths:
@@ -53,9 +61,14 @@ jobs:
   test:
     <<: *NODE
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - *CHECKOUT-WORKSPACE
-      - run: npm run test
+      - run: 
+          command: |
+            yarn test
+          environment:
+            NODE_OPTIONS: --openssl-legacy-provider
       - store_test_results:
           path: coverage/junit
       - store_artifacts:
@@ -68,16 +81,25 @@ jobs:
   lint:
     <<: *NODE
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - *CHECKOUT-WORKSPACE
-      - run: npm run lint
+      - run: 
+          command: |
+            yarn lint
+          environment:
+            NODE_OPTIONS: --openssl-legacy-provider
   # Build
   build-app:
     <<: *NODE
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - *CHECKOUT-WORKSPACE
-      - run: npm run build -- --base-href "./"
+      - run: 
+          command: yarn build -- --base-href "./"
+          environment:
+            NODE_OPTIONS: --openssl-legacy-provider
       - store_artifacts:
           path: dist
       - persist_to_workspace:
