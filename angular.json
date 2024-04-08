@@ -45,7 +45,6 @@
               "optimization": true,
               "outputHashing": "none",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -130,7 +129,6 @@
       }
     }
   },
-  "defaultProject": "celostats-frontend",
   "cli": {
     "analytics": "719689f5-878e-48c1-8b45-86be7abef84e"
   }
