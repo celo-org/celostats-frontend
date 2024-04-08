@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build --configuration production",
-    "test": "ng test --no-watch --code-coverage",
-    "test:watch": "ng test --code-coverage",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
+    "start": "ng serve celostats-frontend",
+    "build": "ng build --configuration production celostats-frontend",
+    "test": "ng test --no-watch --code-coverage celostats-frontend",
+    "test:watch": "ng test --code-coverage celostats-frontend",
+    "lint": "ng lint celostats-frontend",
+    "e2e": "ng e2e celostats-frontend",
     "set:variables": "scripts/set-env-variables.js ./dist"
   },
   "private": true,
