@@ -108,7 +108,7 @@ export class MicroChartComponent implements OnInit, OnChanges, OnDestroy {
       )
       .subscribe(([, x]) => this.generateChart(x))
 
-    this.onData$.next()
+    this.onData$.next(null);
   }
 
   ngOnDestroy() {
@@ -120,7 +120,7 @@ export class MicroChartComponent implements OnInit, OnChanges, OnDestroy {
       if (JSON.stringify(changes.data.currentValue) === JSON.stringify(changes.data.previousValue)) {
         return
       }
-      this.onData$.next()
+      this.onData$.next(null)
     }
   }
 

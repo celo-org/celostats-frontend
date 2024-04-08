@@ -1,5 +1,5 @@
 # Builder
-FROM node:13 as builder
+FROM node:20 as builder
 
 ADD . /app
 WORKDIR /app
@@ -19,7 +19,7 @@ FROM nginx:latest
 EXPOSE 80
 RUN apt-get update -y \
   && apt-get install curl -y \
-  && curl -sL https://deb.nodesource.com/setup_12.x | /bin/bash - \
+  && curl -sL https://deb.nodesource.com/setup_20.x | /bin/bash - \
   && apt-get install -y nodejs \
   && rm -rf /var/lib/apt/lists/*
 RUN npm i -g @angular/service-worker
