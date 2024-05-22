@@ -15,7 +15,7 @@
       
   jobs:
     celostats-frontend-build-dev:
-      uses: celo-org/reusable-workflows/.github/workflows/container-cicd.yaml@v2.0.1
+      uses: celo-org/reusable-workflows/.github/workflows/container-cicd.yaml@v2.0.4
       name: Build us-west1-docker.pkg.dev/devopsre/dev-images/celostats-frontend
       permissions:
         contents: read
@@ -32,7 +32,7 @@
         trivy: true
   
     celostats-frontend-build-main:
-      uses: celo-org/reusable-workflows/.github/workflows/container-cicd.yaml@v2.0.1
+      uses: celo-org/reusable-workflows/.github/workflows/container-cicd.yaml@v2.0.4
       name: Build us-west1-docker.pkg.dev/devopsre/celostats-frontend/celostats-frontend
       permissions:
         contents: read
@@ -50,7 +50,7 @@
         trivy: true
   
     celostats-frontend-build-tag:
-      uses: celo-org/reusable-workflows/.github/workflows/container-cicd.yaml@v2.0.1
+      uses: celo-org/reusable-workflows/.github/workflows/container-cicd.yaml@v2.0.4
       name: Build us-west1-docker.pkg.dev/devopsre/celostats-frontend/celostats-frontend tag
       permissions:
         contents: read
