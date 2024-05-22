@@ -21,6 +21,7 @@ RUN apt-get update -y \
   && apt-get install curl -y \
   && curl -sL https://deb.nodesource.com/setup_12.x | /bin/bash - \
   && apt-get install -y nodejs \
+  && apt-get install -y npm \
   && rm -rf /var/lib/apt/lists/*
 RUN npm i -g @angular/service-worker
 COPY --from=builder /app/dist/ /var/www/app
